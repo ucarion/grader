@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-group :development do
+group :development, :test do
+  gem 'rspec-rails'
   gem 'sqlite3'
 end
 
@@ -28,5 +29,6 @@ end
 gem 'jquery-rails'
 
 group :test do
+  gem 'selenium-webdriver'
   gem 'capybara'
 end
