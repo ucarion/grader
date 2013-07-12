@@ -26,3 +26,7 @@ end
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+group :test do
+  gem 'capybara'
+end
