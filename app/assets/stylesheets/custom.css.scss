@@ -1,6 +1,33 @@
 @import "bootstrap";
 
+$darkGrey: #eaeaea;
+
 /* The header takes up 60px from the top. */
 body {
   margin-top: 60px;
+}
+
+footer {
+  hr {
+    /* http://stackoverflow.com/a/4151954/1462197 */
+    background-color: $darkGrey;
+    border: 0 none;
+    color: $darkGrey;
+    height: 1px;
+  }
+
+  li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+    float: right;
+
+    a {
+      color: $grayLight;
+
+      &:hover {
+        color: $grayDarker;
+      }
+    }
+  }
 }
