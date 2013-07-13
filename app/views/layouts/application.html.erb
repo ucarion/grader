@@ -7,28 +7,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="brand" href="#">Grader</a>
-        <div class="pull-right">
-          <ul class="nav">
-            <li><a href="#">Sign in</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>  
-  </header>
+  <%= render 'layouts/header' %>
   <div class="container">
     <%= yield %>
-    <footer>
-      <hr />
-      <ul>
-        <li><small><%= link_to 'About', '#'%></small></li>
-        <li><small><%= link_to 'Help', '#'%></small></li>
-        <li><small><%= link_to 'Home', '#'%></small></li>
-      </ul>
-    </footer>
+    <%= render 'layouts/footer' %>
   </div>
 </body>
 </html>
