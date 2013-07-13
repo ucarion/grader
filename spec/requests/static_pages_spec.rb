@@ -1,39 +1,26 @@
 require 'spec_helper'
 
 describe "Static pages" do
-  describe "Home page" do
-    it "should have the content 'Grader'" do
-      visit root_path
-      expect(page).to have_content('Grader')
-    end
+  subject { page }
 
-    it "should have 'Home' in the title" do
-      visit root_path
-      expect(page).to have_title('Grader')
-    end
+  describe "Home page" do
+    before { visit root_path }
+
+    it { should have_content('Grader') }
+    it { should have_title('Grader') }
   end
 
   describe "Help page" do
-    it "should have the content 'Help'" do
-      visit help_path
-      expect(page).to have_content('Help')
-    end
+    before { visit help_path }
 
-    it "should have 'Help' in the title" do
-      visit help_path
-      expect(page).to have_title('Grader | Help')
-    end
+    it { should have_content('Help') }
+    it { should have_title('Grader | Help') }
   end
 
   describe "About page" do
-    it "should have the content 'About'" do
-      visit about_path
-      expect(page).to have_content('About')
-    end
+    before { visit about_path }
 
-    it "should have 'About' in the title" do
-      visit about_path
-      expect(page).to have_title('Grader | About')
-    end
+    it { should have_content('About') }
+    it { should have_title('Grader | About') }
   end
 end
