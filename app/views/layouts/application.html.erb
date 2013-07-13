@@ -21,6 +21,14 @@
   </header>
   <div class="container">
     <%= yield %>
+    <footer>
+      <hr />
+      <ul>
+        <li><small><%= link_to 'About', '#'%></small></li>
+        <li><small><%= link_to 'Help', '#'%></small></li>
+        <li><small><%= link_to 'Home', '#'%></small></li>
+      </ul>
+    </footer>
   </div>
 </body>
 </html>
