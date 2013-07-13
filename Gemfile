@@ -28,6 +28,9 @@ end
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+# Use bootstrap from SCSS as CSS library
+gem 'bootstrap-sass'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
