@@ -1,7 +1,5 @@
 @import "bootstrap";
 
-$darkGrey: #eaeaea;
-
 /* The header takes up 60px from the top. */
 body {
   margin-top: 60px;
@@ -10,9 +8,9 @@ body {
 footer {
   hr {
     /* http://stackoverflow.com/a/4151954/1462197 */
-    background-color: $darkGrey;
+    background-color: $grayLighter;
     border: 0 none;
-    color: $darkGrey;
+    color: $grayLighter;
     height: 1px;
   }
 
