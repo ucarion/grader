@@ -31,6 +31,9 @@ gem 'jquery-rails'
 # Use bootstrap from SCSS as CSS library
 gem 'bootstrap-sass'
 
+# For password hashing
+gem 'bcrypt-ruby', '3.0.1'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
