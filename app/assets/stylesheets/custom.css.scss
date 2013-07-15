@@ -1,13 +1,13 @@
 @import "bootstrap";
 
-/* The header takes up 60px from the top. */
+// The header takes up 60px from the top.
 body {
   margin-top: 60px;
 }
 
 footer {
   hr {
-    /* http://stackoverflow.com/a/4151954/1462197 */
+    // http://stackoverflow.com/a/4151954/1462197
     background-color: $grayLighter;
     border: 0 none;
     color: $grayLighter;
