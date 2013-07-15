@@ -22,4 +22,28 @@ describe User do
 
     it { should_not be_valid }
   end
+
+  describe "when email is not correct" do
+    it "should not be valid" do
+      bad_emails = %w{a@b a@b,c @a.b a@@b.c}
+
+      bad_emails.each do |email|
+        @user.email = email
+
+        expect(@user).not_to be_valid
+      end
+    end
+  end
+
+  describe "when email is correct" do
+    it "should be valid" do
+      good_emails = %w{a@b.c a.b@c.d a@b.c.d a+b@c.d}
+
+      good_emails.each do |email|
+        @user.email = email
+
+        expect(@user).to be_valid
+      end
+    end
+  end
 end
