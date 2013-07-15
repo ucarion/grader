@@ -46,4 +46,14 @@ describe User do
       end
     end
   end
+
+  describe "when email has already been taken" do
+    before do
+      copycat = @user.dup
+      copycat.email.upcase!
+      copycat.save
+    end
+
+    it { should_not be_valid }
+  end
 end
