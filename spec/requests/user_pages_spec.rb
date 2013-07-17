@@ -66,5 +66,24 @@ describe "User Pages" do
 
       it { should have_content('error') }
     end
+
+    describe "with valid information" do
+      let(:new_name) { "New Name" }
+      let(:new_email) { "new@email.com" }
+
+      before do
+        fill_in "Name", with: new_name
+        fill_in "Email", with: new_email
+        fill_in "Password", with: "password"
+        fill_in "Password confirmation", with: "password"
+
+        click_button "Save changes"
+      end
+
+        it { should have_title(user.reload.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Successfully updated') }
+        specify { expect(user.reload.name).to eq new_name }
+        specify { expect(user.reload.email).to eq new_email }
+    end
   end
 end
