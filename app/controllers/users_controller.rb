@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :checked_signed_in, only: [:edit, :update]
+
   def show
     @user = User.find(params[:id])
   end
@@ -39,5 +41,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def checked_signed_in
+    redirect_to signin_path, notice: "Sign in before completing this action." unless signed_in?
   end
 end
