@@ -51,4 +51,20 @@ describe "User Pages" do
     it { should have_content(user.email) }
     it { should have_title(user.name)}
   end
+
+  describe "edit" do
+    let(:user) { FactoryGirl.create(:user) }
+    before { visit edit_user_path(user) }
+
+    describe "page" do
+      it { should have_title('Edit Account') }
+      it { should have_content('Edit Account') }
+    end
+
+    describe "with bad information" do
+      before { click_button "Save changes" }
+
+      it { should have_content('error') }
+    end
+  end
 end
