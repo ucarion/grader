@@ -41,4 +41,16 @@ describe "Authentication Pages" do
       end
     end
   end
+
+  describe "authorization" do
+    describe "for actions requiring signin" do
+      let(:user) { FactoryGirl.create(:user) }
+
+      describe "when trying to edit a user" do
+        before { visit edit_user_path(user) }
+
+        it { should have_title('Sign in') }
+      end
+    end
+  end
 end
