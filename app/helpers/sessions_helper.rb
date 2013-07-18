@@ -27,4 +27,13 @@ module SessionsHelper
   def current_user?(user)
     @current_user == user
   end
+
+  def remember_return_location
+    session[:return_loc] = request.url
+  end
+
+  def redirect_to_return_or(backup)
+    redirect_to(session[:return_loc] || backup)
+    session.delete(:return_loc)
+  end
 end
