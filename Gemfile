@@ -37,6 +37,9 @@ gem 'bcrypt-ruby', '3.0.1'
 # For fake data
 gem 'faker'
 
+# Data pagination
+gem 'bootstrap-will_paginate'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
