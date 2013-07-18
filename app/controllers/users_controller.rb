@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :checked_signed_in, only: [:edit, :update]
+  before_filter :check_right_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -45,5 +46,10 @@ class UsersController < ApplicationController
 
   def checked_signed_in
     redirect_to signin_path, notice: "Sign in before completing this action." unless signed_in?
+  end
+
+  def check_right_user
+    @user = User.find(params[:id])
+    redirect_to root_path, notice: "You cannot edit others' information." unless current_user?(@user)
   end
 end
