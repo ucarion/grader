@@ -43,3 +43,14 @@ footer {
   @extend .control-group;
   @extend .error;
 }
+
+.list-users-table {
+  th:first-of-type {
+    // have the gravatar column be very thin
+    width: 32px;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
