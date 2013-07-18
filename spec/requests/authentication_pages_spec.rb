@@ -51,6 +51,24 @@ describe "Authentication Pages" do
 
         it { should have_title('Sign in') }
       end
+
+      describe "as the correct user" do
+        let(:other_user) { FactoryGirl.create(:user, name: "John Doe", email: "john@doe.com") }
+
+        before { sign_in(user) }
+
+        describe "visiting another person's edit page" do
+          before { visit edit_user_path(other_user) }
+
+          it { should_not have_title('Edit Account') }
+        end
+
+        describe "visiting another person's profile page" do
+          before { visit user_path(other_user) }
+
+          it { should have_title(other_user.name) }
+        end
+      end
     end
   end
 end
