@@ -42,7 +42,10 @@ class UsersController < ApplicationController
   end
 
   def checked_signed_in
-    redirect_to signin_path, notice: "Sign in before completing this action." unless signed_in?
+    unless signed_in?
+      remember_return_location
+      redirect_to signin_path, notice: "Sign in before completing this action."
+    end
   end
 
   def check_right_user
