@@ -89,4 +89,17 @@ describe "User Pages" do
         specify { expect(user.reload.email).to eq new_email }
     end
   end
+
+  describe "index" do
+    before { visit users_path }
+
+    it { should have_title('All Users') }
+    it { should have_content('All Users') }
+
+    it "should list each user" do
+      User.all.each do |user|
+        it { should have_selector('li', text: user.name) }
+      end
+    end
+  end
 end
