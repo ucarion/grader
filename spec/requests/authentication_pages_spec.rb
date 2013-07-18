@@ -50,6 +50,12 @@ describe "Authentication Pages" do
         before { visit edit_user_path(user) }
 
         it { should have_title('Sign in') }
+
+        describe "after logging in" do
+          before { sign_in(user) }
+
+          it { should have_title('Edit Account') }
+        end
       end
 
       describe "as the correct user" do
