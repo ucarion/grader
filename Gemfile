@@ -34,6 +34,9 @@ gem 'bootstrap-sass'
 # For password hashing
 gem 'bcrypt-ruby', '3.0.1'
 
+# For fake data
+gem 'faker'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
