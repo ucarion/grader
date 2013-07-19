@@ -8,12 +8,7 @@
     <th></th>
     <th>Name</th>
   </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= gravatar_for user, size: 32 %></td>
-      <td><%= link_to user.name, user %></td>
-    </tr>
-  <% end %>
+  <%= render @users %>
 </table>
 
 <%= will_paginate %>
