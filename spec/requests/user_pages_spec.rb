@@ -91,14 +91,19 @@ describe "User Pages" do
   end
 
   describe "index" do
-    before { visit users_path }
+    before do
+      30.times { FactoryGirl.create(:user) }
+      visit users_path
+    end
+
+    after { User.delete_all }
 
     it { should have_title('All Users') }
     it { should have_content('All Users') }
 
     it "should list each user" do
-      User.all.each do |user|
-        it { should have_selector('li', text: user.name) }
+      User.paginate(page: 1).each do |user|
+        expect(page).to have_selector('td', text: user.name)
       end
     end
   end
