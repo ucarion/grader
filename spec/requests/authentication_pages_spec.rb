@@ -45,6 +45,7 @@ describe "Authentication Pages" do
   describe "authorization" do
     describe "for actions requiring signin" do
       let(:user) { FactoryGirl.create(:user) }
+      let(:other_user) { FactoryGirl.create(:user, name: "John Doe", email: "john@doe.com") }
 
       describe "when trying to edit a user" do
         before { visit edit_user_path(user) }
@@ -59,8 +60,6 @@ describe "Authentication Pages" do
       end
 
       describe "as the correct user" do
-        let(:other_user) { FactoryGirl.create(:user, name: "John Doe", email: "john@doe.com") }
-
         before { sign_in(user) }
 
         describe "visiting another person's edit page" do
@@ -73,6 +72,16 @@ describe "Authentication Pages" do
           before { visit user_path(other_user) }
 
           it { should have_title(other_user.name) }
+        end
+      end
+
+      describe "as a non-admin" do
+        before { sign_in(user, no_capybara: true ) }
+
+        describe "submitting a DELETE request to Users#destroy" do
+          before { delete user_path(other_user) }
+
+          specify { expect(response).to redirect_to(root_path) }
         end
       end
     end
