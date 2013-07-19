@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :checked_signed_in, only: [:edit, :update, :destroy]
+  before_filter :check_signed_in, only: [:edit, :update, :destroy]
   before_filter :check_right_user, only: [:edit, :update]
   before_filter :check_admin, only: [:destroy]
 
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def checked_signed_in
+  def check_signed_in
     unless signed_in?
       remember_return_location
       redirect_to signin_path, notice: "Sign in before completing this action."
