@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :taught_courses, class_name: "Course", foreign_key: "teacher_id"
+  has_and_belongs_to_many :enrolled_courses, class_name: "Course"
+
   has_secure_password
 
   before_save { email.downcase! }
