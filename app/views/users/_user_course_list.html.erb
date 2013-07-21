@@ -1,0 +1,20 @@
+<div class="span6">
+  <h3>Enrolled courses</h3>
+  <ul class="course-list">
+    <% @user.enrolled_courses.each do |course| %>
+      <li>
+        <%= link_to course.name, course %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div class="span6">
+  <h3>Taught courses</h3>
+  <ul class="course-list">
+    <% @user.taught_courses.each do |course| %>
+      <li>
+        <%= link_to course.name, course %>
+      </li>
+    <% end %>
+  </ul>
+</div>
