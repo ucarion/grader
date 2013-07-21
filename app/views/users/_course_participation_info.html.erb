@@ -1,13 +1,17 @@
 <div class="participation-info">
   Taking
+
   <span class="participation-info-value">
     <%= @user.enrolled_courses.count %>
   </span>
-  courses &mdash; Teaching
+
+  <%= "course".pluralize(@user.enrolled_courses.count) %> &mdash; Teaching
+
   <span class="participation-info-value">
     <%= @user.taught_courses.count %>
   </span>
-  courses
+  
+  <%= "course".pluralize(@user.taught_courses.count) %>
 
   <hr>
 </div>
