@@ -18,6 +18,8 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin?) }
+  it { should respond_to(:taught_courses) }
+  it { should respond_to(:enrolled_courses) }
 
   # default definition of user is valid
   it { should be_valid }
@@ -125,5 +127,26 @@ describe User do
     end
 
     it { should be_admin }
+  end
+
+  describe "with taught courses" do
+    # order does matter here; save the user or else you can't create
+    # a class with it
+    before { @user.save }
+
+    let!(:course) { FactoryGirl.create(:course, teacher: @user) }
+
+    its(:taught_courses) { should_not be_empty }
+    its(:taught_courses) { should include(course) }
+  end
+
+  describe "enrolled in classes" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let!(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
+    before { course.students << @user }
+
+    its(:enrolled_courses) { should_not be_empty }
+    its(:enrolled_courses) { should include(course) }
   end
 end
