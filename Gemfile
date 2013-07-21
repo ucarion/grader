@@ -47,5 +47,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
 
+  # for capybara's save_and_open_page
+  gem 'launchy'
+
   gem 'factory_girl_rails'
 end
