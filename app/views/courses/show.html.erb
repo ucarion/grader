@@ -1,0 +1,5 @@
+<%= provide(:title, @course.name) %>
+<ul class="breadcrumb">
+  <li><%= link_to @course.teacher.name, @course.teacher %> <span class="divider">/</span></li>
+  <li class="active"><%= @course.name %></li>
+</ul>
