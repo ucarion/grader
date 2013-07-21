@@ -29,6 +29,7 @@ describe "Static pages" do
 
     describe "when not logged in" do
       it { should have_link "Sign in", href: signin_path }
+      it { should have_link "Sign up", href: signup_path }
     end
 
     describe "when logged in" do
