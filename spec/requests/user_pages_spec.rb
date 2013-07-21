@@ -49,7 +49,7 @@ describe "User Pages" do
 
     it { should have_content(user.name) }
     it { should have_content(user.email) }
-    it { should have_title(user.name)}
+    it { should have_title(user.name) }
   end
 
   describe "edit" do
