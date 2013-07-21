@@ -129,24 +129,36 @@ describe User do
     it { should be_admin }
   end
 
-  describe "with taught courses" do
-    # order does matter here; save the user or else you can't create
-    # a class with it
-    before { @user.save }
+  describe "course associations" do
+    describe "with taught courses" do
+      # order does matter here; save the user or else you can't create
+      # a class with it
+      before { @user.save }
 
-    let!(:course) { FactoryGirl.create(:course, teacher: @user) }
+      let!(:course) { FactoryGirl.create(:course, teacher: @user) }
 
-    its(:taught_courses) { should_not be_empty }
-    its(:taught_courses) { should include(course) }
-  end
+      its(:taught_courses) { should_not be_empty }
+      its(:taught_courses) { should include(course) }
 
-  describe "enrolled in classes" do
-    let(:teacher) { FactoryGirl.create(:teacher) }
-    let!(:course) { FactoryGirl.create(:course, teacher: teacher) }
+      it "should destroy associated courses upon deletion" do
+        courses = @user.taught_courses.to_a
 
-    before { course.students << @user }
+        @user.destroy
 
-    its(:enrolled_courses) { should_not be_empty }
-    its(:enrolled_courses) { should include(course) }
+        courses.each do |course|
+          expect { Course.find(course) }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
+    describe "enrolled in classes" do
+      let(:teacher) { FactoryGirl.create(:teacher) }
+      let!(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
+      before { course.students << @user }
+
+      its(:enrolled_courses) { should_not be_empty }
+      its(:enrolled_courses) { should include(course) }
+    end
   end
 end
