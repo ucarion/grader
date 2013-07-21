@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :user do
+  factory :user, aliases: [:teacher, :student] do
     name Faker::Name.name
     sequence(:email) { |i| "user#{i}@example.com" }
     password "password"
