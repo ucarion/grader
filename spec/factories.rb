@@ -9,4 +9,14 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :course do
+    sequence(:name) { |i| "Course #{i}" }
+
+    students do
+      rand(2..10).times.map do
+        FactoryGirl.create(:student)
+      end
+    end
+  end
 end
