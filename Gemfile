@@ -40,6 +40,9 @@ gem 'faker'
 # Data pagination
 gem 'bootstrap-will_paginate'
 
+# Font awesome
+gem "font-awesome-rails"
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
