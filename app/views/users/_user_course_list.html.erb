@@ -4,6 +4,7 @@
     <% @user.enrolled_courses.each do |course| %>
       <li>
         <%= link_to course.name, course %>
+        <small>(<%= pluralize(course.students.count, "student") %>)</small>
       </li>
     <% end %>
   </ul>
@@ -14,6 +15,7 @@
     <% @user.taught_courses.each do |course| %>
       <li>
         <%= link_to course.name, course %>
+        <small>(<%= pluralize(course.students.count, "student") %>)</small>
       </li>
     <% end %>
   </ul>
