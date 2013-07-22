@@ -36,4 +36,20 @@ module SessionsHelper
     redirect_to(session[:return_loc] || backup)
     session.delete(:return_loc)
   end
+
+  def check_signed_in
+    unless signed_in?
+      remember_return_location
+      redirect_to signin_path, notice: "Sign in before completing this action."
+    end
+  end
+
+  def check_right_user
+    @user = User.find(params[:id])
+    redirect_to root_path, notice: "You cannot edit others' information." unless current_user?(@user)
+  end
+
+  def check_admin
+    redirect_to(root_path) unless current_user.admin?
+  end
 end
