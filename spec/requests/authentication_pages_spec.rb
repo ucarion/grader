@@ -59,6 +59,12 @@ describe "Authentication Pages" do
         end
       end
 
+      describe "when trying to create a course" do
+        before { visit new_course_path }
+
+        it { should have_title('Sign in') }
+      end
+
       describe "as the correct user" do
         before { sign_in(user) }
 
