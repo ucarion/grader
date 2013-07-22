@@ -10,6 +10,11 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
+/* forms */
+input, textarea {
+  width: 100%;
+}
+
 footer {
   hr {
     // http://stackoverflow.com/a/4151954/1462197
