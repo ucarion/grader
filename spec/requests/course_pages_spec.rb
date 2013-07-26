@@ -71,6 +71,15 @@ describe "CoursePages" do
           end
         end
       end
+
+      describe "when logged in as the teacher of a course" do
+        before do
+          sign_in teacher
+          visit course_path(course)
+        end
+
+        it { should_not have_selector('.btn-enroll') }
+      end
     end
   end
 end
