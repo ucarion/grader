@@ -65,6 +65,12 @@ describe "Authentication Pages" do
         it { should have_title('Sign in') }
       end
 
+      describe "when viewing a course" do
+        let(:course) { FactoryGirl.create(:course, teacher: :user) }
+
+        it { should_not have_selector('.btn-enroll' }
+      end
+
       describe "as the correct user" do
         before { sign_in(user) }
 

@@ -37,4 +37,40 @@ describe "CoursePages" do
       end
     end
   end
+
+  describe "course description page" do
+    let(:teacher) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class") }
+    
+    describe "joining a class" do
+      describe "when not logged in" do
+        before { visit course_path(course) }
+
+        it { should_not have_selector('.btn-enroll') }
+      end
+
+      describe "when logged in" do
+        before do
+          sign_in user
+          visit course_path(course)
+        end
+
+        it { should have_selector('.btn-enroll') }
+
+        describe "clicking on the enroll button" do
+          before { click_button "Enroll in this Course" }
+
+          it "should make the current user enroll into the course" do
+            expect(user.enrolled_courses).to include(course)
+            expect(course.students).to include(user)
+          end
+
+          describe "after having already enrolled" do
+            it { should_not have_selector('.btn-enroll') }
+          end
+        end
+      end
+    end
+  end
 end
