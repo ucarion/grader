@@ -59,7 +59,7 @@ describe "CoursePages" do
         it { should have_selector('.btn-enroll') }
 
         describe "clicking on the enroll button" do
-          before { click_button "Enroll in this Course" }
+          before { click_link 'Enroll in this Course' }
 
           it "should make the current user enroll into the course" do
             expect(user.enrolled_courses).to include(course)
