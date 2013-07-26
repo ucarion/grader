@@ -66,9 +66,17 @@ describe "Authentication Pages" do
       end
 
       describe "when viewing a course" do
-        let(:course) { FactoryGirl.create(:course, teacher: :user) }
+        let!(:course) { FactoryGirl.create(:course, teacher: user) }
 
         it { should_not have_selector('.btn-enroll') }
+      end
+
+      describe "when editing a course" do
+        let!(:course) { FactoryGirl.create(:course, teacher: user) }
+
+        before { visit edit_course_path(course) }
+
+        it { should have_title('Sign in') }        
       end
 
       describe "as the correct user" do
@@ -84,6 +92,14 @@ describe "Authentication Pages" do
           before { visit user_path(other_user) }
 
           it { should have_title(other_user.name) }
+        end
+
+        describe "editing another person's course" do
+          let!(:course) { FactoryGirl.create(:course, teacher: other_user) }
+          
+          before { visit edit_course_path(course) }
+
+          it { should_not have_title('Edit Course') }
         end
       end
 

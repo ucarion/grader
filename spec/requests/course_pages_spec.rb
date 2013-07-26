@@ -105,4 +105,30 @@ describe "CoursePages" do
       end
     end
   end
+
+  describe "edit course page" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course) { teacher.taught_courses.create!(name: "Foo", description: "Bar") }
+    let(:submit) { "Submit changes" }
+
+    before do
+      sign_in teacher
+      visit edit_course_path(course)
+    end
+
+    describe "submitted with bad information" do
+      before do
+        fill_in "Name", with: ""
+        click_button submit
+      end
+
+      it { should have_content('error') }
+    end
+
+    describe "submitted with valid information" do
+      before { click_button submit }
+
+      it { should have_selector('.alert-success') }
+    end
+  end
 end
