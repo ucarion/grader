@@ -4,7 +4,8 @@
 
 <% if signed_in? && !@course.students.exists?(current_user) && @course.teacher != current_user %>
   <div class="pagination-centered">
-    <%= button_to 'Enroll in this Course', enroll_course_path(@course), method: :post, class: 'btn btn-enroll' %>
+    <%= link_to '<i class="icon-plus"></i> Enroll in this Course'.html_safe, enroll_course_path(@course),
+          method: :post, class: 'btn btn-success btn-enroll' %>
   </div>
 <% end %>
 
