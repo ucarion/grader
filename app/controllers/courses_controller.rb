@@ -19,6 +19,14 @@ class CoursesController < ApplicationController
     end
   end
 
+  def enroll
+    @course = Course.find(params[:id])
+    
+    @course.students << current_user
+    flash[:success] = "You have been enrolled into the course #{@course.name}"
+    redirect_to @course
+  end
+
   private
 
   def course_params
