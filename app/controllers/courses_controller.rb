@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
-  before_filter :check_signed_in, only: [:new, :create]
+  before_filter :check_signed_in, only: [:new, :create, :update, :edit]
+  before_filter :check_editing_own_course, only: [:update, :edit]
 
   def show
     @course = Course.find(params[:id])
@@ -13,6 +14,21 @@ class CoursesController < ApplicationController
     @course = current_user.taught_courses.build(course_params)
     if @course.save
       flash[:success] = "Course #{@course.name} created successfully!"
+      redirect_to @course
+    else
+      render 'new'
+    end
+  end
+
+  def edit
+    @course = Course.find(params[:id])
+  end
+
+  def update
+    @course = Course.find(params[:id])
+
+    if @course.update_attributes(course_params)
+      flash[:success] = "Course #{@course.name} was updated successfully."
       redirect_to @course
     else
       render 'new'

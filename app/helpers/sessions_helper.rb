@@ -52,4 +52,9 @@ module SessionsHelper
   def check_admin
     redirect_to(root_path) unless current_user.admin?
   end
+
+  def check_editing_own_course
+    @course = Course.find(params[:id])
+    redirect_to root_path, notice: "You cannot edit others' courses." unless current_user?(@course.teacher)
+  end
 end
