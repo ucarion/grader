@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_filter :check_signed_in, only: [:new, :create]
+
   def show
     @course = Course.find(params[:id])
   end
