@@ -20,4 +20,9 @@ FactoryGirl.define do
       end
     end
   end
+
+  factory :assignment do
+    sequence(:name) { |i| "Assignment #{i}" }
+    description Faker::Lorem.paragraph(3)
+  end
 end

@@ -13,6 +13,7 @@ describe Course do
   it { should respond_to(:description) }
   it { should respond_to(:teacher) }
   it { should respond_to(:students) }
+  it { should respond_to(:assignments) }
 
   its(:teacher) { should eq teacher }
 
