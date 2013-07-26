@@ -42,7 +42,30 @@ describe "CoursePages" do
     let(:teacher) { FactoryGirl.create(:user) }
     let(:user) { FactoryGirl.create(:user) }
     let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class") }
-    
+
+    describe "when there are no enrolled students" do
+      before { visit course_path(course) }
+
+      it { should have_content("There are no students enrolled in this class.") }
+      it { should_not have_selector('.list-users-table') }
+    end
+
+    describe "when there are enrolled students" do
+      before do
+        10.times do
+          course.students << FactoryGirl.create(:student)
+        end
+
+        visit course_path(course)
+      end
+
+      it "should have all the students listed" do
+        course.students.each do |student|
+          expect(page).to have_selector('td', text: student.name)
+        end
+      end
+    end
+
     describe "joining a class" do
       describe "when not logged in" do
         before { visit course_path(course) }
