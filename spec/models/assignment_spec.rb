@@ -15,4 +15,24 @@ describe Assignment do
   it { should respond_to(:course) }
 
   its(:course) { should eq course }
+
+  it { should be_valid }
+
+  describe "with no name" do
+    before { @assignment.name = "" }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no description" do
+    before { @assignment.name = "" }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no course_id" do
+    before { @assignment.course_id = nil }
+
+    it { should_not be_valid }
+  end
 end
