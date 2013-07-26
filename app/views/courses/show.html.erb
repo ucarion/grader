@@ -1,31 +1,24 @@
 <%= provide(:title, @course.name) %>
 <h1><%= @course.name %></h1>
 <h3>Taught by <%= link_to @course.teacher.name, @course.teacher %></h3>
-
-<% if signed_in? && !@course.students.exists?(current_user) && @course.teacher != current_user %>
-  <div class="pagination-centered">
-    <%= link_to '<i class="icon-plus"></i> Enroll in this Course'.html_safe, enroll_course_path(@course),
-          method: :post, class: 'btn btn-success btn-enroll' %>
-  </div>
-<% end %>
-
+<%= render 'enroll_button' %>
 <div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">Assignments</a></li>
     <li><a href="#tab2" data-toggle="tab">Students</a></li>
+    <li><a href="#tab3" data-toggle="tab">About</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
       <p><i>Nothing here yet...</i></p>
     </div>
+
     <div class="tab-pane" id="tab2">
-      <table class="table table-striped table-bordered list-users-table">
-        <tr>
-          <th></th>
-          <th>Name</th>
-        </tr>
-        <%= render @course.students %>
-      </table>
+      <%= render 'course_students_table' %>
+    </div>
+
+    <div class="tab-pane" id="tab3">
+      <%= @course.description %>
     </div>
   </div>
 </div>
