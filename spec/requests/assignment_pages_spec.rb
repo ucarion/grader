@@ -3,6 +3,18 @@ require 'spec_helper'
 describe "AssignmentPages" do
   subject { page }
 
+  describe "assignment show page" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+    let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+
+    before { visit assignment_path(assignment) }
+
+    it { should have_content(assignment.name) }
+    it { should have_content(assignment.description) }
+    it { should have_content(course.name) }
+  end
+
   describe "assignment creation page" do
     let(:teacher) { FactoryGirl.create(:teacher) }
     let(:course) { FactoryGirl.create(:course, teacher: teacher) }
