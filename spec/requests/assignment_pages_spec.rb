@@ -3,9 +3,10 @@ require 'spec_helper'
 describe "AssignmentPages" do
   subject { page }
 
+  let(:teacher) { FactoryGirl.create(:teacher) }
+  let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
   describe "assignment show page" do
-    let(:teacher) { FactoryGirl.create(:teacher) }
-    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
     let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
     before { visit assignment_path(assignment) }
@@ -16,9 +17,6 @@ describe "AssignmentPages" do
   end
 
   describe "assignment creation page" do
-    let(:teacher) { FactoryGirl.create(:teacher) }
-    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
-
     before { visit new_course_assignment_path(course) }
 
     it { should have_title("Create an assignment") }
@@ -47,6 +45,30 @@ describe "AssignmentPages" do
         it { should have_title course.name }
         it { should have_selector('.alert.alert-success', text: "Assignment") }
       end
+    end
+  end
+
+  describe "assignment editing page" do
+    let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+    let(:submit) { "Submit Changes" }
+
+    before { visit edit_assignment_path(assignment) }
+
+    it { should have_title('Edit Assignment') }
+
+    describe "given bad information" do
+      before do
+        fill_in "Name", with: ""
+        click_button submit
+      end
+
+      it { should have_selector('.alert.alert-error') }
+    end
+
+    describe "given good information" do
+      before { click_button submit }
+
+      it { should have_selector('.alert.alert-success') }
     end
   end
 end
