@@ -1,0 +1,9 @@
+<% if @course.assignments.any? %>
+  <ul class="course-assignment-list">
+    <% @course.assignments.each do |assignment| %>
+      <li><%= assignment.name %> - <%= assignment.description %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <i>There are no assignments for this course.</i>
+<% end %>
