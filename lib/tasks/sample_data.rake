@@ -6,7 +6,7 @@ namespace :db do
       password: "password", password_confirmation: "password", admin: true)
 
     puts "Creating users"
-    100.times do |n|
+    50.times do |n|
       User.create!(name: Faker::Name.name, email: "#{n}@example.com", 
         password: "password", password_confirmation: "password")
     end
@@ -14,7 +14,14 @@ namespace :db do
     puts "Creating courses"
     u = User.first
     10.times do |n|
-      u.taught_courses.create!(name: "Example Course #{n}")
+      u.taught_courses.create!(name: "Course #{n}", description: Faker::Lorem.paragraph(3))
+    end
+
+    puts "Creating assignments for the courses"
+    u.taught_courses.each_with_index do |course|
+      5.times do |n|
+        course.assignments.create!(name: "Assignment #{n}", description: Faker::Lorem.paragraph(3))
+      end
     end
 
     puts "Making people join the courses"
