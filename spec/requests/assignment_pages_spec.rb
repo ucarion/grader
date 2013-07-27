@@ -63,6 +63,7 @@ describe "AssignmentPages" do
       end
 
       it { should have_selector('.alert.alert-error') }
+      it { should have_title('Edit Assignment') }
     end
 
     describe "given good information" do

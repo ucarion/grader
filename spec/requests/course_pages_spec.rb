@@ -123,6 +123,7 @@ describe "CoursePages" do
       end
 
       it { should have_content('error') }
+      it { should have_title('Edit Course') }
     end
 
     describe "submitted with valid information" do

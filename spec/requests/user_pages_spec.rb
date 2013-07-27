@@ -68,6 +68,7 @@ describe "User Pages" do
       before { click_button "Save changes" }
 
       it { should have_content('error') }
+      it { should have_title('Edit Account') }
     end
 
     describe "with valid information" do
