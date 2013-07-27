@@ -1,0 +1,18 @@
+<% provide(:title, "Edit Assignment") %>
+<h1>Edit Assignment</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@assignment) do |f| %>
+      <%= render 'shared/assignment_error_messages' %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+
+      <%= f.submit "Submit Changes", class: "btn btn-large" %>
+    <% end %>
+  </div>
+</div>
