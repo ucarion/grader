@@ -1,0 +1,11 @@
+<% if @assignment.errors.any? %>
+  <div class="alert alert-error">
+    Your form contains <%= pluralize(@assignment.errors.count, "error") %>.
+
+    <ul>
+      <% @assignment.errors.full_messages.each do |message| %>
+        <li><%= message.capitalize %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

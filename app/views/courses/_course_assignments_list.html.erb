@@ -1,7 +1,7 @@
 <% if @course.assignments.any? %>
   <ul class="course-assignment-list">
     <% @course.assignments.each do |assignment| %>
-      <li><%= assignment.name %> - <%= assignment.description %></li>
+      <li><%= link_to assignment.name, assignment %> - <%= assignment.description %></li>
     <% end %>
   </ul>
 <% else %>
