@@ -31,7 +31,7 @@ class AssignmentsController < ApplicationController
       flash[:success] = "Assignment #{@assignment.name} updated successfully"
       redirect_to @assignment.course
     else
-      render 'new'
+      render 'edit'
     end
   end
 

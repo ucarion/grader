@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
       flash[:success] = "Course #{@course.name} was updated successfully."
       redirect_to @course
     else
-      render 'new'
+      render 'edit'
     end
   end
 
