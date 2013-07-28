@@ -57,4 +57,9 @@ module SessionsHelper
     @course = Course.find(params[:id])
     redirect_to root_path, notice: "You cannot edit others' courses." unless current_user?(@course.teacher)
   end
+
+  def check_editing_own_assignment
+    @assignment = Assignment.find(params[:id])
+    redirect_to root_path, notice: "You cannot edit others' assignments." unless current_user?(@assignment.course.teacher)
+  end
 end

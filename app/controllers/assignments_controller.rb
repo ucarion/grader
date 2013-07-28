@@ -1,4 +1,7 @@
 class AssignmentsController < ApplicationController
+  before_filter :check_signed_in, only: [:new, :create, :update, :edit]
+  before_filter :check_editing_own_assignment, only: [:update, :edit]
+
   def show
     @assignment = Assignment.find(params[:id])
   end
