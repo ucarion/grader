@@ -79,6 +79,23 @@ describe "Authentication Pages" do
         it { should have_title('Sign in') }        
       end
 
+      describe "when trying to create an assignment" do
+        let(:course) { FactoryGirl.create(:course, teacher: user) }
+
+        before { visit new_course_assignment_path(course) }
+
+        it { should have_title('Sign in') }
+      end
+
+      describe "when editing an assignment" do
+        let(:course) { FactoryGirl.create(:course, teacher: user) }
+        let!(:assignment) { FactoryGirl.create(:assignment, course: course) }
+
+        before { visit edit_assignment_path(assignment) }
+
+        it { should have_title('Sign in') }
+      end
+
       describe "as the correct user" do
         before { sign_in(user) }
 
@@ -100,6 +117,15 @@ describe "Authentication Pages" do
           before { visit edit_course_path(course) }
 
           it { should_not have_title('Edit Course') }
+        end
+
+        describe "editing another person's assignment" do
+          let(:course) { FactoryGirl.create(:course, teacher: other_user) }
+          let!(:assignment) { FactoryGirl.create(:assignment, course: course) }
+
+          before { visit edit_assignment_path(assignment) }
+
+          it { should_not have_title('Edit Assignment') }
         end
       end
 
