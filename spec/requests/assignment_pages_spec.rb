@@ -6,6 +6,8 @@ describe "AssignmentPages" do
   let(:teacher) { FactoryGirl.create(:teacher) }
   let(:course) { FactoryGirl.create(:course, teacher: teacher) }
 
+  before { sign_in teacher }
+
   describe "assignment show page" do
     let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
