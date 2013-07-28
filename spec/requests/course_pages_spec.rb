@@ -103,6 +103,19 @@ describe "CoursePages" do
 
         it { should_not have_selector('.btn-enroll') }
       end
+
+      describe "when logged in as a student enrolled in a course" do
+        let(:student) { FactoryGirl.create(:student) }
+
+        before do
+          course.students << student
+
+          sign_in student
+          visit course_path(course)
+        end
+
+        it { should_not have_selector('.btn-enroll') }
+      end
     end
   end
 

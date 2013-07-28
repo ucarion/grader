@@ -46,6 +46,8 @@ describe "Authentication Pages" do
     describe "for actions requiring signin" do
       let(:user) { FactoryGirl.create(:user) }
       let(:other_user) { FactoryGirl.create(:user, name: "John Doe", email: "john@doe.com") }
+      let(:course) { FactoryGirl.create(:course, teacher: other_user) }
+      let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
       describe "when trying to edit a user" do
         before { visit edit_user_path(user) }
@@ -65,32 +67,19 @@ describe "Authentication Pages" do
         it { should have_title('Sign in') }
       end
 
-      describe "when viewing a course" do
-        let!(:course) { FactoryGirl.create(:course, teacher: user) }
-
-        it { should_not have_selector('.btn-enroll') }
-      end
-
       describe "when editing a course" do
-        let!(:course) { FactoryGirl.create(:course, teacher: user) }
-
         before { visit edit_course_path(course) }
 
-        it { should have_title('Sign in') }        
+        it { should have_title('Sign in') }
       end
 
       describe "when trying to create an assignment" do
-        let(:course) { FactoryGirl.create(:course, teacher: user) }
-
         before { visit new_course_assignment_path(course) }
 
         it { should have_title('Sign in') }
       end
 
       describe "when editing an assignment" do
-        let(:course) { FactoryGirl.create(:course, teacher: user) }
-        let!(:assignment) { FactoryGirl.create(:assignment, course: course) }
-
         before { visit edit_assignment_path(assignment) }
 
         it { should have_title('Sign in') }
@@ -112,17 +101,12 @@ describe "Authentication Pages" do
         end
 
         describe "editing another person's course" do
-          let!(:course) { FactoryGirl.create(:course, teacher: other_user) }
-          
           before { visit edit_course_path(course) }
 
           it { should_not have_title('Edit Course') }
         end
 
         describe "editing another person's assignment" do
-          let(:course) { FactoryGirl.create(:course, teacher: other_user) }
-          let!(:assignment) { FactoryGirl.create(:assignment, course: course) }
-
           before { visit edit_assignment_path(assignment) }
 
           it { should_not have_title('Edit Assignment') }
