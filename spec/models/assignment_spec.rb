@@ -13,6 +13,7 @@ describe Assignment do
   it { should respond_to(:name) }
   it { should respond_to(:description) }
   it { should respond_to(:course) }
+  it { should respond_to(:due_time) }
 
   its(:course) { should eq course }
 
@@ -32,6 +33,12 @@ describe Assignment do
 
   describe "with no course_id" do
     before { @assignment.course_id = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no due_time" do
+    before { @assignment.due_time = nil }
 
     it { should_not be_valid }
   end

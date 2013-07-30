@@ -16,6 +16,7 @@ describe "AssignmentPages" do
     it { should have_content(assignment.name) }
     it { should have_content(assignment.description) }
     it { should have_content(course.name) }
+    it { should have_content(assignment.due_time) }
   end
 
   describe "assignment creation page" do
