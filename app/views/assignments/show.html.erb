@@ -1,4 +1,5 @@
 <% provide(:title, @assignment.name) %>
 <h1><%= @assignment.name %></h1>
 <h3>For course: <%= link_to @assignment.course.name, @assignment.course %></h3>
+<h5><%= @assignment.due_time %></h5>
 <p><%= @assignment.description %></p>
