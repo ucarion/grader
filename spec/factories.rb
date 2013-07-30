@@ -24,5 +24,6 @@ FactoryGirl.define do
   factory :assignment do
     sequence(:name) { |i| "Assignment #{i}" }
     description Faker::Lorem.paragraph(3)
+    due_time Time.now
   end
 end
