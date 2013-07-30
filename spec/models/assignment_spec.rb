@@ -14,6 +14,8 @@ describe Assignment do
   it { should respond_to(:description) }
   it { should respond_to(:course) }
   it { should respond_to(:due_time) }
+  it { should respond_to(:open?) }
+  it { should respond_to(:closed?) }
 
   its(:course) { should eq course }
 
@@ -41,5 +43,19 @@ describe Assignment do
     before { @assignment.due_time = nil }
 
     it { should_not be_valid }
+  end
+
+  describe "whose due time is not yet passed" do
+    before { @assignment.due_time = 1.year.from_now }
+
+    it { should be_open }
+    it { should_not be_closed }
+  end
+
+  describe "whose due time is passed" do
+    before { @assignment.due_time = 1.year.ago }
+
+    it { should_not be_open }
+    it { should be_closed }
   end
 end
