@@ -1,0 +1,2 @@
+<%= content_tag(:div, time_left_message(@assignment),
+  class: "timestatus timestatus-#{@assignment.open? ? "open" : "closed"}") %>
