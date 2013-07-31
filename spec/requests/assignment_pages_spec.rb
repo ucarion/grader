@@ -16,7 +16,26 @@ describe "AssignmentPages" do
     it { should have_content(assignment.name) }
     it { should have_content(assignment.description) }
     it { should have_content(course.name) }
-    it { should have_content(assignment.due_time) }
+
+    describe "time status" do
+      describe "for closed assignments" do
+        before do
+          assignment.update_attributes(due_time: 1.year.ago)
+          visit(current_path) # refresh
+        end
+
+        it { should have_selector('.timestatus.timestatus-closed') }
+      end
+
+      describe "for open assignments" do
+        before do
+          assignment.update_attributes(due_time: 1.year.from_now)
+          visit(current_path) # refresh
+        end
+
+        it { should have_selector('.timestatus.timestatus-open') }
+      end
+    end
   end
 
   describe "assignment creation page" do
@@ -36,6 +55,9 @@ describe "AssignmentPages" do
       before do
         fill_in "Name", with: "Course"
         fill_in "Description", with: "Description goes here ..."
+        select Time.now.strftime("%Y"), from: "assignment_due_time_1i"
+        select Time.now.strftime("%B"), from: "assignment_due_time_2i"
+        select Time.now.strftime("%d"), from: "assignment_due_time_3i"
       end
 
       it "should create a new assignment on click" do
