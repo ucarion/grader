@@ -8,4 +8,8 @@ module AssignmentHelper
       "Closed since #{human_due_time} (#{time_ago_in_words(assignment.due_time)} ago)"
     end
   end
+
+  def format_date(time)
+    time.strftime("%m/%d/%Y")
+  end
 end
