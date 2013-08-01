@@ -1,6 +1,7 @@
 class AssignmentsController < ApplicationController
   before_filter :check_signed_in, only: [:new, :create, :update, :edit]
   before_filter :check_editing_own_assignment, only: [:update, :edit]
+  before_filter :change_due_time_param, only: [:update, :create]
 
   def show
     @assignment = Assignment.find(params[:id])
@@ -12,8 +13,6 @@ class AssignmentsController < ApplicationController
   end
 
   def create
-    change_due_time_param
-
     @course = Course.find(params[:course_id])
     @assignment = @course.assignments.build(assignment_params)
 
@@ -31,8 +30,6 @@ class AssignmentsController < ApplicationController
 
   def update
     @assignment = Assignment.find(params[:id])
-
-    change_due_time_param
 
     if @assignment.update_attributes(assignment_params)
       flash[:success] = "Assignment #{@assignment.name} updated successfully"
