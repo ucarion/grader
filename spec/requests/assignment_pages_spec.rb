@@ -39,11 +39,11 @@ describe "AssignmentPages" do
   end
 
   describe "assignment creation page" do
+    let(:submit) { "Create Assignment" }
+    
     before { visit new_course_assignment_path(course) }
 
-    it { should have_title("Create an assignment") }
-
-    let(:submit) { "Create Assignment" }
+    it { should have_title("Create a new assignment") }
 
     describe "submitted with bad information" do
       it "should not create an assignment on submission" do
@@ -55,9 +55,7 @@ describe "AssignmentPages" do
       before do
         fill_in "Name", with: "Course"
         fill_in "Description", with: "Description goes here ..."
-        select Time.now.strftime("%Y"), from: "assignment_due_time_1i"
-        select Time.now.strftime("%B"), from: "assignment_due_time_2i"
-        select Time.now.strftime("%d"), from: "assignment_due_time_3i"
+        fill_in "Due time", with: 1.year.from_now.strftime("%m/%d/%Y")
       end
 
       it "should create a new assignment on click" do
