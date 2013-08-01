@@ -43,6 +43,9 @@ gem 'bootstrap-will_paginate'
 # Font awesome
 gem "font-awesome-rails"
 
+# For forms that require inputting dates
+gem 'bootstrap-datepicker-rails'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
