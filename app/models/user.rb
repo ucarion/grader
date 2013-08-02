@@ -21,6 +21,11 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
 
+  def assignments
+    courses = "SELECT course_id FROM courses_users WHERE user_id = :user_id"
+    Assignment.where("course_id IN (#{courses})", user_id: id).order("due_time ASC")
+  end
+
   private
 
   def create_remember_token
