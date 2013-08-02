@@ -1,7 +1,27 @@
 <% if @course.assignments.any? %>
   <ul class="course-assignment-list">
     <% @course.assignments.each do |assignment| %>
-      <li><%= link_to assignment.name, assignment %> - <%= assignment.description %></li>
+      <li>
+        <div class="assignment-entry">
+          <div class="assignment-description">
+            <div class="name">
+              <%= link_to assignment.name, assignment %>
+              <% if assignment.open? %>
+                <small>Due in <%= time_ago_in_words(assignment.due_time) %></small>
+              <% end %>
+            </div>
+            <%= assignment.description %>
+          </div>
+
+          <div class="assignment-edit">
+            <% if assignment.course.teacher == current_user %>
+              <%= link_to edit_assignment_path(assignment), class: 'btn btn-primary btn-small' do %>
+                <i class="icon-edit"></i> 
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </li>
     <% end %>
   </ul>
 <% else %>

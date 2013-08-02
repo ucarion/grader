@@ -92,7 +92,7 @@ footer {
   }
 }
 
-.course-list {
+.course-list, .course-assignment-list {
   list-style: none;
   margin-left: 0;
 
@@ -110,5 +110,19 @@ footer {
   small {
     margin-left: 10px;
     color: $grayLight;
+  }
+}
+
+.course-assignment-list {
+  .assignment-description, .assignment-edit {
+    display: inline-block;
+  }
+
+  .assignment-description {
+    width: 90%;
+  }
+
+  .assignment-edit {
+    float: right;
   }
 }
