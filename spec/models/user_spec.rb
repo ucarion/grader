@@ -180,7 +180,7 @@ describe User do
       expect(@user.assignments).to include(assignment1, assignment2)
     end
 
-    it "should return all assignments ordered by due time" do
+    it "should return all assignments ordered by due time, with soon-due ones first" do
       expect(@user.assignments).to eq [assignment2, assignment1]
     end
   end
