@@ -1,5 +1,10 @@
 <% provide(:title, @assignment.name) %>
-<h1><%= @assignment.name %></h1>
+<h1>
+  <%= @assignment.name %>
+  <% if @assignment.course.teacher == current_user %>
+    <small><%= link_to "Edit", edit_assignment_path(@assignment) %></small>
+  <% end %>
+</h1>
 <h3>For course: <%= link_to @assignment.course.name, @assignment.course %></h3>
 <h5><%= render 'time_left' %></h5>
 <p><%= @assignment.description %></p>
