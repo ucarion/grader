@@ -14,7 +14,7 @@
           </div>
 
           <div class="assignment-edit">
-            <% if assignment.course.teacher == current_user %>
+            <% if current_user?(@course.teacher) %>
               <%= link_to edit_assignment_path(assignment), class: 'btn btn-primary btn-small' do %>
                 <i class="icon-edit"></i> 
               <% end %>
