@@ -16,6 +16,7 @@ describe "AssignmentPages" do
     it { should have_content(assignment.name) }
     it { should have_content(assignment.description) }
     it { should have_content(course.name) }
+    it { should have_link('Edit', href: edit_assignment_path(assignment)) }
 
     describe "time status" do
       describe "for closed assignments" do
@@ -35,6 +36,17 @@ describe "AssignmentPages" do
 
         it { should have_selector('.timestatus.timestatus-open') }
       end
+    end
+
+    describe "for non-teacher users" do
+      let!(:user) { FactoryGirl.create(:user) }
+
+      before do
+        sign_in user
+        visit(assignment_path(assignment))
+      end
+
+      it { should_not have_link('Edit', href: edit_assignment_path(assignment)) }
     end
   end
 
