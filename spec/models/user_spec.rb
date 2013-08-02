@@ -20,6 +20,7 @@ describe User do
   it { should respond_to(:admin?) }
   it { should respond_to(:taught_courses) }
   it { should respond_to(:enrolled_courses) }
+  it { should respond_to(:assignments) }
 
   # default definition of user is valid
   it { should be_valid }
@@ -159,6 +160,28 @@ describe User do
 
       its(:enrolled_courses) { should_not be_empty }
       its(:enrolled_courses) { should include(course) }
+    end
+  end
+
+  describe "assignments" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course1) { FactoryGirl.create(:course, teacher: teacher) }
+    let(:course2) { FactoryGirl.create(:course, teacher: teacher) }
+    let!(:assignment1) { FactoryGirl.create(:assignment, course: course1, due_time: 3.days.from_now) }
+    let!(:assignment2) { FactoryGirl.create(:assignment, course: course2, due_time: 2.days.from_now) }
+
+    before do
+      @user.save
+
+      @user.enrolled_courses << course1 << course2
+    end
+
+    it "should contain all assignments" do
+      expect(@user.assignments).to include(assignment1, assignment2)
+    end
+
+    it "should return all assignments ordered by due time" do
+      expect(@user.assignments).to eq [assignment2, assignment1]
     end
   end
 end
