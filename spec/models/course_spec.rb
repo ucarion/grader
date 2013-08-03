@@ -36,4 +36,15 @@ describe Course do
 
     it { should_not be_valid }
   end
+
+  describe "assignment association" do
+    before { @course.save! }
+
+    let!(:assignment1) { FactoryGirl.create(:assignment, course: @course, due_time: 2.days.from_now) }
+    let!(:assignment2) { FactoryGirl.create(:assignment, course: @course, due_time: 1.day.from_now) }
+
+    it "should return soon-to-be-due assignments first" do
+      expect(@course.assignments).to eq [assignment2, assignment1]
+    end
+  end
 end
