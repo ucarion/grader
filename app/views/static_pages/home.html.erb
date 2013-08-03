@@ -1,7 +1,7 @@
 <h1>Grader</h1>
 <% if signed_in? %>
   <ul class="course-assignment-list">
-    <% current_user.assignments.find_all do |assignment| %>
+    <% current_user.assignments(only_open: true).find_all do |assignment| %>
       <li>
         <%= render 'shared/assignment_in_list', assignment: assignment %>
       </li>
