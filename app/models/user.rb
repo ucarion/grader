@@ -23,11 +23,12 @@ class User < ActiveRecord::Base
 
   def assignments(args = {only_open: false})
     courses = "SELECT course_id FROM courses_users WHERE user_id = :user_id"
+    assignments = Assignment.where("course_id IN (#{courses})", user_id: id).order("due_time ASC")
+    
     if args[:only_open]
-      Assignment.where("course_id IN (#{courses}) AND due_time > :current_time", 
-        user_id: id, current_time: Time.now).order("due_time ASC")
+      assignments.select { |assignment| assignment.open? }
     else
-      Assignment.where("course_id IN (#{courses})", user_id: id).order("due_time ASC")
+      assignments
     end
   end
 
