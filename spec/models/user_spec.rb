@@ -168,7 +168,8 @@ describe User do
     let(:course1) { FactoryGirl.create(:course, teacher: teacher) }
     let(:course2) { FactoryGirl.create(:course, teacher: teacher) }
     let!(:assignment1) { FactoryGirl.create(:assignment, course: course1, due_time: 3.days.from_now) }
-    let!(:assignment2) { FactoryGirl.create(:assignment, course: course2, due_time: 2.days.from_now) }
+    let!(:assignment2) { FactoryGirl.create(:assignment, course: course2, due_time: 1.day.from_now) }
+    let!(:assignment3) { FactoryGirl.create(:assignment, course: course2, due_time: 2.days.ago) }
 
     before do
       @user.save
@@ -177,11 +178,11 @@ describe User do
     end
 
     it "should contain all assignments" do
-      expect(@user.assignments).to include(assignment1, assignment2)
+      expect(@user.assignments).to include(assignment1, assignment2, assignment3)
     end
 
     it "should return all assignments ordered by due time, with soon-due ones first" do
-      expect(@user.assignments).to eq [assignment2, assignment1]
+      expect(@user.assignments).to eq [assignment3, assignment2, assignment1]
     end
   end
 end
