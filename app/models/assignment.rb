@@ -1,5 +1,6 @@
 class Assignment < ActiveRecord::Base
   belongs_to :course
+  has_many :submissions
 
   default_scope -> { order('due_time ASC') }
 

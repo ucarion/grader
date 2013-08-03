@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :taught_courses, class_name: "Course", foreign_key: "teacher_id", dependent: :destroy
   has_and_belongs_to_many :enrolled_courses, class_name: "Course"
+  has_many :submissions, foreign_key: "author_id"
 
   has_secure_password
 
