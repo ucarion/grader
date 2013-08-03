@@ -13,6 +13,7 @@ describe Assignment do
   it { should respond_to(:name) }
   it { should respond_to(:description) }
   it { should respond_to(:course) }
+  it { should respond_to(:submissions) }
   it { should respond_to(:due_time) }
   it { should respond_to(:open?) }
   it { should respond_to(:closed?) }
