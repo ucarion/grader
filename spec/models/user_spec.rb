@@ -177,10 +177,6 @@ describe User do
       @user.enrolled_courses << course1 << course2
     end
 
-    it "should contain all assignments" do
-      expect(@user.assignments).to include(assignment1, assignment2, assignment3)
-    end
-
     it "should return all assignments ordered by due time, with soon-due ones first" do
       expect(@user.assignments).to eq [assignment3, assignment2, assignment1]
     end
