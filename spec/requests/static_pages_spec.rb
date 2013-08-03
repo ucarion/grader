@@ -8,6 +8,32 @@ describe "Static pages" do
 
     it { should have_content('Grader') }
     it { should have_title('Grader') }
+
+    describe "when logged in" do
+      let(:teacher) { FactoryGirl.create(:teacher) }
+      let(:student) { FactoryGirl.create(:student) }
+
+      before do
+        2.times do
+          course = FactoryGirl.create(:course, teacher: teacher)
+          course.students << student
+
+          5.times do
+            FactoryGirl.create(:assignment, course: course)
+          end
+        end
+
+        sign_in student
+        visit root_path
+      end
+
+      it "should show the current user's assignments" do
+        student.assignments.find_all do |assignment|
+          expect(page).to have_content(assignment.name)
+          expect(page).to have_content(assignment.description)
+        end
+      end
+    end
   end
 
   describe "Help page" do
