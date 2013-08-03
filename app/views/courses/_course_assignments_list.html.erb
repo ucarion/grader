@@ -2,25 +2,7 @@
   <ul class="course-assignment-list">
     <% @course.assignments.each do |assignment| %>
       <li>
-        <div class="assignment-entry">
-          <div class="assignment-description">
-            <div class="name">
-              <%= link_to assignment.name, assignment %>
-              <% if assignment.open? %>
-                <small>Due in <%= time_ago_in_words(assignment.due_time) %></small>
-              <% end %>
-            </div>
-            <%= assignment.description %>
-          </div>
-
-          <div class="assignment-edit">
-            <% if current_user?(@course.teacher) %>
-              <%= link_to edit_assignment_path(assignment), class: 'btn btn-primary btn-small' do %>
-                <i class="icon-edit"></i> 
-              <% end %>
-            <% end %>
-          </div>
-        </div>
+        <%= render 'shared/assignment_in_list', assignment: assignment %>
       </li>
     <% end %>
   </ul>
