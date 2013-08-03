@@ -12,4 +12,18 @@ describe Submission do
 
   it { should respond_to(:author) }
   it { should respond_to(:assignment) }
+
+  it { should be_valid }
+
+  describe "with no author" do
+    before { @submission.author = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no assignment" do
+    before { @submission.assignment = nil }
+
+    it { should_not be_valid }
+  end
 end
