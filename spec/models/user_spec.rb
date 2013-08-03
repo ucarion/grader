@@ -180,5 +180,9 @@ describe User do
     it "should return all assignments ordered by due time, with soon-due ones first" do
       expect(@user.assignments).to eq [assignment3, assignment2, assignment1]
     end
+
+    it "should only due assignments that are still open if we specify only_open: true" do
+      expect(@user.assignments(only_open: true)).to eq [assignment2, assignment1]
+    end
   end
 end
