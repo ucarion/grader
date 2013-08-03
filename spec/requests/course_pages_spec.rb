@@ -43,6 +43,43 @@ describe "CoursePages" do
     let(:user) { FactoryGirl.create(:user) }
     let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class") }
 
+    describe "when there are no assignments for that course" do
+      before { visit course_path(course) }
+
+      it { should have_content("There are no assignments for this course.") }
+    end
+
+    describe "when there are assignments for that course" do
+      before do
+        10.times do
+          FactoryGirl.create(:assignment, course: course)
+        end
+
+        visit course_path(course)
+      end
+
+      it "should display all assignments" do
+        course.assignments.find_all do |assignment|
+          expect(page).to have_content(assignment.name)
+          expect(page).to have_content(assignment.description)
+        end
+      end
+
+      describe "and logged in as the teacher" do
+        before do
+          sign_in(teacher)
+
+          visit course_path(course)
+        end
+
+        it "should offer edit buttons for each assignment" do
+          course.assignments.find_all do |assignment|
+            expect(page).to have_link("", href: edit_assignment_path(assignment))
+          end
+        end
+      end
+    end
+
     describe "when there are no enrolled students" do
       before { visit course_path(course) }
 
