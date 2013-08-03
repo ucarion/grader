@@ -27,10 +27,13 @@ describe "Static pages" do
         visit root_path
       end
 
-      it "should show the current user's assignments" do
+      it "should show only the current user's assignments that are still open" do
         student.assignments.find_all do |assignment|
-          expect(page).to have_content(assignment.name)
-          expect(page).to have_content(assignment.description)
+          if assignment.open?
+            expect(page).to have_link("", href: assignment_path(assignment))
+          else
+            expect(page).not_to have_link("", href: assignment_path(assignment))
+          end
         end
       end
     end
