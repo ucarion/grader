@@ -20,7 +20,8 @@ namespace :db do
     puts "Creating assignments for the courses"
     u.taught_courses.each_with_index do |course|
       5.times do |n|
-        course.assignments.create!(name: "Assignment #{n}", description: Faker::Lorem.paragraph(3), due_time: Time.now)
+        course.assignments.create!(name: "Assignment #{n}", 
+          description: Faker::Lorem.paragraph(3), due_time: rand(-3..3).days.from_now)
       end
     end
 
