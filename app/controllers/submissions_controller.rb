@@ -1,4 +1,5 @@
 class SubmissionsController < ApplicationController
+  before_filter :check_assignment_still_open, only: [:new, :create]
   def show
     @submission = Submission.find(params[:id])
   end
@@ -24,5 +25,10 @@ class SubmissionsController < ApplicationController
 
   def submission_params
     params.require(:submission).permit(:source_code, :author_id)
+  end
+
+  def check_assignment_still_open
+    assignment = Assignment.find(params[:assignment_id])
+    redirect_to root_path, notice: "This assignment is now closed." unless assignment.open?
   end
 end
