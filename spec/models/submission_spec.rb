@@ -6,7 +6,10 @@ describe Submission do
   let(:course) { FactoryGirl.create(:course, teacher: teacher) }
   let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
-  before { @submission = student.submissions.create!(assignment_id: assignment.id) }
+  before do
+    @submission = student.submissions.create!(assignment_id: assignment.id, 
+      source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
+  end
 
   subject { @submission }
 
