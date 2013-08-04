@@ -1,3 +1,4 @@
 <h1>Submission</h1>
 <h2>By <%= @submission.author.name %></h2>
 <h3>For assignment <%= @submission.assignment.name %></h3>
+<%= content_tag(:pre, File.read(@submission.source_code.path)) %>
