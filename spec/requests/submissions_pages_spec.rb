@@ -57,5 +57,15 @@ describe "SubmissionsPages" do
 
       it { should have_selector('.alert.alert-error') }
     end
+
+    describe "for an assignment that is closed" do
+      before do
+        assignment.update_attributes(due_time: 1.day.ago)
+
+        visit new_assignment_submission_path(assignment)
+      end
+
+      it { should have_selector('.alert', text: "closed") }
+    end
   end
 end
