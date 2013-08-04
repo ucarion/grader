@@ -12,8 +12,12 @@ describe Submission do
 
   it { should respond_to(:author) }
   it { should respond_to(:assignment) }
+  it { should respond_to(:source_code) }
 
   it { should be_valid }
+
+  it { should have_attached_file(:source_code) }
+  it { should validate_attachment_presence(:source_code) }
 
   describe "with no author" do
     before { @submission.author = nil }
