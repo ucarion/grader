@@ -46,6 +46,9 @@ gem "font-awesome-rails"
 # For forms that require inputting dates
 gem 'bootstrap-datepicker-rails'
 
+# For dealing with file attachments for submissions
+gem "paperclip", "~> 3.0"
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
