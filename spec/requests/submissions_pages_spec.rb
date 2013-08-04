@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "SubmissionsPages" do
   subject { page }
 
-  describe "show page" do
-    let(:teacher) { FactoryGirl.create(:teacher) }
-    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
-    let(:assignment) { FactoryGirl.create(:assignment, course: course) }
-    let(:student) { FactoryGirl.create(:student) }
+  let(:teacher) { FactoryGirl.create(:teacher) }
+  let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+  let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+  let(:student) { FactoryGirl.create(:student) }
 
+  describe "show page" do
     let(:submission) do
       student.submissions.create!(assignment: assignment,
         source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
@@ -22,6 +22,40 @@ describe "SubmissionsPages" do
     it "should show the submission's source code" do
       source = File.read(submission.source_code.path)
       expect(page).to have_content(source)
+    end
+  end
+
+  describe "creation page" do
+    let(:submit) { "Create Submission" }
+
+    before do
+      assignment.save!
+      course.students << student
+      sign_in student
+
+      visit new_assignment_submission_path(assignment)
+    end
+
+    it { should have_title("Create a new Submission") }
+
+    describe "submitted with good information" do
+      before { attach_file "Source code", Rails.root + 'spec/example_files/valid.rb' }
+
+      it "should create a new submission on submit" do
+        expect { click_button submit }.to change(Submission, :count).by(1)
+      end
+
+      describe "after submitting" do
+        before { click_button submit }
+
+        it { should have_selector('.alert.alert-success', text: "submission") }
+      end
+    end
+
+    describe "submitted with bad information" do
+      before { click_button submit }
+
+      it { should have_selector('.alert.alert-error') }
     end
   end
 end
