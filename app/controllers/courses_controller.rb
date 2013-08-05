@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_filter :check_signed_in, only: [:new, :create, :update, :edit]
-  before_filter :check_editing_own_course, only: [:update, :edit]
+  before_filter :check_editing_own_course, only: [:update, :edit, :destroy]
 
   def show
     @course = Course.find(params[:id])
@@ -33,6 +33,12 @@ class CoursesController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    course = Course.find(params[:id]).destroy
+    flash[:success] = "Course #{course.name} was destroyed successfully."
+    redirect_to root_path
   end
 
   def enroll
