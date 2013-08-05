@@ -46,5 +46,15 @@ describe Course do
     it "should return soon-to-be-due assignments first" do
       expect(@course.assignments).to eq [assignment2, assignment1]
     end
+
+    it "should destroy dependent assignments on deletion" do
+      assignments = @course.assignments.to_a
+
+      @course.destroy
+
+      assignments.each do |assignment|
+        expect { Assignment.find(assignment) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end
