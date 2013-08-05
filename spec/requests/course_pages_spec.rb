@@ -154,6 +154,34 @@ describe "CoursePages" do
         it { should_not have_selector('.btn-enroll') }
       end
     end
+
+    describe "when deleting a course" do
+      let(:delete_button) { "Delete Course" }
+
+      describe "when not the teacher of the course" do
+        before do
+          sign_in user
+
+          visit course_path(course)
+        end
+
+        it { should_not have_link delete_button }
+      end
+
+      describe "when the teacher of the course" do
+        before do
+          sign_in teacher
+
+          visit course_path(course)
+        end
+
+        it { should have_link delete_button }
+
+        it "should delete the course when clicking the delete button" do
+          expect { click_link delete_button }.to change(Course, :count).by(-1)
+        end
+      end
+    end
   end
 
   describe "edit course page" do
