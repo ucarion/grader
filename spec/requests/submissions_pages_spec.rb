@@ -67,5 +67,27 @@ describe "SubmissionsPages" do
 
       it { should have_selector('.alert', text: "closed") }
     end
+
+    describe "visited while not signed in" do
+      before do
+        sign_out
+
+        visit new_assignment_submission_path(assignment)
+      end
+
+      it { should have_title("Sign in") }
+    end
+
+    describe "visited by a user who is not enrolled in the corresponding course" do
+      let(:other_user) { FactoryGirl.create(:user) }
+
+      before do
+        sign_in other_user
+
+        visit new_assignment_submission_path(assignment)
+      end
+
+      it { should have_selector('.alert', text: "cannot post submissions for this course") }
+    end
   end
 end
