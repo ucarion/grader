@@ -26,4 +26,8 @@ FactoryGirl.define do
     description Faker::Lorem.paragraph(3)
     due_time 1.day.from_now
   end
+
+  factory :submission do
+    source_code File.new(Rails.root + 'spec/example_files/valid.rb')
+  end
 end
