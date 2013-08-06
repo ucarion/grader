@@ -59,4 +59,28 @@ describe Assignment do
     it { should_not be_open }
     it { should be_closed }
   end
+
+  describe "submission association" do
+    let(:student) { FactoryGirl.create(:student) }
+
+    before do
+      @assignment.save!
+
+      course.students << student
+
+      2.times do
+        FactoryGirl.create(:submission, assignment: @assignment, author: student)
+      end
+    end
+
+    it "should destroy dependent submissions on deletion" do
+      submissions = @assignment.submissions.to_a
+
+      @assignment.destroy
+
+      submissions.each do |submission|
+        expect { Submission.find(submission) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
