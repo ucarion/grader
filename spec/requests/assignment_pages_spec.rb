@@ -38,6 +38,8 @@ describe "AssignmentPages" do
       end
     end
 
+    let(:delete_button) { "Delete" }
+
     describe "for non-teacher users" do
       let!(:user) { FactoryGirl.create(:user) }
 
@@ -47,6 +49,20 @@ describe "AssignmentPages" do
       end
 
       it { should_not have_link('Edit', href: edit_assignment_path(assignment)) }
+      it { should_not have_link(delete_button) }
+    end
+
+    describe "for teacher users" do
+      before do
+        sign_in teacher
+        visit assignment_path(assignment)
+      end
+
+      it { should have_link(delete_button) }
+
+      it "should delete the course upon clicking the delete button" do
+        expect { click_link delete_button }.to change(Assignment, :count).by(-1)
+      end
     end
   end
 
