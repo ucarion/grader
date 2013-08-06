@@ -2,7 +2,9 @@
 <h1>
   <%= @assignment.name %>
   <% if @assignment.course.teacher == current_user %>
-    <small><%= link_to "Edit", edit_assignment_path(@assignment) %></small>
+    <small><%= link_to "Edit", edit_assignment_path(@assignment) %>
+      &mdash;
+    <%= link_to "Delete", @assignment, method: :delete %></small>
   <% end %>
 </h1>
 <h3>For course: <%= link_to @assignment.course.name, @assignment.course %></h3>

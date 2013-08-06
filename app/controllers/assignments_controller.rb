@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
   before_filter :check_signed_in, only: [:new, :create, :update, :edit]
-  before_filter :check_editing_own_assignment, only: [:update, :edit]
+  before_filter :check_editing_own_assignment, only: [:update, :edit, :destroy]
   before_filter :change_due_time_param, only: [:update, :create]
 
   def show
@@ -37,6 +37,12 @@ class AssignmentsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    assignment = Assignment.find(params[:id]).destroy
+    flash[:success] = "Assignment #{assignment.name} was destroyed successfully."
+    redirect_to assignment.course
   end
 
   private
