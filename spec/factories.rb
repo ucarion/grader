@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user, aliases: [:teacher, :student] do
-    name Faker::Name.name
+    name { Faker::Name.name }
     sequence(:email) { |i| "user#{i}@example.com" }
     password "password"
     password_confirmation "password"
@@ -12,7 +12,7 @@ FactoryGirl.define do
 
   factory :course do
     sequence(:name) { |i| "Course #{i}" }
-    description Faker::Lorem.paragraph(10)
+    description { Faker::Lorem.paragraph(10) }
 
     students do
       rand(2..10).times.map do
@@ -23,7 +23,7 @@ FactoryGirl.define do
 
   factory :assignment do
     sequence(:name) { |i| "Assignment #{i}" }
-    description Faker::Lorem.paragraph(3)
+    description { Faker::Lorem.paragraph(3) }
     due_time 1.day.from_now
   end
 
