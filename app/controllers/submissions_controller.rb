@@ -24,6 +24,10 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def index
+    @assignment = Assignment.find(params[:assignment_id])
+  end
+
   private
 
   def submission_params

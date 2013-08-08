@@ -1,0 +1,8 @@
+<% provide(:title, "Submissions for #{@assignment.name}") %>
+
+<h1>Submissions for <%= @assignment.name %></h1>
+<ul>
+  <% @assignment.submissions.each do |submission| %>
+    <li><%= link_to submission.author.name, submission %></li>
+  <% end %>
+</ul>
