@@ -18,6 +18,9 @@ namespace :db do
     end
 
     puts "Creating assignments for the courses"
+    Course.first.assignments.create!(name: "Example Assignment", 
+      description: Faker::Lorem.paragraph(3), due_time: 1.day.from_now)
+
     u.taught_courses.each_with_index do |course|
       5.times do |n|
         course.assignments.create!(name: "Assignment #{n}", 
@@ -30,6 +33,12 @@ namespace :db do
       u.taught_courses.each do |course|
         course.students << user
       end
+    end
+
+    puts "Having each student submit to the first assignment"
+    a = Assignment.first
+    User.all.each do |user|
+      a.submissions.create!(author: user, source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
     end
   end
 end
