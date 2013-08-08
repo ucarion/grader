@@ -90,4 +90,31 @@ describe "SubmissionsPages" do
       it { should have_selector('.alert', text: "cannot post submissions for this course") }
     end
   end
+
+  describe "assignment submissions page" do
+    let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+
+    before do
+      5.times do
+        student = FactoryGirl.create(:student)
+        course.students << student
+        FactoryGirl.create(:submission, assignment: assignment, author: student)
+      end
+    end
+
+    describe "when visisted by a teacher" do
+      before do
+        sign_in teacher
+        visit assignment_submissions_path(assignment)
+      end
+
+      it { should have_title("Submissions for #{assignment.name}") }
+
+      it "should list each of the assignment's submissions' authors" do
+        assignment.submissions.each do |submission|
+          expect(page).to have_content(submission.author.name)
+        end
+      end
+    end
+  end
 end
