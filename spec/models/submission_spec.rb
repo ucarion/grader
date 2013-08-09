@@ -8,7 +8,7 @@ describe Submission do
 
   before do
     @submission = student.submissions.create!(assignment_id: assignment.id, 
-      source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
+      source_code: File.new(Rails.root + 'spec/example_files/valid.rb'), grade: 1)
   end
 
   subject { @submission }
@@ -16,6 +16,7 @@ describe Submission do
   it { should respond_to(:author) }
   it { should respond_to(:assignment) }
   it { should respond_to(:source_code) }
+  it { should respond_to(:grade) }
 
   it { should be_valid }
 
@@ -30,6 +31,18 @@ describe Submission do
 
   describe "with no assignment" do
     before { @submission.assignment = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no grade" do
+    before { @submission.grade = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with a grade that is out of bounds" do
+    before { @submission.grade = assignment.point_value + 1 }
 
     it { should_not be_valid }
   end
