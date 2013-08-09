@@ -17,6 +17,7 @@ describe Assignment do
   it { should respond_to(:due_time) }
   it { should respond_to(:open?) }
   it { should respond_to(:closed?) }
+  it { should respond_to(:point_value) }
 
   its(:course) { should eq course }
 
@@ -42,6 +43,18 @@ describe Assignment do
 
   describe "with no due_time" do
     before { @assignment.due_time = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no point_value" do
+    before { @assignment.point_value = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with a zero point_value" do
+    before { @assignment.point_value = 0 }
 
     it { should_not be_valid }
   end
