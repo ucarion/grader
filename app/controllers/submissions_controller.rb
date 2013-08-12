@@ -1,7 +1,8 @@
 class SubmissionsController < ApplicationController
-  before_filter :check_signed_in, only: [:new, :create]
+  before_filter :check_signed_in, only: [:show, :new, :create]
   before_filter :check_assignment_still_open, only: [:new, :create]
   before_filter :check_enrolled_in_corresponding_course, only: [:new, :create]
+  before_filter :check_is_own_submission_or_is_teacher, only: [:show]
 
   def show
     @submission = Submission.find(params[:id])
@@ -44,6 +45,14 @@ class SubmissionsController < ApplicationController
 
     unless assignment.course.students.exists?(current_user)
       redirect_to root_path, notice: "You cannot post submissions for this course"
+    end
+  end
+
+  def check_is_own_submission_or_is_teacher
+    submission = Submission.find(params[:id])
+
+    unless current_user?(submission.author) || current_user?(submission.assignment.course.teacher)
+      redirect_to root_path, notice: "You cannot view others' submissions" 
     end
   end
 end
