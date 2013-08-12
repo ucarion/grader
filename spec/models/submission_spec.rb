@@ -34,16 +34,4 @@ describe Submission do
 
     it { should_not be_valid }
   end
-
-  describe "with no grade" do
-    before { @submission.grade = nil }
-
-    it { should_not be_valid }
-  end
-
-  describe "with a grade that is out of bounds" do
-    before { @submission.grade = assignment.point_value + 1 }
-
-    it { should_not be_valid }
-  end
 end
