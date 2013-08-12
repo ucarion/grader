@@ -14,7 +14,10 @@ describe "SubmissionsPages" do
         source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
     end
 
-    before { visit submission_path(submission) }
+    before do
+      sign_in student
+      visit submission_path(submission)
+    end
 
     it { should have_content(student.name) }
     it { should have_content(assignment.name) }
@@ -22,6 +25,38 @@ describe "SubmissionsPages" do
     it "should show the submission's source code" do
       source = File.read(submission.source_code.path)
       expect(page).to have_content(source)
+    end
+
+    describe "authentication" do
+      describe "visited by someone who is not signed in" do
+        before do
+          sign_out
+          visit submission_path(submission)
+        end
+
+        it { should have_title("Sign in") }
+      end
+
+      describe "visited by another user" do
+        let(:other_user) { FactoryGirl.create(:user) }
+
+        before do
+          sign_in other_user
+          visit submission_path(submission)
+        end
+
+        it { should have_selector('.alert', text: "others' submissions") }
+      end
+
+      describe "visited by the teacher" do
+        before do
+          sign_in teacher
+          visit submission_path(submission)
+        end
+
+        it { should have_content(student.name) }
+        it { should have_content(assignment.name) }
+      end
     end
   end
 
