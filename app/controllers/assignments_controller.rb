@@ -48,7 +48,7 @@ class AssignmentsController < ApplicationController
   private
 
   def assignment_params
-    params.require(:assignment).permit(:name, :description, :due_time)
+    params.require(:assignment).permit(:name, :description, :due_time, :point_value)
   end
 
   def change_due_time_param
