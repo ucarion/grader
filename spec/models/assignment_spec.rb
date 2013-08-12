@@ -59,6 +59,12 @@ describe Assignment do
     it { should_not be_valid }
   end
 
+  describe "with a non-number point_value" do
+    before { @assignment.point_value = "two" }
+
+    it { should_not be_valid }
+  end
+
   describe "whose due time is not yet passed" do
     before { @assignment.due_time = 1.year.from_now }
 
