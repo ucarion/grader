@@ -84,6 +84,7 @@ describe "AssignmentPages" do
         fill_in "Name", with: "Course"
         fill_in "Description", with: "Description goes here ..."
         fill_in "Due time", with: 1.year.from_now.strftime("%m/%d/%Y")
+        fill_in "Point value", with: "10"
       end
 
       it "should create a new assignment on click" do
