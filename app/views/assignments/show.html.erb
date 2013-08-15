@@ -9,4 +9,9 @@
 </h1>
 <h3>For course: <%= link_to @assignment.course.name, @assignment.course %></h3>
 <h5><%= render 'time_left' %></h5>
+<div class="pagination-centered">
+  <%= link_with_icon('gear', "View submissions for this assignment", 
+    assignment_submissions_path(@assignment), class: "btn btn-success") %>
+</div>
+<hr>
 <p><%= @assignment.description %></p>
