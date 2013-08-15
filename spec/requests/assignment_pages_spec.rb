@@ -63,6 +63,8 @@ describe "AssignmentPages" do
       it "should delete the course upon clicking the delete button" do
         expect { click_link delete_button }.to change(Assignment, :count).by(-1)
       end
+
+      it { should have_link("submissions", href: assignment_submissions_path(assignment)) }
     end
   end
 
