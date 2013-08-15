@@ -17,7 +17,9 @@
           </a>
         <ul class="dropdown-menu">
           <li><%= link_with_icon "pencil", "Edit Course", edit_course_path(@course) %></li>
-          <li><%= link_with_icon "trash", "Delete Course", @course, method: :delete %></li>
+          <li>
+            <%= link_with_icon "trash", "Delete Course", @course, method: :delete,
+              data: { confirm: "Are you sure you want to delete #{@course.name}?" } %></li>
         </ul>
       </li>
     <% end %>
