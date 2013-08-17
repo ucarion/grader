@@ -7,4 +7,5 @@ class Submission < ActiveRecord::Base
   validates :author_id, presence: true
   validates :assignment_id, presence: true
   validates_attachment :source_code, presence: true
+  validates :grade, numericality: { only_integer: true }, allow_blank: true
 end
