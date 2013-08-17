@@ -19,12 +19,12 @@ namespace :db do
 
     puts "Creating assignments for the courses"
     Course.first.assignments.create!(name: "Example Assignment", 
-      description: Faker::Lorem.paragraph(3), due_time: 1.day.from_now)
+      description: Faker::Lorem.paragraph(3), due_time: 1.day.from_now, point_value: 10)
 
     u.taught_courses.each_with_index do |course|
       5.times do |n|
         course.assignments.create!(name: "Assignment #{n}", 
-          description: Faker::Lorem.paragraph(3), due_time: rand(-3..3).days.from_now)
+          description: Faker::Lorem.paragraph(3), due_time: rand(-3..3).days.from_now, point_value: 10)
       end
     end
 
