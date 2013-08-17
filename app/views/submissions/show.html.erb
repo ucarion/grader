@@ -1,4 +1,14 @@
 <h1>Submission</h1>
 <h2>By <%= @submission.author.name %></h2>
 <h3>For assignment <%= @submission.assignment.name %></h3>
+<div class="pagination-centered">
+  <% if current_user?(@submission.assignment.course.teacher) %>
+    <%= render 'grade_submission_form' %>
+  <% elsif @submission.grade %>
+    Grade: <strong><%= @submission.grade %></strong> out of <%= @submission.assignment.point_value %>
+  <% else %>
+    <i>This submssion has not been graded yet.</i>
+  <% end %>
+</div>
+<hr>
 <%= content_tag(:pre, File.read(@submission.source_code.path)) %>

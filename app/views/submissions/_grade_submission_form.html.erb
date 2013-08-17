@@ -1,0 +1,8 @@
+<%= form_for @submission, url: grade_submission_path(@submission), 
+    html: { class: "form-inline" } do |f| %>
+  <div class="input-append">
+    <%= f.text_field :grade, class: "input-mini", placeholder: "Grade" %>
+    <span class="add-on">/ <%= @submission.assignment.point_value %></span>
+  </div>
+  <%= f.submit "Submit", class: "btn btn-grade" %>
+<% end %>
