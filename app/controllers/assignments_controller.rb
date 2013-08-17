@@ -5,6 +5,8 @@ class AssignmentsController < ApplicationController
 
   def show
     @assignment = Assignment.find(params[:id])
+
+    @user_submission = Submission.where(assignment: @assignment, author: current_user).first
   end
 
   def new
