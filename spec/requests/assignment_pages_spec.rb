@@ -63,8 +63,52 @@ describe "AssignmentPages" do
       it "should delete the course upon clicking the delete button" do
         expect { click_link delete_button }.to change(Assignment, :count).by(-1)
       end
+    end
 
-      it { should have_link("submissions", href: assignment_submissions_path(assignment)) }
+    describe "view or create submission button" do
+      describe "for teachers" do
+        before do
+          sign_in teacher
+          visit assignment_path(assignment)
+        end
+
+        it { should have_link("", href: assignment_submissions_path(assignment)) }
+      end
+
+      describe "for students" do
+        let(:student) { FactoryGirl.create(:student) }
+
+        before do
+          sign_in student
+          visit assignment_path(assignment)
+        end
+
+        it { should_not have_link("", href: assignment_submissions_path(assignment)) }
+
+        describe "who are not enrolled in the course" do
+          it { should_not have_link("", href: new_assignment_submission_path(assignment)) }
+        end
+
+        describe "who have not submitted to the assignment" do
+          before do
+            course.students << student
+            visit current_path # refesh
+          end
+
+          it { should have_link("", href: new_assignment_submission_path(assignment)) }
+        end
+
+        describe "who have submitted to the assignment" do
+          let!(:submission) { FactoryGirl.create(:submission, author: student, assignment: assignment) }
+
+          before do
+            course.students << student
+            visit current_path
+          end
+
+          it { should have_link("", href: submission_path(submission)) }
+        end
+      end
     end
   end
 
