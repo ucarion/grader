@@ -17,7 +17,11 @@ Grader::Application.routes.draw do
       end
 
       resources :assignments do
-        resources :submissions
+        resources :submissions do
+          member do
+            patch :grade
+          end
+        end
       end
     end
   end
