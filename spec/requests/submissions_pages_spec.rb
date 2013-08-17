@@ -56,6 +56,24 @@ describe "SubmissionsPages" do
 
         it { should have_content(student.name) }
         it { should have_content(assignment.name) }
+        it { should have_button("Submit") }
+      end
+
+      describe "visited by the author" do
+        it { should_not have_button("Submit") }
+
+        describe "when the submission is ungraded" do
+          it { should have_content("has not been graded yet") }
+        end
+
+        describe "when the submission has been graded" do
+          before do
+            submission.update_attributes(grade: 10)
+            visit current_path
+          end
+
+          it { should have_content(submission.grade) }
+        end
       end
     end
   end
@@ -150,6 +168,15 @@ describe "SubmissionsPages" do
           expect(page).to have_content(submission.author.name)
         end
       end
+    end
+
+    describe "when visited by a non-teacher" do
+      before do
+        sign_in assignment.course.students.last # a student of the assignment
+        visit assignment_submissions_path(assignment)
+      end
+
+      it { should have_selector('.alert', text: "cannot view")}
     end
   end
 end
