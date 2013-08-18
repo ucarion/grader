@@ -8,6 +8,8 @@ class SubmissionsController < ApplicationController
 
   def show
     @submission = Submission.find(params[:id])
+
+    @comment = @submission.comments.build
   end
 
   def new
