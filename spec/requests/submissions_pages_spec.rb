@@ -92,6 +92,32 @@ describe "SubmissionsPages" do
         end
       end
     end
+
+    describe "new comment form" do
+      it { should have_selector('.btn-comment') }
+
+      let(:submit_comment) { "Comment" }
+
+      describe "filled in with invalid information" do
+        before { click_button submit_comment }
+
+        it { should have_selector('.alert.alert-error', text: "blank") }
+      end
+
+      describe "filled in with valid information" do
+        before { fill_in "comment[content]", with: "Lorem ipsum dolor sit amet." }
+
+        it "should create a new comment on submit" do
+          expect { click_button submit_comment }.to change(submission.comments, :count).by(1)
+        end
+
+        describe "after commenting" do
+          before { click_button submit_comment }
+
+          it { should have_selector('.alert.alert-success', text: "created") }
+        end
+      end
+    end
   end
 
   describe "creation page" do
