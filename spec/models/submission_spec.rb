@@ -17,6 +17,7 @@ describe Submission do
   it { should respond_to(:assignment) }
   it { should respond_to(:source_code) }
   it { should respond_to(:grade) }
+  it { should respond_to(:comments) }
 
   it { should be_valid }
 
@@ -33,5 +34,27 @@ describe Submission do
     before { @submission.assignment = nil }
 
     it { should_not be_valid }
+  end
+
+  describe "comment association" do
+    before do
+      @submission.save!
+
+      course.students << student
+
+      2.times do
+        FactoryGirl.create(:comment, user: student, submission: @submission)
+      end
+    end
+
+    it "should destroy dependent submissions on deletion" do
+      comments = @submission.comments.to_a
+
+      @submission.destroy
+
+      comments.each do |comment|
+        expect { Comment.find(comment) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end
