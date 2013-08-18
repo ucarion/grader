@@ -31,4 +31,8 @@ FactoryGirl.define do
   factory :submission do
     source_code File.new(Rails.root + 'spec/example_files/valid.rb')
   end
+
+  factory :comment do
+    content { Faker::Lorem.paragraph(3) }
+  end
 end
