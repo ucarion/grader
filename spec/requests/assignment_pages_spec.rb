@@ -110,6 +110,17 @@ describe "AssignmentPages" do
         end
       end
     end
+
+    describe "for signed out users" do
+      before do
+        sign_out
+        visit assignment_path(assignment)
+      end
+
+      it "should not crash on rendering page" do
+        expect(page).to have_content assignment.name
+      end
+    end
   end
 
   describe "assignment creation page" do
