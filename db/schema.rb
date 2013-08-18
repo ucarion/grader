@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130809000916) do
+ActiveRecord::Schema.define(version: 20130818022824) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20130809000916) do
     t.datetime "due_time"
     t.integer  "point_value"
   end
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "submission_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["submission_id"], name: "index_comments_on_submission_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "courses", force: true do |t|
     t.string   "name"
