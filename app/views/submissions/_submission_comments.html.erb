@@ -1,9 +1,7 @@
 <% if @submission.comments.any? %>
   <ul>
     <% @submission.comments.each do |comment| %>
-      <li>
-        <%= comment.content %>
-      </li>
+      <%= render comment if comment.content %>
     <% end %>
   </ul>
 <% else %>
