@@ -41,10 +41,13 @@ describe Submission do
       @submission.save!
 
       course.students << student
+    end
 
-      2.times do
-        FactoryGirl.create(:comment, user: student, submission: @submission)
-      end
+    let!(:comment1) { FactoryGirl.create(:comment, user: student, submission: @submission, created_at: 1.day.ago) }
+    let!(:comment2) { FactoryGirl.create(:comment, user: student, submission: @submission, created_at: 2.days.ago) }
+
+    it "should return older comments first" do
+      expect(@submission.comments).to eq [comment2, comment1]
     end
 
     it "should destroy dependent submissions on deletion" do
