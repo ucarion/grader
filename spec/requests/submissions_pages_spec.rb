@@ -76,6 +76,22 @@ describe "SubmissionsPages" do
         end
       end
     end
+
+    describe "comments" do
+      before do
+        3.times do
+          FactoryGirl.create(:comment, user: teacher, submission: submission)
+        end
+
+        visit current_path
+      end
+
+      it "should have all the comments displayed" do
+        submission.comments.each do |comment|
+          expect(page).to have_content(comment.content)
+        end
+      end
+    end
   end
 
   describe "creation page" do
