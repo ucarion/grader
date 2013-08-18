@@ -12,3 +12,5 @@
 </div>
 <hr>
 <%= content_tag(:pre, File.read(@submission.source_code.path)) %>
+<h3>Comments</h3>
+<%= render 'submission_comments' %>
