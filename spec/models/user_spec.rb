@@ -22,6 +22,7 @@ describe User do
   it { should respond_to(:enrolled_courses) }
   it { should respond_to(:assignments) }
   it { should respond_to(:submissions) }
+  it { should respond_to(:comments) }
 
   # default definition of user is valid
   it { should be_valid }
