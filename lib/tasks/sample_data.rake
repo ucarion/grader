@@ -40,5 +40,10 @@ namespace :db do
     User.all.each do |user|
       a.submissions.create!(author: user, source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
     end
+
+    puts "Having each student comment on their submission"
+    User.all.each do |user|
+      user.comments.create!(submission: user.submissions.first, content: "Lorem ipsum dolor sit amet.")
+    end
   end
 end
