@@ -49,6 +49,9 @@ gem 'bootstrap-datepicker-rails'
 # For dealing with file attachments for submissions
 gem "paperclip", "~> 3.0"
 
+# For playing with docker
+gem 'docker-api', require: 'docker'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
