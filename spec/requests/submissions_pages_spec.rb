@@ -8,6 +8,10 @@ describe "SubmissionsPages" do
   let(:assignment) { FactoryGirl.create(:assignment, course: course) }
   let(:student) { FactoryGirl.create(:student) }
 
+  before do
+    course.students << student
+  end
+
   describe "show page" do
     let(:submission) do
       student.submissions.create!(assignment: assignment,
