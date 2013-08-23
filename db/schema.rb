@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818022824) do
+ActiveRecord::Schema.define(version: 20130823004005) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20130818022824) do
     t.integer  "source_code_file_size"
     t.datetime "source_code_updated_at"
     t.integer  "grade"
+    t.text     "output"
   end
 
   create_table "users", force: true do |t|
