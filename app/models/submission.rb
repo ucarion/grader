@@ -12,15 +12,17 @@ class Submission < ActiveRecord::Base
 
   DOCKER_RUBY_IMAGE_ID = '8d7cd7b96168'
 
-  def execute_code
+  def execute_code!
     image = ruby_image
 
     file_name = source_code_file_name
     source = File.read(source_code.path).shellescape
     cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; ruby #{file_name}"]
 
-    image.run(cmd).attach
+    self.output = image.run(cmd).attach
   end
+
+  private
 
   def ruby_image
     Docker::Image.all.each do |image|
