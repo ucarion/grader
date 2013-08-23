@@ -153,7 +153,7 @@ describe "SubmissionsPages" do
     it { should have_title("Create a new Submission") }
 
     describe "submitted with good information" do
-      before { attach_file "Source code", Rails.root + 'spec/example_files/valid.rb' }
+      before { attach_file "Source code", Rails.root + 'spec/example_files/norepeat.rb' }
 
       it "should create a new submission on submit" do
         expect { click_button submit }.to change(Submission, :count).by(1)
@@ -163,6 +163,10 @@ describe "SubmissionsPages" do
         before { click_button submit }
 
         it { should have_selector('.alert.alert-success', text: "submission") }
+
+        it "should automatically evaluate the program" do
+          expect(page).to have_selector('.output')
+        end
       end
     end
 
