@@ -61,9 +61,9 @@ describe Submission do
     end
   end
 
-  describe "code execution" do
-    it "should execute the submission's code" do
-      expect(@submission.execute_code).to eq "Hello, world!\n"
-    end
+  describe "output" do
+    before { @submission.execute_code! }
+      
+    its(:output) { should eq "Hello, world!\n" }
   end
 end
