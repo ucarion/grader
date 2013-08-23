@@ -19,7 +19,7 @@ class Submission < ActiveRecord::Base
     source = File.read(source_code.path).shellescape
     cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; ruby #{file_name}"]
 
-    self.output = image.run(cmd).attach
+    update_attributes(output: image.run(cmd).attach)
   end
 
   private
