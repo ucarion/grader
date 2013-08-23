@@ -96,6 +96,15 @@ describe "AssignmentPages" do
           end
 
           it { should have_link("", href: new_assignment_submission_path(assignment)) }
+
+          describe "but the assignment is closed" do
+            before do
+              assignment.update_attributes!(due_time: 1.day.ago)
+              visit current_path
+            end
+
+            it { should have_content('assignment is now closed') }
+          end
         end
 
         describe "who have submitted to the assignment" do
