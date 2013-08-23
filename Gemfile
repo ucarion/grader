@@ -52,6 +52,9 @@ gem "paperclip", "~> 3.0"
 # For playing with docker
 gem 'docker-api', require: 'docker'
 
+# For background tasks
+gem 'delayed_job_active_record'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
