@@ -15,7 +15,7 @@ describe "SubmissionsPages" do
   describe "show page" do
     let(:submission) do
       student.submissions.create!(assignment: assignment,
-        source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
+        source_code: File.new(Rails.root + 'spec/example_files/norepeat.rb'))
     end
 
     before do
@@ -29,6 +29,21 @@ describe "SubmissionsPages" do
     it "should show the submission's source code" do
       source = File.read(submission.source_code.path)
       expect(page).to have_content(source)
+    end
+
+    describe "submission output" do
+      describe "if not yet executed" do
+        it { should have_content("This submission is still pending") }
+      end
+
+      describe "if executed" do
+        before do
+          submission.execute_code!
+          visit current_path
+        end
+
+        it { should have_selector('.output', text: submission.output.strip) }
+      end
     end
 
     describe "authentication" do
