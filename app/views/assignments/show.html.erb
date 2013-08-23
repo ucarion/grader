@@ -18,8 +18,12 @@
       <%= link_with_icon('pencil', "See your submission for this assignment", 
         submission_path(@user_submission), class: "btn") %>
     <% else %>
-      <%= link_with_icon('pencil', "Turn in a submission for this assignment",
-        new_assignment_submission_path(@assignment), class: "btn btn-primary") %>
+      <% if @assignment.open? %>
+        <%= link_with_icon('pencil', "Turn in a submission for this assignment",
+          new_assignment_submission_path(@assignment), class: "btn btn-primary") %>
+      <% else %>
+        <i>This assignment is now closed and thus cannot be submitted to.</i>
+      <% end %>
     <% end %>
   <% end %>
 </div>
