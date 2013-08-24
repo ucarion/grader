@@ -31,6 +31,7 @@ FactoryGirl.define do
     due_time 1.day.from_now
     point_value { rand(5..10) }
     expected_output { Faker::Lorem.sentence(5) }
+    input { Faker::Lorem.sentence(2) }
   end
 
   factory :submission do
