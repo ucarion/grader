@@ -9,6 +9,7 @@ class Assignment < ActiveRecord::Base
   validates :course_id, presence: true
   validates :due_time, presence: true
   validates :point_value, presence: true, numericality: { greater_than: 0 }
+  validates :expected_output, presence: true
 
   def open?
     Time.now < due_time
