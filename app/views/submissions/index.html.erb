@@ -6,9 +6,10 @@
     <th></th>
     <th>Student</th>
     <th>Grade</th>
+    <th>Status</th>
   </tr>
   <% @assignment.submissions.each do |submission| %>
-    <tr>
+    <tr class="<%= table_class_for_status(submission.status) %>">
       <td><%= gravatar_for submission.author, size: 60 %></td>
       <td><%= link_to submission.author.name, submission %></td>
       <td>
@@ -18,6 +19,7 @@
           <i>Ungraded</i>
         <% end %>
       </td>
+      <td><%= submission.status_as_string.capitalize %></td>
     </tr>
   <% end %>
 </table>

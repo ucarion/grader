@@ -22,6 +22,17 @@ class Submission < ActiveRecord::Base
     self.status = Status::WAITING
   end
 
+  def status_as_string
+    case status
+    when Status::WAITING
+      "waiting"
+    when Status::OUTPUT_CORRECT
+      "correct output"
+    when Status::OUTPUT_INCORRECT
+      "incorrect output"
+    end
+  end
+
   DOCKER_RUBY_IMAGE_ID = '8d7cd7b96168'
 
   def execute_code!
