@@ -43,6 +43,7 @@ describe "SubmissionsPages" do
         end
 
         it { should have_selector('.output', text: submission.output.strip) }
+        it { should have_selector('.expected-output', text: assignment.expected_output) }
       end
     end
 
