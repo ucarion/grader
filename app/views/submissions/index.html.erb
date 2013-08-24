@@ -19,7 +19,7 @@
           <i>Ungraded</i>
         <% end %>
       </td>
-      <td><%= submission.status_as_string.capitalize %></td>
+      <td><%= submission.status_as_string.capitalize if submission.status %></td>
     </tr>
   <% end %>
 </table>
