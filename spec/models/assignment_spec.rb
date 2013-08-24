@@ -18,6 +18,7 @@ describe Assignment do
   it { should respond_to(:open?) }
   it { should respond_to(:closed?) }
   it { should respond_to(:point_value) }
+  it { should respond_to(:expected_output) }
 
   its(:course) { should eq course }
 
@@ -61,6 +62,12 @@ describe Assignment do
 
   describe "with a non-number point_value" do
     before { @assignment.point_value = "two" }
+
+    it { should_not be_valid }
+  end
+
+  describe "with an empty expected_output" do
+    before { @assignment.expected_output = nil }
 
     it { should_not be_valid }
   end
