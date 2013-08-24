@@ -1,49 +1,39 @@
+require 'factory_girl'
+
 namespace :db do
   desc "Fill database with fake users"
   task populate: :environment do
+    require File.expand_path("spec/factories.rb")
+
     puts "Creating admin"
-    User.create!(name: Faker::Name.name, email: "admin@example.com", 
-      password: "password", password_confirmation: "password", admin: true)
+    admin = FactoryGirl.create(:user, admin: true, email: "admin@example.com")
 
     puts "Creating users"
-    50.times do |n|
-      User.create!(name: Faker::Name.name, email: "#{n}@example.com", 
-        password: "password", password_confirmation: "password")
-    end
+    20.times { FactoryGirl.create(:user) }
 
     puts "Creating courses"
-    u = User.first
-    10.times do |n|
-      u.taught_courses.create!(name: "Course #{n}", description: Faker::Lorem.paragraph(3))
-    end
+    10.times { FactoryGirl.create(:course, teacher: admin) }
 
     puts "Creating assignments for the courses"
-    Course.first.assignments.create!(name: "Example Assignment", 
-      description: Faker::Lorem.paragraph(3), due_time: 1.day.from_now, point_value: 10)
-
-    u.taught_courses.each_with_index do |course|
-      5.times do |n|
-        course.assignments.create!(name: "Assignment #{n}", 
-          description: Faker::Lorem.paragraph(3), due_time: rand(-3..3).days.from_now, point_value: 10)
-      end
+    admin.taught_courses.each do |course|
+      10.times { FactoryGirl.create(:assignment, course: course) }
     end
 
     puts "Making people join the courses"
     User.all.each do |user|
-      u.taught_courses.each do |course|
-        course.students << user
-      end
+      Course.all.each { |course| course.students << user } unless user == admin
     end
 
+    course = Course.first
+
     puts "Having each student submit to the first assignment"
-    a = Assignment.first
-    User.all.each do |user|
-      a.submissions.create!(author: user, source_code: File.new(Rails.root + 'spec/example_files/valid.rb'))
+    course.students.each do |student|
+      FactoryGirl.create(:submission, author: student, assignment: course.assignments.first).delay.execute_code!
     end
 
     puts "Having each student comment on their submission"
-    User.all.each do |user|
-      user.comments.create!(submission: user.submissions.first, content: "Lorem ipsum dolor sit amet.")
+    course.students.each do |student|
+      FactoryGirl.create(:comment, user: student, submission: student.submissions.first)
     end
   end
 end
