@@ -16,7 +16,7 @@ class Submission < ActiveRecord::Base
   validates_attachment :source_code, presence: true
   validates :grade, numericality: { only_integer: true }, allow_blank: true
 
-  after_initialize :init_status
+  after_create :init_status
 
   def init_status
     self.status = Status::WAITING
