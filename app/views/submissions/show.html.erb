@@ -1,6 +1,6 @@
 <h1>Submission</h1>
-<h2>By <%= @submission.author.name %></h2>
-<h3>For assignment <%= @submission.assignment.name %></h3>
+<h2>By <%= link_to @submission.author.name, @submission.author %></h2>
+<h3>For assignment <%= link_to @submission.assignment.name, @submission.assignment %></h3>
 <div class="pagination-centered">
   <% if current_user?(@submission.assignment.course.teacher) %>
     <%= render 'grade_submission_form' %>
