@@ -18,6 +18,7 @@ describe Submission do
   it { should respond_to(:source_code) }
   it { should respond_to(:grade) }
   it { should respond_to(:comments) }
+  it { should respond_to(:output) }
 
   it { should be_valid }
 
