@@ -36,4 +36,7 @@ Grader::Application.configure do
 
   # Use faster hashing when in test mode
   ActiveModel::SecurePassword.min_cost = true
+
+  # Do not delay jobs when testing
+  Delayed::Worker.delay_jobs = false
 end
