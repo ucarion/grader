@@ -1,0 +1,14 @@
+<% if @submission.output %>
+  <div class="row">
+    <div class="span6">
+      <h4>Submission Output</h4>
+      <%= content_tag(:pre, @submission.output, class: "output") %>
+    </div>
+    <div class="span6">
+      <h4>Expected Output</h4>
+      <%= content_tag(:pre, @submission.assignment.expected_output, class: "expected-output") %>
+    </div>
+  </div>
+<% else %>
+  <i>This submission is still pending...</i>
+<% end %>

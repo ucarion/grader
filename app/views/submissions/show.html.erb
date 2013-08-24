@@ -1,3 +1,6 @@
+<%= link_to "Back to other submissions for this assignment.",
+  assignment_submissions_path(@submission.assignment) %> 
+
 <h1>Submission</h1>
 <h2>By <%= link_to @submission.author.name, @submission.author %></h2>
 <h3>For assignment <%= link_to @submission.assignment.name, @submission.assignment %></h3>
@@ -17,12 +20,7 @@
 <hr>
 <%= content_tag(:pre, File.read(@submission.source_code.path)) %>
 
-<h3>Output</h3>
-<% if @submission.output %>
-  <%= content_tag(:pre, @submission.output, class: "output") %>
-<% else %>
-  <i>This submission is still pending...</i>
-<% end %>
+<%= render 'output' %>
 
 <h3>Comments</h3>
 <%= render 'submission_comments' %>
