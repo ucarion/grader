@@ -19,6 +19,10 @@ FactoryGirl.define do
         FactoryGirl.create(:student)
       end
     end
+
+    factory :empty_course do
+      students { [] }
+    end
   end
 
   factory :assignment do
