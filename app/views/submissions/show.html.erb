@@ -10,6 +10,10 @@
     <i>This submssion has not been graded yet.</i>
   <% end %>
 </div>
+<div class="pagination-centered">
+  <%= render 'submission_status_message' %>
+</div>
+
 <hr>
 <%= content_tag(:pre, File.read(@submission.source_code.path)) %>
 
