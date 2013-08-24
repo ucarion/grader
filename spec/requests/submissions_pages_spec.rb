@@ -76,6 +76,8 @@ describe "SubmissionsPages" do
         it { should have_content(student.name) }
         it { should have_content(assignment.name) }
         it { should have_button("Submit") }
+
+        it { should have_link("", href: assignment_submissions_path(assignment)) }
       end
 
       describe "visited by the author" do
