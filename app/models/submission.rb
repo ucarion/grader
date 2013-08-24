@@ -42,6 +42,8 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  handle_asynchronously :execute_code!
+
   private
 
   def ruby_image

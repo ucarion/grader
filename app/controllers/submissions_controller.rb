@@ -24,7 +24,7 @@ class SubmissionsController < ApplicationController
     if @submission.save
       flash[:success] = "Your submission was created successfully."
       redirect_to @submission
-      @submission.delay.execute_code!
+      @submission.execute_code!
     else
       render 'new'
     end
