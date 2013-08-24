@@ -23,8 +23,8 @@ describe "SubmissionsPages" do
       visit submission_path(submission)
     end
 
-    it { should have_content(student.name) }
-    it { should have_content(assignment.name) }
+    it { should have_link(student.name, href: user_path(student)) }
+    it { should have_link(assignment.name, href: assignment_path(assignment)) }
 
     it "should show the submission's source code" do
       source = File.read(submission.source_code.path)
