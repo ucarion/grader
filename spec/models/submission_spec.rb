@@ -19,6 +19,7 @@ describe Submission do
   it { should respond_to(:grade) }
   it { should respond_to(:comments) }
   it { should respond_to(:output) }
+  it { should respond_to(:status) }
 
   it { should be_valid }
 
@@ -66,5 +67,31 @@ describe Submission do
     before { @submission.execute_code! }
       
     its(:output) { should eq "Hello, world!\n" }
+  end
+
+  describe "status" do
+    describe "before being executed" do
+      its(:status) { should eq Submission::Status::WAITING }
+    end
+
+    describe "after being executed" do
+      describe "and the output is the expected output" do
+        before do
+          assignment.update_attributes(expected_output: "Hello, world!")
+          @submission.execute_code!
+        end
+
+        its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
+      end
+
+      describe "and the output is not the expected output" do
+        before do
+          assignment.update_attributes(expected_output: "Something else")
+          @submission.execute_code!
+        end
+
+        its(:status) { should eq Submission::Status::OUTPUT_INCORRECT }
+      end
+    end
   end
 end
