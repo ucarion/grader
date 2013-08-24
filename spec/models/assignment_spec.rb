@@ -19,6 +19,7 @@ describe Assignment do
   it { should respond_to(:closed?) }
   it { should respond_to(:point_value) }
   it { should respond_to(:expected_output) }
+  it { should respond_to(:input) }
 
   its(:course) { should eq course }
 
@@ -68,6 +69,12 @@ describe Assignment do
 
   describe "with an empty expected_output" do
     before { @assignment.expected_output = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with an empty input" do
+    before { @assignment.input = nil }
 
     it { should_not be_valid }
   end
