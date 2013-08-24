@@ -1,4 +1,10 @@
 class Submission < ActiveRecord::Base
+  module Status
+    WAITING = 0
+    OUTPUT_CORRECT = 1
+    OUTPUT_INCORRECT = 2
+  end
+  
   belongs_to :author, class_name: "User"
   belongs_to :assignment
   has_many :comments, dependent: :destroy
@@ -10,6 +16,12 @@ class Submission < ActiveRecord::Base
   validates_attachment :source_code, presence: true
   validates :grade, numericality: { only_integer: true }, allow_blank: true
 
+  after_initialize :init_status
+
+  def init_status
+    self.status = Status::WAITING
+  end
+
   DOCKER_RUBY_IMAGE_ID = '8d7cd7b96168'
 
   def execute_code!
@@ -19,7 +31,15 @@ class Submission < ActiveRecord::Base
     source = File.read(source_code.path).shellescape
     cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; ruby #{file_name}"]
 
-    update_attributes(output: image.run(cmd).attach)
+    output = image.run(cmd).attach
+
+    update_attributes(output: output)
+
+    if output.strip == assignment.expected_output.strip
+      update_attributes(status: Status::OUTPUT_CORRECT)
+    else
+      update_attributes(status: Status::OUTPUT_INCORRECT)
+    end
   end
 
   private
