@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130824180828) do
+ActiveRecord::Schema.define(version: 20130824233416) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20130824180828) do
     t.datetime "due_time"
     t.integer  "point_value"
     t.text     "expected_output"
+    t.text     "input"
   end
 
   create_table "comments", force: true do |t|
