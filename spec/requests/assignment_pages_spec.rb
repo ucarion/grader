@@ -149,6 +149,7 @@ describe "AssignmentPages" do
       before do
         fill_in "Name", with: "Course"
         fill_in "Description", with: "Description goes here ..."
+        fill_in "Input", with: "a b c d e"
         fill_in "Expected output", with: "Output goes here ..."
         fill_in "Due time", with: 1.year.from_now.strftime("%m/%d/%Y")
         fill_in "Point value", with: "10"
