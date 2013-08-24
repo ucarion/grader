@@ -1,8 +1,23 @@
 <% provide(:title, "Submissions for #{@assignment.name}") %>
 
 <h1>Submissions for <%= @assignment.name %></h1>
-<ul>
+<table class="table table-striped table-bordered list-users-table">
+  <tr>
+    <th></th>
+    <th>Student</th>
+    <th>Grade</th>
+  </tr>
   <% @assignment.submissions.each do |submission| %>
-    <li><%= link_to submission.author.name, submission %></li>
+    <tr>
+      <td><%= gravatar_for submission.author, size: 60 %></td>
+      <td><%= link_to submission.author.name, submission %></td>
+      <td>
+        <% if submission.grade %>
+          <%= submission.grade %> / <%= @assignment.point_value %>
+        <% else %>
+          <i>Ungraded</i>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
-</ul>
+</table>
