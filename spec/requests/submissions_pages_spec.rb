@@ -137,6 +137,28 @@ describe "SubmissionsPages" do
         end
       end
     end
+
+    describe "status" do
+      describe "when a submission passed tests" do
+        before do
+          submission.update_attributes!(status: Submission::Status::OUTPUT_CORRECT)
+
+          visit current_path
+        end
+
+        it { should have_content("submission passed tests") }
+      end
+
+      describe "when a submission failed tests" do
+        before do
+          submission.update_attributes!(status: Submission::Status::OUTPUT_INCORRECT)
+
+          visit current_path
+        end
+
+        it { should have_content("submission failed tests") }
+      end
+    end
   end
 
   describe "creation page" do
