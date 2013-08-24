@@ -213,10 +213,10 @@ describe "SubmissionsPages" do
     let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
     before do
-      5.times do
+      5.times do |n|
         student = FactoryGirl.create(:student)
         course.students << student
-        FactoryGirl.create(:submission, assignment: assignment, author: student)
+        FactoryGirl.create(:submission, assignment: assignment, author: student, grade: n)
       end
     end
 
@@ -231,6 +231,7 @@ describe "SubmissionsPages" do
       it "should list each of the assignment's submissions' authors" do
         assignment.submissions.each do |submission|
           expect(page).to have_content(submission.author.name)
+          expect(page).to have_content("#{submission.grade} / #{submission.assignment.point_value}")
         end
       end
     end
