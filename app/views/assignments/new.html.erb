@@ -13,10 +13,10 @@
       <%= f.text_area :description %>
 
       <%= f.label :input %>
-      <%= f.text_area :input %>
+      <%= f.text_area :input, class: "code-field", spellcheck: false %>
 
       <%= f.label :expected_output %>
-      <%= f.text_area :expected_output %>
+      <%= f.text_area :expected_output, class: "code-field", spellcheck: false %>
 
       <%= f.label :point_value %>
       <%= f.text_field :point_value %>

@@ -130,3 +130,9 @@ footer {
 .add-assignment-button {
   margin-bottom: 20px;
 }
+
+// For input/output fields that should have a fixed-with font
+.code-field {
+  font-size: .9em;
+  font-family: "Lucida Console", Monaco, monospace;
+}
