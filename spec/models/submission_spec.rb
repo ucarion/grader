@@ -4,7 +4,7 @@ describe Submission do
   let(:teacher) { FactoryGirl.create(:teacher) }
   let(:student) { FactoryGirl.create(:student) }
   let(:course) { FactoryGirl.create(:course, teacher: teacher) }
-  let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+  let(:assignment) { FactoryGirl.create(:assignment, course: course, input: "1 2 3 4 5") }
 
   before do
     @submission = student.submissions.create!(assignment_id: assignment.id, 
@@ -67,6 +67,16 @@ describe Submission do
     before { @submission.execute_code! }
       
     its(:output) { should eq "Hello, world!\n" }
+  end
+
+  describe "input" do
+    before do
+      @submission.update_attributes(source_code: File.new(Rails.root + 'spec/example_files/inreader.rb'))
+
+      @submission.execute_code!
+    end
+
+    its(:output) { should eq "[1, 4, 9, 16, 25]\n" }
   end
 
   describe "status" do
