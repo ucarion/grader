@@ -1,5 +1,7 @@
-<%= link_to "Back to other submissions for this assignment.",
-  assignment_submissions_path(@submission.assignment) %> 
+<% if current_user?(@submission.assignment.course.teacher) %>
+  <%= link_to "Back to other submissions for this assignment.",
+    assignment_submissions_path(@submission.assignment) %> 
+<% end %>
 
 <h1>Submission</h1>
 <h2>By <%= link_to @submission.author.name, @submission.author %></h2>
