@@ -55,6 +55,9 @@ gem 'docker-api', require: 'docker'
 # For background tasks
 gem 'delayed_job_active_record'
 
+# For an activity feed
+gem 'public_activity'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
