@@ -40,7 +40,6 @@ class Submission < ActiveRecord::Base
 
     file_name = source_code_file_name
     source = File.read(source_code.path).shellescape
-    cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; ruby #{file_name}"]
     input = assignment.input.shellescape
     cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; echo #{input} | ruby #{file_name}" ]
 
