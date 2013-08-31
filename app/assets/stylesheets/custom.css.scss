@@ -136,3 +136,13 @@ footer {
   font-size: .9em;
   font-family: "Lucida Console", Monaco, monospace;
 }
+
+// For activity feeds
+.activity {
+  margin-top: 5px;
+
+  .details {
+    font-style: italic;
+    color: $grayLight;
+  }
+}

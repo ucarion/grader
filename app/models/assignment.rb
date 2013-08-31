@@ -1,4 +1,6 @@
 class Assignment < ActiveRecord::Base
+  include PublicActivity::Common
+  
   belongs_to :course
   has_many :submissions, dependent: :destroy
 

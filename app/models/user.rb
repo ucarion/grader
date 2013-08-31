@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :enrolled_courses, class_name: "Course"
   has_many :submissions, foreign_key: "author_id"
   has_many :comments
+  
+  # Shortcuts
+  has_many :teachers, -> { uniq }, through: :enrolled_courses
+  has_many :students, -> { uniq }, through: :taught_courses
 
   has_secure_password
 

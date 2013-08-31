@@ -1,4 +1,6 @@
 class Submission < ActiveRecord::Base
+  include PublicActivity::Common
+
   module Status
     WAITING = 0
     OUTPUT_CORRECT = 1

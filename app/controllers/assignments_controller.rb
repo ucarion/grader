@@ -21,6 +21,7 @@ class AssignmentsController < ApplicationController
     @assignment = @course.assignments.build(assignment_params)
 
     if @assignment.save
+      @assignment.create_activity :create, owner: @assignment.course.teacher
       flash[:success] = "Assignment #{@assignment.name} created successfully."
       redirect_to @assignment.course
     else

@@ -1,12 +1,8 @@
 <h1>Grader</h1>
 <% if signed_in? %>
-  <ul class="course-assignment-list">
-    <% current_user.assignments(only_open: true).find_all do |assignment| %>
-      <li>
-        <%= render 'shared/assignment_in_list', assignment: assignment %>
-      </li>
-    <% end %>
-  </ul>
+  <% @activities.each do |activity| %>
+    <%= render_activity(activity, layout: "layouts/activity") %>
+  <% end %>
 <% else %>
   <p>Grade your Ruby programs and stuff.</p>
 <% end %>

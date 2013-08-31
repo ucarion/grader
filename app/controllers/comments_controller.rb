@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
 
     if @comment.save
+      @comment.create_activity :create, owner: @comment.user
       flash[:success] = "Comment created."
       redirect_to @comment.submission
     else

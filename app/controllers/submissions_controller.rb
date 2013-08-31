@@ -22,6 +22,7 @@ class SubmissionsController < ApplicationController
     @submission = @assignment.submissions.build(submission_params)
 
     if @submission.save
+      @submission.create_activity :create, owner: @submission.author
       flash[:success] = "Your submission was created successfully."
       redirect_to @submission
       @submission.execute_code!
