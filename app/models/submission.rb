@@ -45,7 +45,8 @@ class Submission < ActiveRecord::Base
     input = assignment.input.shellescape
     cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; echo #{input} | ruby #{file_name}" ]
 
-    output = image.run(cmd).attach
+    container = image.run(cmd)
+    output = container.attach
 
     update_attributes(output: output)
 
@@ -54,6 +55,8 @@ class Submission < ActiveRecord::Base
     else
       update_attributes(status: Status::OUTPUT_INCORRECT)
     end
+
+    container.delete
   end
 
   handle_asynchronously :execute_code!
