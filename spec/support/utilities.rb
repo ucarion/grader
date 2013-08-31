@@ -14,3 +14,7 @@ end
 def sign_out
   click_link "Sign out"
 end
+
+def submission_file(file_name = "valid.rb")
+  File.new(Rails.root + "spec/example_files/#{file_name}")
+end
