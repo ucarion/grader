@@ -28,4 +28,4 @@
   <% end %>
 </div>
 <hr>
-<p><%= @assignment.description %></p>
+<p><%= simple_format(h @assignment.description) %></p>
