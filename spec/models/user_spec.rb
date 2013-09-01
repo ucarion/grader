@@ -23,6 +23,7 @@ describe User do
   it { should respond_to(:assignments) }
   it { should respond_to(:submissions) }
   it { should respond_to(:comments) }
+  it { should respond_to(:grade_in_course) }
 
   # default definition of user is valid
   it { should be_valid }
@@ -130,6 +131,25 @@ describe User do
     end
 
     it { should be_admin }
+  end
+
+
+  describe "grade in course" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
+    before do
+      @user.save
+
+      5.times do |n|
+        assignment = FactoryGirl.create(:assignment, course: course)
+        FactoryGirl.create(:submission, author: @user, assignment: assignment, grade: n)
+      end
+    end
+
+    it "should correctly find its total score in the course" do
+      expect(@user.grade_in_course(course)).to eq (0 + 1 + 2 + 3 + 4)
+    end
   end
 
   describe "course associations" do
