@@ -210,4 +210,36 @@ describe "CoursePages" do
       it { should have_selector('.alert-success') }
     end
   end
+
+  describe "course analytics page" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+    let(:student) { FactoryGirl.create(:student) }
+
+    before do
+      course.students << student
+
+      5.times do |n|
+        assignment = FactoryGirl.create(:assignment, course: course)
+        FactoryGirl.create(:submission_with_grade, author: student, assignment: assignment)
+      end
+    end
+
+    describe "as a teacher" do
+      before do
+        sign_in teacher
+
+        visit analytics_course_path(course)
+      end
+
+      it { should have_content("Analytics for #{course.name}") }
+      it { should have_title("#{course.name} Analytics")}
+
+      describe "overall grade average" do
+        let(:grade) { "#{student.grade_in_course(course)} / #{course.total_points}" }
+
+        it { should have_content(grade) }
+      end
+    end
+  end
 end
