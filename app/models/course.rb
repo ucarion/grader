@@ -6,4 +6,14 @@ class Course < ActiveRecord::Base
   validates :teacher_id, presence: true
   validates :name, presence: true
   validates :description, presence: true
+
+  def total_points
+    sum = 0
+
+    assignments.each do |assignment|
+      sum += assignment.point_value
+    end
+
+    sum
+  end
 end
