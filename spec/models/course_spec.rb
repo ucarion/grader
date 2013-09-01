@@ -14,6 +14,7 @@ describe Course do
   it { should respond_to(:teacher) }
   it { should respond_to(:students) }
   it { should respond_to(:assignments) }
+  it { should respond_to(:total_points) }
 
   its(:teacher) { should eq teacher }
 
@@ -55,6 +56,20 @@ describe Course do
       assignments.each do |assignment|
         expect { Assignment.find(assignment) }.to raise_error(ActiveRecord::RecordNotFound)
       end
+    end
+  end
+
+  describe "total points" do
+    before do
+      @course.save!
+
+      5.times do |n|
+        FactoryGirl.create(:assignment, course: @course, point_value: n + 1)
+      end
+    end
+
+    it "should correctly sum the point values of its assigmnents" do
+      expect(@course.total_points).to eq (1 + 2 + 3 + 4 + 5)
     end
   end
 end
