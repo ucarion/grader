@@ -28,7 +28,8 @@ namespace :db do
 
     puts "Having each student submit to the first assignment"
     course.students.each do |student|
-      FactoryGirl.create(:submission, author: student, assignment: course.assignments.first).execute_code!
+      FactoryGirl.create(:submission_with_grade, author: student, 
+        assignment: course.assignments.first).execute_code!
     end
 
     puts "Having each student comment on their submission"
