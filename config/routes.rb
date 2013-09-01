@@ -14,6 +14,7 @@ Grader::Application.routes.draw do
     resources :courses do
       member do
         post :enroll
+        get :analytics
       end
 
       resources :assignments do

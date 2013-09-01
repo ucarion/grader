@@ -1,0 +1,17 @@
+<% provide(:title, "#{@course.name} Analytics") %>
+<h1>Analytics for <%= @course.name %></h1>
+<h3>Grades</h3>
+<table class="table table-striped table-bordered list-users-table">
+  <tr>
+    <th></th>
+    <th>Student</th>
+    <th>Grade</th>
+  </tr>
+  <% @course.students.each do |student| %>
+    <tr>
+      <td><%= gravatar_for student, size: 60 %></td>
+      <td><%= student.name %></td>
+      <td><%= student.grade_in_course(@course) %> / <%= @course.total_points %></td>
+    </tr>
+  <% end %>
+</table>

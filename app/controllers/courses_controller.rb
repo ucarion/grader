@@ -49,6 +49,10 @@ class CoursesController < ApplicationController
     redirect_to @course
   end
 
+  def analytics
+    @course = Course.find(params[:id])
+  end
+
   private
 
   def course_params
