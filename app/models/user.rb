@@ -38,6 +38,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def grade_in_course(course)
+    sum = 0
+
+    submissions.each do |submission|
+      sum += submission.grade || 0 if submission.assignment.course == course
+    end
+
+    sum
+  end
+
   private
 
   def create_remember_token
