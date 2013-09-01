@@ -36,6 +36,10 @@ FactoryGirl.define do
 
   factory :submission do
     source_code File.new(Rails.root + 'spec/example_files/valid.rb')
+
+    factory :submission_with_grade do
+      grade { rand(5..10) }
+    end
   end
 
   factory :comment do
