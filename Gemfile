@@ -58,6 +58,9 @@ gem 'delayed_job_active_record'
 # For an activity feed
 gem 'public_activity'
 
+# For pretty graphs
+gem "highcharts-rails", "~> 3.0.0"
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
