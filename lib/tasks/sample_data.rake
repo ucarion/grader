@@ -26,13 +26,19 @@ namespace :db do
 
     course = Course.first
 
-    puts "Having each student submit to the first assignment"
+    puts "Having each student submit to each assignment"
     course.students.each do |student|
-      FactoryGirl.create(:submission_with_grade, author: student, 
-        assignment: course.assignments.first).execute_code!
+      course.assignments.each do |assignment|
+        FactoryGirl.create(:submission_with_grade, author: student, assignment: assignment)
+      end
     end
 
-    puts "Having each student comment on their submission"
+    puts "Evaluating the first assignment's submissions"
+    course.assignments.first.submissions do |submission|
+      submission.execute_code!
+    end
+
+    puts "Having each student comment on their first submission"
     course.students.each do |student|
       FactoryGirl.create(:comment, user: student, submission: student.submissions.first)
     end
