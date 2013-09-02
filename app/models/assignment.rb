@@ -21,4 +21,14 @@ class Assignment < ActiveRecord::Base
   def closed?
     !open?
   end
+
+  def average_grade
+    sum = 0
+
+    submissions.each do |submission|
+      sum += submission.grade || 0
+    end
+
+    sum.to_f / submissions.count
+  end
 end
