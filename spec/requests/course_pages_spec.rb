@@ -182,6 +182,28 @@ describe "CoursePages" do
         end
       end
     end
+
+    describe "analytics button" do
+      describe "when signed in as the teacher" do
+        before do
+          sign_in teacher
+
+          visit course_path(course)
+        end
+
+        it { should have_link("", href: analytics_course_path(course)) }
+      end
+
+      describe "when not the teacher" do
+        before do
+          sign_in user
+
+          visit course_path(course)
+        end
+
+        it { should_not have_link("", href: analytics_course_path(course)) }
+      end
+    end
   end
 
   describe "edit course page" do
