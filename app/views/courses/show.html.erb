@@ -10,6 +10,7 @@
     <li><a href="#tab2" data-toggle="tab">Students</a></li>
     <li><a href="#tab3" data-toggle="tab">About</a></li>
     <% if @course.teacher == current_user %>
+      <li><%= link_with_icon "beaker", "Analytics", analytics_course_path(@course) %></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             Options
