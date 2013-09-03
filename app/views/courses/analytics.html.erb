@@ -15,7 +15,7 @@
   <% @course.students.each do |student| %>
     <tr>
       <td><%= gravatar_for student, size: 60 %></td>
-      <td><%= student.name %></td>
+      <td><%= link_to student.name, student %></td>
       <td><%= student.grade_in_course(@course) %> / <%= @course.total_points %></td>
     </tr>
   <% end %>
