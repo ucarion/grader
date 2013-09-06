@@ -4,7 +4,7 @@ end
 class Language::C < Language
 end
 
-class Language::CPP < Language
+class Language::Cpp < Language
 end
 
 class Language::Java < Language
