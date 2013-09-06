@@ -45,6 +45,8 @@ GEM
       xpath (~> 2.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    classy_enum (3.3.1)
+      rails (>= 3.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -185,6 +187,7 @@ DEPENDENCIES
   bootstrap-sass
   bootstrap-will_paginate
   capybara
+  classy_enum
   coffee-rails (~> 4.0.0)
   delayed_job_active_record
   docker-api
