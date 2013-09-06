@@ -1,5 +1,6 @@
 class Submission < ActiveRecord::Base
   include PublicActivity::Common
+  include SubmissionsHelper
 
   module Status
     WAITING = 0
@@ -35,37 +36,9 @@ class Submission < ActiveRecord::Base
     end
   end
 
-  DOCKER_RUBY_IMAGE_ID = '8d7cd7b96168'
-
   def execute_code!
-    image = ruby_image
-
-    file_name = source_code_file_name
-    source = File.read(source_code.path).shellescape
-    input = assignment.input.shellescape
-    cmd = [ "/bin/bash", "-c", "echo #{source} > #{file_name}; echo #{input} | ruby #{file_name}" ]
-
-    container = image.run(cmd)
-    output = container.attach
-
-    update_attributes(output: output)
-
-    if output.strip == assignment.expected_output.strip
-      update_attributes(status: Status::OUTPUT_CORRECT)
-    else
-      update_attributes(status: Status::OUTPUT_INCORRECT)
-    end
-
-    container.delete
+    execute_submission(self)
   end
 
   handle_asynchronously :execute_code!
-
-  private
-
-  def ruby_image
-    Docker::Image.all.each do |image|
-      return image if image.id.starts_with?(DOCKER_RUBY_IMAGE_ID)
-    end
-  end
 end
