@@ -116,5 +116,16 @@ describe Submission do
 
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
     end
+
+    describe "c" do
+      before do
+        course.update_attributes!(language: :c)
+        @submission.update_attributes!(source_code: submission_file("c_example.c"))
+
+        @submission.execute_code!
+      end
+
+      its(:output) { should eq "1\n4\n9\n16\n25\n" }
+    end
   end
 end
