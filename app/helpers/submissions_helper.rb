@@ -48,6 +48,8 @@ module SubmissionsHelper
       "echo #{source} > #{file_name}; javac #{file_name}; echo #{input} | java #{file_name_no_ext}"
     when Language::C
       "echo #{source} > #{file_name}; gcc #{file_name}; echo #{input} | ./a.out"
+    when Language::Cpp
+      "echo #{source} > #{file_name}; g++ #{file_name}; echo #{input} | ./a.out"
     end
   end
 
