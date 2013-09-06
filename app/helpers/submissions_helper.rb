@@ -39,9 +39,13 @@ module SubmissionsHelper
   DOCKER_IMAGE_ID = 'db264f74ed11'
 
   def cmd_for(language, source, file_name, input)
+    file_name_no_ext = file_name.split(".").first
+
     case language
     when Language::Ruby
       "echo #{source} > #{file_name}; echo #{input} | ruby #{file_name}"
+    when Language::Java
+      "echo #{source} > #{file_name}; javac #{file_name}; echo #{input} | java #{file_name_no_ext}"
     end
   end
 
