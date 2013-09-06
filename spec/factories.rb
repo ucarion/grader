@@ -13,6 +13,7 @@ FactoryGirl.define do
   factory :course do
     sequence(:name) { |i| "Course #{i}" }
     description { Faker::Lorem.paragraph(10) }
+    language :ruby
 
     students do
       rand(2..10).times.map do

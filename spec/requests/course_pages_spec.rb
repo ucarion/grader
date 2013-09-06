@@ -41,7 +41,7 @@ describe "CoursePages" do
   describe "course description page" do
     let(:teacher) { FactoryGirl.create(:user) }
     let(:user) { FactoryGirl.create(:user) }
-    let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class") }
+    let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class", language: :ruby) }
 
     describe "when there are no assignments for that course" do
       before { visit course_path(course) }
