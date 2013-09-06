@@ -4,7 +4,7 @@ describe Course do
   let(:teacher) { FactoryGirl.create(:teacher) }
 
   before do
-    @course = teacher.taught_courses.build(name: "Example", description: "Description")
+    @course = teacher.taught_courses.build(name: "Example", description: "Description", language: :ruby)
   end
 
   subject { @course }
@@ -15,6 +15,7 @@ describe Course do
   it { should respond_to(:students) }
   it { should respond_to(:assignments) }
   it { should respond_to(:total_points) }
+  it { should respond_to(:language) }
 
   its(:teacher) { should eq teacher }
 
@@ -34,6 +35,18 @@ describe Course do
 
   describe "when description is not present" do
     before { @course.description = "" }
+
+    it { should_not be_valid }
+  end
+
+  describe "when language is not present" do
+    before { @course.language = "" }
+
+    it { should_not be_valid }
+  end
+
+  describe "when language is not a known language" do
+    before { @course.language = :french }
 
     it { should_not be_valid }
   end
