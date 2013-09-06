@@ -36,7 +36,7 @@ module SubmissionsHelper
 
   private
 
-  DOCKER_IMAGE_ID = 'db264f74ed11'
+  DOCKER_IMAGE_ID = '3d18420281f8'
 
   def cmd_for(language, source, file_name, input)
     file_name_no_ext = file_name.split(".").first
