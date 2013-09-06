@@ -208,7 +208,7 @@ describe "CoursePages" do
 
   describe "edit course page" do
     let(:teacher) { FactoryGirl.create(:teacher) }
-    let(:course) { teacher.taught_courses.create!(name: "Foo", description: "Bar") }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
     let(:submit) { "Submit changes" }
 
     before do
