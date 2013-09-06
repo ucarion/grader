@@ -11,6 +11,11 @@
       <%= f.label :description %>
       <%= f.text_area :description %>
 
+      <div class="row-fluid">
+        <%= f.label :language %>
+        <%= f.select :language, Language.select_options %>
+      </div>
+
       <%= f.submit "Create Course", class: "btn btn-large" %>
     <% end %>
   </div>
