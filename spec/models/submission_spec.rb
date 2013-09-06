@@ -138,5 +138,16 @@ describe Submission do
 
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
     end
+
+    describe "python" do
+      before do
+        course.update_attributes(language: :python)
+        @submission.update_attributes!(source_code: submission_file("pyexample.py"))
+
+        @submission.execute_code!
+      end
+
+      its(:output) { should eq "1\n4\n9\n16\n25\n" }
+    end
   end
 end
