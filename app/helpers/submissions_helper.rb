@@ -45,7 +45,7 @@ module SubmissionsHelper
     when Language::Ruby
       "echo #{source} > #{file_name}; echo #{input} | ruby #{file_name}"
     when Language::Java
-      "echo #{source} > #{file_name}; javac #{file_name}; echo #{input} | java #{file_name_no_ext}"
+      "echo #{source} > #{file_name}; javac #{file_name} && echo #{input} | java #{file_name_no_ext}"
     when Language::C
       "echo #{source} > #{file_name}; gcc #{file_name}; echo #{input} | ./a.out"
     when Language::Cpp
