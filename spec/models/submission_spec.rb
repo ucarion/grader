@@ -150,4 +150,16 @@ describe Submission do
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
     end
   end
+
+  describe "stderr" do
+    before do
+      course.update_attributes(language: :java)
+      @submission.update_attributes!(source_code: submission_file("NoCompile.java"))
+
+      @submission.execute_code!
+      puts @submission.output
+    end
+
+    its(:output) { should_not be_blank }
+  end
 end
