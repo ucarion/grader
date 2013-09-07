@@ -21,7 +21,7 @@ module SubmissionsHelper
     cmd = [ "/bin/bash", "-c", cmd_for(language, source, file_name, input) ]
 
     container = image.run(cmd)
-    output = container.attach
+    output = container.attach(stderr: true)
 
     update_attributes(output: output)
 
