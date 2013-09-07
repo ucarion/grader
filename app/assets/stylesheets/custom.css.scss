@@ -146,3 +146,10 @@ footer {
     color: $grayLight;
   }
 }
+
+// Shows the output and expected results of submissions
+pre.output {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
