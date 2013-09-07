@@ -161,4 +161,23 @@ describe Submission do
 
     its(:output) { should_not be_blank }
   end
+
+  describe "errors" do
+    describe "compilation issues" do
+      before do
+        # This file is understood by no language; compile errors in C, C++, and Java
+        @submission.update_attributes!(source_code: submission_file("NoCompile.java"))
+      end
+
+      describe "java" do
+        before do
+          course.update_attributes(language: :java)
+        
+          @submission.execute_code!
+        end
+
+        its(:output) { should_not include("NoClassDefFoundError") }
+      end
+    end
+  end
 end
