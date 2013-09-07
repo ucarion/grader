@@ -157,7 +157,6 @@ describe Submission do
       @submission.update_attributes!(source_code: submission_file("NoCompile.java"))
 
       @submission.execute_code!
-      puts @submission.output
     end
 
     its(:output) { should_not be_blank }
