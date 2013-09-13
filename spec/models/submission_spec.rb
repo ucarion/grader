@@ -188,6 +188,16 @@ describe Submission do
 
         its(:output) { should_not include("./a.out: No such file or directory") }
       end
+
+      describe "c++" do
+        before do
+          course.update_attributes(language: :cpp)
+
+          @submission.execute_code!
+        end
+
+        its(:output) { should_not include("./a.out: No such file or directory") }
+      end
     end
   end
 end
