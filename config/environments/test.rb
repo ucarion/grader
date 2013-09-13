@@ -39,4 +39,9 @@ Grader::Application.configure do
 
   # Do not delay jobs when testing
   Delayed::Worker.delay_jobs = false
+
+  # Use different folder for tests
+  Paperclip::Attachment.default_options.merge!({
+    :path => "tmp/test/uploads/:style/:filename"
+  })
 end
