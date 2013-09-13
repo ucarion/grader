@@ -49,7 +49,7 @@ module SubmissionsHelper
     when Language::C
       "echo #{source} > #{file_name}; gcc #{file_name} && echo #{input} | ./a.out"
     when Language::Cpp
-      "echo #{source} > #{file_name}; g++ #{file_name}; echo #{input} | ./a.out"
+      "echo #{source} > #{file_name}; g++ #{file_name} && echo #{input} | ./a.out"
     when Language::Python
       "echo #{source} > #{file_name}; echo #{input} | python #{file_name}"
     end
