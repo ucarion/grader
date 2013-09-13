@@ -34,7 +34,7 @@ namespace :db do
     end
 
     puts "Evaluating the first assignment's submissions"
-    course.assignments.first.submissions do |submission|
+    course.assignments.first.submissions.each do |submission|
       submission.execute_code!
     end
 
