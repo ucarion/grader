@@ -162,6 +162,26 @@ describe "SubmissionsPages" do
         it { should have_content("submission failed tests") }
       end
     end
+
+    describe "resubmission" do
+      describe "for non-authors" do
+        before do
+          sign_in teacher
+          visit submission_path(submission)
+        end
+
+        it { should_not have_link("", href: edit_submission_path(submission)) }
+      end
+
+      describe "for authors" do
+        before do
+          sign_in student
+          visit submission_path(submission)
+        end
+
+        it { should have_link("Resubmit", href: edit_submission_path(submission)) }
+      end
+    end
   end
 
   describe "creation page" do
@@ -231,6 +251,51 @@ describe "SubmissionsPages" do
       end
 
       it { should have_selector('.alert', text: "cannot post submissions for this course") }
+    end
+  end
+
+  describe "edit page" do
+    let(:submission) { FactoryGirl.create(:submission, author: student, assignment: assignment) }
+
+    describe "authentication" do
+      before do
+        sign_in teacher
+        visit edit_submission_path(submission)
+      end
+
+      it { should have_selector('.alert', text: "edit others' submissions")}
+    end
+
+    before do
+      sign_in student
+      visit edit_submission_path(submission)
+    end
+
+    it { should have_content("Retry Submission") }
+
+    let(:submit) { "Resubmit Submission" }
+
+    describe "filled in with correct information" do
+      before do
+        attach_file "Source code", submission_file("norepeat.rb").path
+        click_button submit
+
+        submission.reload
+      end
+
+      it "should change the submission" do
+        expect(submission.source_code_file_name).to eq "norepeat.rb"
+      end
+
+      describe "after submission" do
+        it "should show the new submission's source code" do
+          expect(page).to have_content(File.read(Rails.root + submission.source_code.path))
+        end
+
+        it "should show the new submission's output" do
+          expect(page).to have_content("[0, 1, 4, 9, 16, 25]")
+        end
+      end
     end
   end
 
