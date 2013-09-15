@@ -5,6 +5,7 @@ class SubmissionsController < ApplicationController
   before_filter :check_is_own_submission_or_is_teacher, only: [:show]
   before_filter :check_is_teacher, only: [:grade]
   before_filter :check_is_teacher_for_index, only: [:index]
+  before_filter :check_is_author, only: [:edit]
 
   def show
     @submission = Submission.find(params[:id])
@@ -31,6 +32,23 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def edit
+    @submission = Submission.find(params[:id])
+  end
+
+  def update
+    @submission = Submission.find(params[:id])
+
+    if @submission.update_attributes(submission_update_params)
+      flash[:success] = "Your submission was successfully updated."
+      redirect_to @submission
+      @submission.init_status
+      @submission.execute_code!
+    else
+      render 'edit'
+    end
+  end
+
   def index
     @assignment = Assignment.find(params[:assignment_id])
   end
@@ -54,6 +72,10 @@ class SubmissionsController < ApplicationController
 
   def submission_grading_params
     params.require(:submission).permit(:grade)
+  end
+
+  def submission_update_params
+    params.require(:submission).permit(:source_code)
   end
 
   # only show the first one, because otherwise it looks weird in an alert
@@ -93,5 +115,12 @@ class SubmissionsController < ApplicationController
     teacher = assignment.course.teacher
 
     redirect_to root_path, notice: "You cannot view this page" unless current_user?(teacher)
+  end
+
+  def check_is_author
+    submission = Submission.find(params[:id])
+    author = submission.author
+
+    redirect_to root_path, notice: "You cannot edit others' submissions." unless current_user?(author)
   end
 end

@@ -1,0 +1,12 @@
+<% provide(:title, "Retry Submission") %>
+<h1>Retry Submission</h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@submission) do |f| %>
+      <%= f.label :source_code %>
+      <%= f.file_field :source_code %>
+
+      <%= f.submit "Resubmit Submission", class: "btn btn-large" %>
+    <% end %>
+  </div>
+</div>

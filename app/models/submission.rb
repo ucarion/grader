@@ -22,7 +22,7 @@ class Submission < ActiveRecord::Base
   after_create :init_status
 
   def init_status
-    self.status = Status::WAITING
+    update_attributes(status: Status::WAITING, output: nil)
   end
 
   def status_as_string
