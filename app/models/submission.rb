@@ -13,7 +13,6 @@ class Submission < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :source_files
 
-  has_attached_file :source_code
 
   validates :author_id, presence: true
   validates :assignment_id, presence: true
