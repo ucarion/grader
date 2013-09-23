@@ -11,6 +11,7 @@ class Submission < ActiveRecord::Base
   belongs_to :author, class_name: "User"
   belongs_to :assignment
   has_many :comments, dependent: :destroy
+  has_many :source_files
 
   has_attached_file :source_code
 
