@@ -13,10 +13,7 @@ describe "SubmissionsPages" do
   end
 
   describe "show page" do
-    let(:submission) do
-      student.submissions.create!(assignment: assignment,
-        source_code: File.new(Rails.root + 'spec/example_files/norepeat.rb'))
-    end
+    let(:submission) { FactoryGirl.create(:submission, author: student, assignment: assignment) }
 
     before do
       sign_in student
@@ -27,7 +24,7 @@ describe "SubmissionsPages" do
     it { should have_link(assignment.name, href: assignment_path(assignment)) }
 
     it "should show the submission's source code" do
-      source = File.read(submission.source_code.path)
+      source = File.read(submission.source_files.first.code.path)
       expect(page).to have_content(source)
     end
 
@@ -198,7 +195,10 @@ describe "SubmissionsPages" do
     it { should have_title("Create a new Submission") }
 
     describe "submitted with good information" do
-      before { attach_file "Source code", Rails.root + 'spec/example_files/norepeat.rb' }
+      before do
+        attach_file "Code", Rails.root + 'spec/example_files/norepeat.rb'
+        check "Main"
+      end
 
       it "should create a new submission on submit" do
         expect { click_button submit }.to change(Submission, :count).by(1)
@@ -277,19 +277,20 @@ describe "SubmissionsPages" do
 
     describe "filled in with correct information" do
       before do
-        attach_file "Source code", submission_file("norepeat.rb").path
+        attach_file "Code", submission_file("norepeat.rb").path
         click_button submit
 
         submission.reload
       end
 
       it "should change the submission" do
-        expect(submission.source_code_file_name).to eq "norepeat.rb"
+        expect(submission.source_files.first.code_file_name).to eq "norepeat.rb"
       end
 
       describe "after submission" do
         it "should show the new submission's source code" do
-          expect(page).to have_content(File.read(Rails.root + submission.source_code.path))
+          source = File.read(submission.source_files.first.code.path)
+          expect(page).to have_content(source)
         end
 
         it "should show the new submission's output" do
