@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130902234421) do
+ActiveRecord::Schema.define(version: 20130915221848) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20130902234421) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-    t.string   "language"
+    t.string   "language",    default: "Ruby"
   end
 
   create_table "courses_users", id: false, force: true do |t|
@@ -83,15 +83,24 @@ ActiveRecord::Schema.define(version: 20130902234421) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
+  create_table "source_files", force: true do |t|
+    t.integer  "submission_id"
+    t.boolean  "main"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "code_file_name"
+    t.string   "code_content_type"
+    t.integer  "code_file_size"
+    t.datetime "code_updated_at"
+  end
+
+  add_index "source_files", ["submission_id"], name: "index_source_files_on_submission_id"
+
   create_table "submissions", force: true do |t|
     t.integer  "assignment_id"
     t.integer  "author_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "source_code_file_name"
-    t.string   "source_code_content_type"
-    t.integer  "source_code_file_size"
-    t.datetime "source_code_updated_at"
     t.integer  "grade"
     t.text     "output"
     t.integer  "status"
