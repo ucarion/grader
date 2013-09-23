@@ -36,11 +36,18 @@ FactoryGirl.define do
   end
 
   factory :submission do
-    source_code File.new(Rails.root + 'spec/example_files/valid.rb')
-
     factory :submission_with_grade do
       grade { rand(5..10) }
     end
+
+    after(:build) do |submission, evaluator|
+      submission.source_files << FactoryGirl.create_list(:source_file, 1, submission: nil)
+    end
+  end
+
+  factory :source_file do
+    main { true }
+    code { File.new(Rails.root + 'spec/example_files/valid.rb') }
   end
 
   factory :comment do
