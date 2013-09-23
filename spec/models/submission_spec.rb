@@ -7,24 +7,22 @@ describe Submission do
   let(:assignment) { FactoryGirl.create(:assignment, course: course, input: "1 2 3 4 5") }
 
   before do
-    @submission = student.submissions.create!(assignment_id: assignment.id, 
-      source_code: File.new(Rails.root + 'spec/example_files/valid.rb'), grade: 1)
+    # @submission = student.submissions.create!(assignment_id: assignment.id)
+    # @submission.source_files.create!(code: submission_file("valid.rb"), main: true)
+    @submission = FactoryGirl.create(:submission, author: student, assignment: assignment)
   end
 
   subject { @submission }
 
   it { should respond_to(:author) }
   it { should respond_to(:assignment) }
-  it { should respond_to(:source_code) }
+  it { should respond_to(:source_files) }
   it { should respond_to(:grade) }
   it { should respond_to(:comments) }
   it { should respond_to(:output) }
   it { should respond_to(:status) }
 
   it { should be_valid }
-
-  it { should have_attached_file(:source_code) }
-  it { should validate_attachment_presence(:source_code) }
 
   describe "with no author" do
     before { @submission.author = nil }
@@ -34,6 +32,27 @@ describe Submission do
 
   describe "with no assignment" do
     before { @submission.assignment = nil }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no source files" do
+    before { @submission.source_files.clear }
+
+    it { should_not be_valid }
+  end
+
+  describe "with no main files" do
+    before { @submission.source_files.first.update_attributes(main: false) }
+
+    it { should_not be_valid }
+  end
+
+  describe "with multiple main files" do
+    before do
+      FactoryGirl.create(:source_file, submission: @submission, main: true)
+      @submission.reload
+    end
 
     it { should_not be_valid }
   end
@@ -71,7 +90,7 @@ describe Submission do
 
   describe "input" do
     before do
-      @submission.update_attributes(source_code: File.new(Rails.root + 'spec/example_files/inreader.rb'))
+      @submission.source_files.first.update_attributes(code: File.new(Rails.root + 'spec/example_files/inreader.rb'))
 
       @submission.execute_code!
     end
@@ -105,11 +124,28 @@ describe Submission do
     end
   end
 
+  describe "multiple files" do
+    before do
+      @submission.source_files.clear
+
+      course.update_attributes(language: :java)
+      FactoryGirl.create(:source_file, code: submission_file("Refer.java"), submission: @submission)
+      FactoryGirl.create(:source_file, code: submission_file("Referenced.java"), 
+        submission: @submission, main: false)
+
+      @submission.reload
+
+      @submission.execute_code!
+    end
+
+    its(:output) { should eq "Hello, there!\n" }
+  end
+
   describe "programming languages" do
     describe "java" do
       before do
         course.update_attributes!(language: :java)
-        @submission.update_attributes!(source_code: submission_file("JavaExample.java"))
+        @submission.source_files.first.update_attributes!(code: submission_file("JavaExample.java"))
 
         @submission.execute_code!
       end
@@ -120,7 +156,7 @@ describe Submission do
     describe "c" do
       before do
         course.update_attributes!(language: :c)
-        @submission.update_attributes!(source_code: submission_file("c_example.c"))
+        @submission.source_files.first.update_attributes!(code: submission_file("c_example.c"))
 
         @submission.execute_code!
       end
@@ -131,7 +167,7 @@ describe Submission do
     describe "c++" do
       before do
         course.update_attributes(language: :cpp)
-        @submission.update_attributes!(source_code: submission_file("cpp_example.cpp"))
+        @submission.source_files.first.update_attributes!(code: submission_file("cpp_example.cpp"))
 
         @submission.execute_code!
       end
@@ -142,7 +178,7 @@ describe Submission do
     describe "python" do
       before do
         course.update_attributes(language: :python)
-        @submission.update_attributes!(source_code: submission_file("pyexample.py"))
+        @submission.source_files.first.update_attributes!(code: submission_file("pyexample.py"))
 
         @submission.execute_code!
       end
@@ -154,7 +190,7 @@ describe Submission do
   describe "stderr" do
     before do
       course.update_attributes(language: :java)
-      @submission.update_attributes!(source_code: submission_file("NoCompile.java"))
+      @submission.source_files.first.update_attributes!(code: submission_file("NoCompile.java"))
 
       @submission.execute_code!
     end
@@ -166,7 +202,7 @@ describe Submission do
     describe "compilation issues" do
       before do
         # This file is understood by no language; compile errors in C, C++, and Java
-        @submission.update_attributes!(source_code: submission_file("NoCompile.java"))
+        @submission.source_files.first.update_attributes!(code: submission_file("NoCompile.java"))
       end
 
       describe "java" do
