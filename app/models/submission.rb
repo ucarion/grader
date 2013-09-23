@@ -13,6 +13,7 @@ class Submission < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :source_files
 
+  accepts_nested_attributes_for :source_files, allow_destroy: true
 
   validates :author_id, presence: true
   validates :assignment_id, presence: true

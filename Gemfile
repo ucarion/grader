@@ -64,6 +64,8 @@ gem "highcharts-rails", "~> 3.0.0"
 # For enums
 gem 'classy_enum'
 
+gem 'cocoon'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'

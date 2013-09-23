@@ -3,14 +3,19 @@
 <h1>Create a Submission</h1>
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for([@assignment, @submission]) do |f| %>
+    <%= form_for([@assignment, @submission], :html => { :multipart => true }) do |f| %>
       <%= render 'shared/submission_error_messages' %>
 
+      <%= f.hidden_field :assignment_id, value: @assignment.id %>
       <%= f.hidden_field :author_id, value: current_user.id %>
 
-      <%= f.label :source_code %>
-      <%= f.file_field :source_code %>
-
+      <div id="source_files">
+        <%= f.fields_for :source_files do |b| %>
+          <%= render 'source_file_fields', f: b %>
+        <% end %>
+        <%= link_to_add_association 'Add source file', f, :source_files %>
+      </div>
+      
       <%= f.submit "Create Submission", class: "btn btn-large" %>
     <% end %>
   </div>

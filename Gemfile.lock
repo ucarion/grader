@@ -51,6 +51,7 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.1)
       climate_control (>= 0.0.3, < 1.0)
+    cocoon (1.2.0)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -64,7 +65,7 @@ GEM
       activerecord (>= 3.0, < 4.1)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.4)
-    docker-api (1.5.2)
+    docker-api (1.5.4)
       archive-tar-minitar
       excon (>= 0.22.0)
       json
@@ -188,6 +189,7 @@ DEPENDENCIES
   bootstrap-will_paginate
   capybara
   classy_enum
+  cocoon
   coffee-rails (~> 4.0.0)
   delayed_job_active_record
   docker-api

@@ -15,12 +15,13 @@ class SubmissionsController < ApplicationController
 
   def new
     @assignment = Assignment.find(params[:assignment_id])
-    @submission = Submission.new
+    @submission = @assignment.submissions.build
+    @submission.source_files.build
   end
 
   def create
     @assignment = Assignment.find(params[:assignment_id])
-    @submission = @assignment.submissions.build(submission_params)
+    @submission = Submission.new(submission_params)
 
     if @submission.save
       @submission.create_activity :create, owner: @submission.author
@@ -67,7 +68,8 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    params.require(:submission).permit(:source_code, :author_id)
+    params.require(:submission).permit(:assignment_id, :author_id, 
+      source_files_attributes: source_file_params)
   end
 
   def submission_grading_params
@@ -75,7 +77,11 @@ class SubmissionsController < ApplicationController
   end
 
   def submission_update_params
-    params.require(:submission).permit(:source_code)
+    params.require(:submission).permit(source_files_attributes: source_file_params)
+  end
+
+  def source_file_params
+    [ :code, :main, :id, :_destroy ]
   end
 
   # only show the first one, because otherwise it looks weird in an alert
