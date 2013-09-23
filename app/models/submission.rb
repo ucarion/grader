@@ -16,8 +16,8 @@ class Submission < ActiveRecord::Base
 
   validates :author_id, presence: true
   validates :assignment_id, presence: true
-  validates_attachment :source_code, presence: true
   validates :grade, numericality: { only_integer: true }, allow_blank: true
+  validate :validate_source_files
 
   after_create :init_status
 
@@ -41,4 +41,14 @@ class Submission < ActiveRecord::Base
   end
 
   handle_asynchronously :execute_code!
+
+  private
+
+  def validate_source_files
+    if self.source_files.blank?
+      errors.add(:source_files, "Submission must have at least one attached file.")
+    elsif self.source_files.to_a.count { |file| file.main? } != 1
+      errors.add(:source_files, "Submission must have exactly one main file.")
+    end
+  end
 end
