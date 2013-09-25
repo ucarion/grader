@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_filter :check_signed_in, only: [:show, :new, :create]
-  before_filter :check_assignment_still_open, only: [:new, :create]
+  before_filter :check_assignment_still_open, only: [:new, :create, :edit, :update]
   before_filter :check_enrolled_in_corresponding_course, only: [:new, :create]
   before_filter :check_is_own_submission_or_is_teacher, only: [:show]
   before_filter :check_is_teacher, only: [:grade]
@@ -90,7 +90,12 @@ class SubmissionsController < ApplicationController
   end
 
   def check_assignment_still_open
-    assignment = Assignment.find(params[:assignment_id])
+    assignment = if params[:assignment_id]
+      Assignment.find(params[:assignment_id])
+    else
+      Submission.find(params[:id]).assignment
+    end
+    
     redirect_to root_path, notice: "This assignment is now closed." unless assignment.open?
   end
 
