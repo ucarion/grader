@@ -297,6 +297,15 @@ describe "SubmissionsPages" do
 
     let(:submit) { "Resubmit Submission" }
 
+    describe "visited after assignment is closed" do
+      before do
+        assignment.update_attributes(due_time: 1.day.ago)
+        visit current_path
+      end
+
+      it { should have_selector('.alert', text: "closed") }
+    end
+
     describe "filled in with correct information" do
       before do
         attach_file "Code", submission_file("norepeat.rb").path
