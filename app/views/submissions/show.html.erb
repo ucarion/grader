@@ -6,7 +6,7 @@
 <h1>
   Submission
 
-  <% if current_user?(@submission.author) %>
+  <% if current_user?(@submission.author) && @submission.assignment.open? %>
     <small>
       &mdash;
       <%= link_to "Resubmit Submission", edit_submission_path(@submission) %>
