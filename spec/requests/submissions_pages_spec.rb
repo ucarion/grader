@@ -116,6 +116,15 @@ describe "SubmissionsPages" do
           it { should have_content(submission.grade) }
         end
       end
+
+      describe "visited after the assignment closes" do
+        before do
+          assignment.update_attributes(due_time: 1.day.ago)
+          visit current_path
+        end
+
+        it { should_not have_link("Resubmit", href: edit_submission_path(submission)) }
+      end
     end
 
     describe "comments" do
