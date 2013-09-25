@@ -1,0 +1,8 @@
+<h4>Source Code</h4>
+
+<% @submission.source_files.each do |source_file| %>
+  <div class="source-file <%= "main" if source_file.main? %>">
+    <h4><%= source_file.code_file_name %></h4>
+     <%= content_tag(:pre, File.read(source_file.code.path)) %>
+  </div>
+<% end %>

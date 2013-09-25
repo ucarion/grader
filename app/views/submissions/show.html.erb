@@ -29,8 +29,7 @@
 </div>
 
 <hr>
-<h4>Source Code</h4>
-<%= content_tag(:pre, File.read(@submission.source_code.path)) %>
+<%= render 'source_files' %>
 
 <%= render 'output' %>
 
