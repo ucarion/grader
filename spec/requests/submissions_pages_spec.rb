@@ -28,6 +28,28 @@ describe "SubmissionsPages" do
       expect(page).to have_content(source)
     end
 
+    describe "with multiple files" do
+      before do
+        FactoryGirl.create(:source_file, submission: submission, 
+          code: submission_file("norepeat.rb"), main: false)
+      end
+
+      it "should show each source file" do
+        submission.source_files.each do |file|
+          source = File.read(file.code.path)
+
+          expect(page).to have_content(source)
+          expect(page).to have_selector('.source-file > pre', text: source.strip)
+          expect(page).to have_selector('.source-file', text: file.code_file_name)
+        end
+      end
+
+      it "should mark the main file as being main" do
+        main_file_name = submission.source_files.first.code_file_name
+        expect(page).to have_selector('.source-file.main', text: main_file_name)
+      end
+    end
+
     describe "submission output" do
       describe "if not yet executed" do
         it { should have_content("This submission is still pending") }
