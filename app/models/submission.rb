@@ -19,6 +19,7 @@ class Submission < ActiveRecord::Base
   validates :assignment_id, presence: true
   validates :grade, numericality: { only_integer: true }, allow_blank: true
   validate :validate_source_files
+  validates_associated :source_files
 
   after_create :init_status
 
