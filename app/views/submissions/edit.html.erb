@@ -2,9 +2,15 @@
 <h1>Retry Submission</h1>
 <div class="row">
   <div class="span6 offset3">
+    <%= render 'shared/submission_error_messages' %>
+    
     <%= form_for(@submission) do |f| %>
-      <%= f.label :source_code %>
-      <%= f.file_field :source_code %>
+      <div id="source_files">
+        <%= f.fields_for :source_files do |b| %>
+          <%= render 'source_file_fields', f: b %>
+        <% end %>
+        <%= link_to_add_association 'Add source file', f, :source_files %>
+      </div>
 
       <%= f.submit "Resubmit Submission", class: "btn btn-large" %>
     <% end %>
