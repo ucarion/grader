@@ -64,6 +64,7 @@ gem "highcharts-rails", "~> 3.0.0"
 # For enums
 gem 'classy_enum'
 
+# For nested forms
 gem 'cocoon'
 
 group :test do
