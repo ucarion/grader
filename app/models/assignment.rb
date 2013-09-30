@@ -1,5 +1,6 @@
 class Assignment < ActiveRecord::Base
   include PublicActivity::Common
+  include PlagiarismHelper
   
   belongs_to :course
   has_many :submissions, dependent: :destroy
@@ -30,5 +31,9 @@ class Assignment < ActiveRecord::Base
     end
 
     sum.to_f / submissions.count
+  end
+
+  def test_for_plagiarism!
+    find_and_report_plagiarism!(self)
   end
 end
