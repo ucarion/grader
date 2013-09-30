@@ -21,6 +21,7 @@ describe Submission do
   it { should respond_to(:comments) }
   it { should respond_to(:output) }
   it { should respond_to(:status) }
+  it { should respond_to(:main_file) }
 
   it { should be_valid }
 
@@ -235,5 +236,13 @@ describe Submission do
         its(:output) { should_not include("./a.out: No such file or directory") }
       end
     end
+  end
+
+  describe "main_file" do
+    before do
+      FactoryGirl.create(:source_file, submission: @submission, main: false)
+    end
+
+    its(:main_file) { should eq @submission.source_files.first }
   end
 end
