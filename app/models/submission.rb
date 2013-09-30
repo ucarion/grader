@@ -44,6 +44,10 @@ class Submission < ActiveRecord::Base
 
   handle_asynchronously :execute_code!
 
+  def main_file
+    source_files.find { |file| file.main? }
+  end
+
   private
 
   def validate_source_files
