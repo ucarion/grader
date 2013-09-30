@@ -67,6 +67,9 @@ gem 'classy_enum'
 # For nested forms
 gem 'cocoon'
 
+# For finding string similarity
+gem 'damerau-levenshtein'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
