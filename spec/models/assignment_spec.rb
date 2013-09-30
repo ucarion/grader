@@ -20,6 +20,7 @@ describe Assignment do
   it { should respond_to(:point_value) }
   it { should respond_to(:expected_output) }
   it { should respond_to(:input) }
+  it { should respond_to(:test_for_plagiarism!) }
 
   its(:course) { should eq course }
 
@@ -114,6 +115,42 @@ describe Assignment do
       submissions.each do |submission|
         expect { Submission.find(submission) }.to raise_error(ActiveRecord::RecordNotFound)
       end
+    end
+  end
+
+  describe "testing for plagiarism" do
+    let(:student1) { FactoryGirl.create(:student) }
+    let(:student2) { FactoryGirl.create(:student) }
+    let(:student3) { FactoryGirl.create(:student) }
+
+    before do
+      course.students << student1
+      course.students << student2
+
+      # TODO do this in a less yucky fashion -- skip the source-file creation callback?
+      cheat1 = FactoryGirl.create(:submission, assignment: @assignment, author: student1)
+      cheat1.source_files.clear
+      FactoryGirl.create(:source_file, code: submission_file("prime/doppel.rb"), submission: cheat1)
+
+      cheat2 = FactoryGirl.create(:submission, assignment: @assignment, author: student2)
+      cheat2.source_files.clear
+      FactoryGirl.create(:source_file, code: submission_file("prime/ganger.rb"), submission: cheat2)
+
+      cheat3 = FactoryGirl.create(:submission, assignment: @assignment, author: student3)
+      cheat3.source_files.clear
+      FactoryGirl.create(:source_file, code: submission_file("prime/original.rb"), submission: cheat3)
+
+      @assignment.test_for_plagiarism!
+    end
+
+    it "should have found the plagiarized submissions" do
+      cheat1 = student1.submissions.first
+      cheat2 = student2.submissions.first
+      noncheat = student3.submissions.first
+
+      expect(cheat1.plagiarizing).to eq [ cheat2.id ]
+      expect(cheat2.plagiarizing).to eq [ cheat1.id ]
+      expect(noncheat.plagiarizing).to be_empty
     end
   end
 end
