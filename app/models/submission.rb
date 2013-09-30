@@ -8,6 +8,8 @@ class Submission < ActiveRecord::Base
     OUTPUT_INCORRECT = 2
   end
   
+  serialize :plagiarizing, Array
+
   belongs_to :author, class_name: "User"
   belongs_to :assignment
   has_many :comments, dependent: :destroy

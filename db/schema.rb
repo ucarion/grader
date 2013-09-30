@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130915221848) do
+ActiveRecord::Schema.define(version: 20130929234459) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20130915221848) do
     t.integer  "grade"
     t.text     "output"
     t.integer  "status"
+    t.text     "plagiarizing"
   end
 
   create_table "users", force: true do |t|
