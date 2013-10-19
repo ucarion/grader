@@ -43,7 +43,7 @@ module SubmissionsHelper
 
   private
 
-  DOCKER_IMAGE_ID = '3d18420281f8'
+  DOCKER_IMAGE_ID = '3afdd8d91e29'
 
   def cmd_for(language, main, input)
     file_name = main.code_file_name
