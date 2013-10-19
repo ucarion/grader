@@ -52,13 +52,7 @@ describe "Authentication Pages" do
       describe "when trying to edit a user" do
         before { visit edit_user_path(user) }
 
-        it { should have_title('Sign in') }
-
-        describe "after logging in" do
-          before { sign_in(user) }
-
-          it { should have_title('Edit Account') }
-        end
+        it { should have_selector('.alert.alert-error') }
       end
 
       describe "when trying to create a course" do

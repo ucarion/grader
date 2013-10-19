@@ -1,3 +1,9 @@
+PATH
+  remote: ~/ruby/candela
+  specs:
+    candela (0.0.1)
+      rails (~> 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -188,6 +194,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass
   bootstrap-will_paginate
+  candela!
   capybara
   classy_enum
   cocoon

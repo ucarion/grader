@@ -70,6 +70,8 @@ gem 'cocoon'
 # For finding string similarity
 gem 'damerau-levenshtein'
 
+gem 'candela', path: '~/ruby/candela'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'

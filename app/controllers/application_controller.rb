@@ -5,4 +5,9 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
   include PublicActivity::StoreController
+
+  rescue_from Candela::AccessDeniedError do |error|
+    flash[:error] = "You are not allowed to complete this action."
+    redirect_to root_path
+  end
 end
