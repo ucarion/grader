@@ -120,6 +120,26 @@ describe "AssignmentPages" do
       end
     end
 
+    describe "plagiarism information" do
+      describe "for teachers" do
+        before do
+          sign_in teacher
+          visit assignment_path(assignment)
+        end
+
+        it { should have_link "plagiarism", plagiarism_assignment_path(assignment) }
+      end
+
+      describe "for non-teachers" do
+        before do
+          sign_out
+          visit assignment_path(assignment)
+        end
+
+        it { should_not have_link "plagiarism", plagiarism_assignment_path(assignment) }
+      end
+    end
+
     describe "for signed out users" do
       before do
         sign_out
@@ -190,6 +210,33 @@ describe "AssignmentPages" do
       before { click_button submit }
 
       it { should have_selector('.alert.alert-success') }
+    end
+  end
+
+  describe "plagiarism page" do
+    let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+    let(:student1) { FactoryGirl.create(:student) }
+    let(:student2) { FactoryGirl.create(:student) }
+    let(:student3) { FactoryGirl.create(:student) }
+
+    before do
+      course.students << student1
+      course.students << student2
+
+      # TODO do this in a less yucky fashion -- skip the source-file creation callback?
+      cheat1 = FactoryGirl.create(:submission, assignment: @assignment, author: student1)
+      cheat1.source_files.clear
+      FactoryGirl.create(:source_file, code: submission_file("prime/doppel.rb"), submission: cheat1)
+
+      cheat2 = FactoryGirl.create(:submission, assignment: @assignment, author: student2)
+      cheat2.source_files.clear
+      FactoryGirl.create(:source_file, code: submission_file("prime/ganger.rb"), submission: cheat2)
+
+      cheat3 = FactoryGirl.create(:submission, assignment: @assignment, author: student3)
+      cheat3.source_files.clear
+      FactoryGirl.create(:source_file, code: submission_file("prime/original.rb"), submission: cheat3)
+
+      assignment.test_for_plagiarism!
     end
   end
 end

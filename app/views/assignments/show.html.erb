@@ -13,6 +13,9 @@
   <% if current_user?(@assignment.course.teacher) %>
     <%= link_with_icon('gear', "View submissions for this assignment", 
       assignment_submissions_path(@assignment), class: "btn btn-success") %>
+    <br /><br />
+    <%= link_with_icon('exclamation-sign', "View plagiarism in this assignment", 
+      plagiarism_assignment_path(@assignment), class: "btn btn-danger") %>
   <% elsif @assignment.course.students.include?(current_user) %>
     <% if @user_submission %>
       <%= link_with_icon('pencil', "See your submission for this assignment", 

@@ -18,6 +18,10 @@ Grader::Application.routes.draw do
       end
 
       resources :assignments do
+        member do
+          get :plagiarism
+        end
+
         resources :submissions do
           member do
             patch :grade
