@@ -5,6 +5,8 @@
     <%= render 'shared/course_error_messages' %>
     
     <%= form_for(@course) do |f| %>
+      <%= f.hidden_field :teacher_id, value: current_user.id %>
+
       <%= f.label :name %>
       <%= f.text_field :name %>
 
