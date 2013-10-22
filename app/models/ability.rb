@@ -28,7 +28,9 @@ class Ability < Candela::Ability
         course.teacher != user && course.students.exclude?(user)
       end
 
-      can :create, Assignment
+      can :create, Assignment do |assignment|
+        assignment.course.teacher == user
+      end
 
       can :update, Assignment do |assignment|
         assignment.course.teacher == user

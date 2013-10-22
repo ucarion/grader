@@ -105,6 +105,12 @@ describe "Authentication Pages" do
 
           it { should_not have_title('Edit Assignment') }
         end
+
+        describe "creating an assignment for another's course" do
+          before { visit new_course_assignment_path(course) }
+
+          it { should have_selector('.alert.alert-error') }
+        end
       end
 
       describe "as a non-admin" do
