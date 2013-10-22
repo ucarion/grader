@@ -70,13 +70,13 @@ describe "Authentication Pages" do
       describe "when trying to create an assignment" do
         before { visit new_course_assignment_path(course) }
 
-        it { should have_title('Sign in') }
+        it { should have_selector('.alert.alert-error') }
       end
 
       describe "when editing an assignment" do
         before { visit edit_assignment_path(assignment) }
 
-        it { should have_title('Sign in') }
+        it { should have_selector('.alert.alert-error') }
       end
 
       describe "as the correct user" do
