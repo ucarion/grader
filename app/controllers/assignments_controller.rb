@@ -1,25 +1,19 @@
 class AssignmentsController < ApplicationController
-  before_filter :check_signed_in, only: [:new, :create, :update, :edit]
-  before_filter :check_editing_own_assignment, only: [:update, :edit, :destroy]
   before_filter :change_due_time_param, only: [:update, :create]
 
-  def show
-    @assignment = Assignment.find(params[:id])
+  authorize_resource parent: :course
 
+  def show
     if signed_in?
       @user_submission = Submission.where(assignment: @assignment, author: current_user).first
     end
   end
 
   def new
-    @course = Course.find(params[:course_id])
-    @assignment = Assignment.new
+    @course = @assignment.course # TODO: be able to not have to do this.
   end
 
   def create
-    @course = Course.find(params[:course_id])
-    @assignment = @course.assignments.build(assignment_params)
-
     if @assignment.save
       @assignment.create_activity :create, owner: @assignment.course.teacher
       flash[:success] = "Assignment #{@assignment.name} created successfully."
@@ -30,12 +24,9 @@ class AssignmentsController < ApplicationController
   end
 
   def edit
-    @assignment = Assignment.find(params[:id])
   end
 
   def update
-    @assignment = Assignment.find(params[:id])
-
     if @assignment.update_attributes(assignment_params)
       flash[:success] = "Assignment #{@assignment.name} updated successfully"
       redirect_to @assignment.course
@@ -45,7 +36,7 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    assignment = Assignment.find(params[:id]).destroy
+    assignment = @assignment.destroy
     flash[:success] = "Assignment #{assignment.name} was destroyed successfully."
     redirect_to assignment.course
   end
@@ -53,7 +44,8 @@ class AssignmentsController < ApplicationController
   private
 
   def assignment_params
-    params.require(:assignment).permit(:name, :description, :due_time, :point_value, :expected_output, :input)
+    params.require(:assignment).permit(:name, :description, :due_time, :point_value,
+      :expected_output, :input, :course_id)
   end
 
   def change_due_time_param

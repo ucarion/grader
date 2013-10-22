@@ -3,6 +3,7 @@ class Ability < Candela::Ability
     can :read, User
     can :index, User, collection: true
     can :read, Course
+    can :read, Assignment
 
     if user
       can :update, User do |modified_user|
@@ -25,6 +26,16 @@ class Ability < Candela::Ability
 
       can :enroll, Course do |course|
         course.teacher != user && course.students.exclude?(user)
+      end
+
+      can :create, Assignment
+
+      can :update, Assignment do |assignment|
+        assignment.course.teacher == user
+      end
+
+      can :destroy, Assignment do |assignment|
+        assignment.course.teacher == user
       end
 
       if user.admin?
