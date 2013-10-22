@@ -1,7 +1,9 @@
 <h1>Grader</h1>
 <% if signed_in? %>
   <% @activities.each do |activity| %>
-    <%= render_activity(activity, layout: "layouts/activity") %>
+    <% if activity && activity.trackable %>
+      <%= render_activity(activity, layout: "layouts/activity") %>
+    <% end %>
   <% end %>
 <% else %>
   <p>Grade your Ruby programs and stuff.</p>
