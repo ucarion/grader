@@ -207,4 +207,27 @@ describe User do
       expect(@user.assignments(only_open: true)).to eq [assignment2, assignment1]
     end
   end
+
+  describe "submissions" do
+    describe "cascading deletions" do
+      let(:teacher) { FactoryGirl.create(:teacher) }
+      let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+      let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+
+      before do
+        @user.save
+        FactoryGirl.create(:submission, assignment: assignment, author: @user)
+      end
+
+      it "should cascade-destroy submissions on user submissions" do
+        submissions = @user.submissions.to_a
+
+        @user.destroy
+
+        submissions.each do |submission|
+          expect { Submission.find(submission) }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+  end
 end
