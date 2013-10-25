@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   before_filter :change_due_time_param, only: [:update, :create]
 
-  authorize_resource parent: :course
+  authorize_resource
 
   def show
     if signed_in?
@@ -39,6 +39,22 @@ class AssignmentsController < ApplicationController
     assignment = @assignment.destroy
     flash[:success] = "Assignment #{assignment.name} was destroyed successfully."
     redirect_to assignment.course
+  end
+
+  load_resources do
+    before(:show, :edit, :update, :destroy) do
+      @assignment = Assignment.find(params[:id])
+    end
+
+    before(:new) do
+      @course = Course.find(params[:course_id])
+      @assignment = @course.assignments.new
+    end
+
+    before(:create) do
+      @course = Course.find(params[:course_id])
+      @assignment = @course.assignments.build(assignment_params)
+    end
   end
 
   private
