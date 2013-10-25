@@ -1,7 +1,7 @@
 class Ability < Candela::Ability
   def initialize(user)
     can :read, User
-    can :index, User, collection: true
+    can :index, User
     can :read, Course
     can :read, Assignment
 

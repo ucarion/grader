@@ -40,6 +40,28 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  load_resources do
+    before(:show, :edit, :update) do
+      @user = User.find(params[:id])
+    end
+
+    before(:new) do
+      @user = User.new
+    end
+
+    before(:create) do
+      @user = User.new(user_params)
+    end
+
+    before(:destroy) do
+      @user = User.find(params[:id])
+    end
+
+    before(:index) do
+      @users = User.all
+    end
+  end
+
   private
 
   def user_params
