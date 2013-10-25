@@ -43,9 +43,23 @@ class CoursesController < ApplicationController
   def analytics
   end
 
+  load_resources do
+    before(:show, :edit, :update, :destroy, :enroll, :analytics) do
+      @course = Course.find(params[:id])
+    end
+
+    before(:new) do
+      @course = Course.new
+    end
+
+    before(:create) do
+      @course = current_user.taught_courses.build(course_params)
+    end
+  end
+
   private
 
   def course_params
-    params.require(:course).permit(:name, :description, :language, :teacher_id)
+    params.require(:course).permit(:name, :description, :language)
   end
 end
