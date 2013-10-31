@@ -40,6 +40,28 @@ class Ability < Candela::Ability
         assignment.course.teacher == user
       end
 
+      can :read, Submission do |submission|
+        submission.author == user || submission.assignment.course.teacher == user
+      end
+
+      can :create, Submission do |submission|
+        submission.assignment.course.students.include?(user) && submission.assignment.open?
+      end
+
+      can :update, Submission do |submission|
+        submission.assignment.course.students.include?(user) && submission.assignment.open?
+      end
+
+      can :grade, Submission do |submission|
+        submission.assignment.course.teacher == user
+      end
+
+      can :index, Submission do |submissions|
+        # Bleckh... this probably can be done in a better way
+        assignment = Assignment.find(submissions.where_values_hash["assignment_id"])
+        assignment.course.teacher == user
+      end
+
       if user.admin?
         can :destroy, User do |destroyed_user|
           destroyed_user != user

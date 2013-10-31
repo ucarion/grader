@@ -73,7 +73,7 @@ describe "SubmissionsPages" do
           visit submission_path(submission)
         end
 
-        it { should have_title("Sign in") }
+        it { should have_selector('.alert.alert-error') }
       end
 
       describe "visited by another user" do
@@ -84,7 +84,7 @@ describe "SubmissionsPages" do
           visit submission_path(submission)
         end
 
-        it { should have_selector('.alert', text: "others' submissions") }
+        it { should have_selector('.alert.alert-error') }
       end
 
       describe "visited by the teacher" do
@@ -259,7 +259,7 @@ describe "SubmissionsPages" do
         visit new_assignment_submission_path(assignment)
       end
 
-      it { should have_selector('.alert', text: "closed") }
+      it { should have_selector('.alert.alert-error') }
     end
 
     describe "visited while not signed in" do
@@ -269,7 +269,7 @@ describe "SubmissionsPages" do
         visit new_assignment_submission_path(assignment)
       end
 
-      it { should have_title("Sign in") }
+      it { should have_selector('.alert.alert-error') }
     end
 
     describe "visited by a user who is not enrolled in the corresponding course" do
@@ -281,7 +281,7 @@ describe "SubmissionsPages" do
         visit new_assignment_submission_path(assignment)
       end
 
-      it { should have_selector('.alert', text: "cannot post submissions for this course") }
+      it { should have_selector('.alert.alert-error') }
     end
   end
 
@@ -294,7 +294,7 @@ describe "SubmissionsPages" do
         visit edit_submission_path(submission)
       end
 
-      it { should have_selector('.alert', text: "edit others' submissions")}
+      it { should have_selector('.alert.alert-error') }
     end
 
     before do
@@ -312,7 +312,7 @@ describe "SubmissionsPages" do
         visit current_path
       end
 
-      it { should have_selector('.alert', text: "closed") }
+      it { should have_selector('.alert.alert-error') }
     end
 
     describe "filled in with correct information" do
@@ -343,37 +343,48 @@ describe "SubmissionsPages" do
   describe "assignment submissions page" do
     let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
-    before do
-      5.times do |n|
-        student = FactoryGirl.create(:student)
-        course.students << student
-        FactoryGirl.create(:submission, assignment: assignment, author: student, grade: n)
-      end
-    end
-
-    describe "when visisted by a teacher" do
+    describe "when there are no submissions" do
       before do
         sign_in teacher
         visit assignment_submissions_path(assignment)
       end
 
-      it { should have_title("Submissions for #{assignment.name}") }
-
-      it "should list each of the assignment's submissions' authors" do
-        assignment.submissions.each do |submission|
-          expect(page).to have_content(submission.author.name)
-          expect(page).to have_content("#{submission.grade} / #{submission.assignment.point_value}")
-        end
-      end
+      it { should have_content("no submissions") }
     end
 
-    describe "when visited by a non-teacher" do
+    describe "when there are submissions" do
       before do
-        sign_in assignment.course.students.last # a student of the assignment
-        visit assignment_submissions_path(assignment)
+        5.times do |n|
+          student = FactoryGirl.create(:student)
+          course.students << student
+          FactoryGirl.create(:submission, assignment: assignment, author: student, grade: n)
+        end
       end
 
-      it { should have_selector('.alert', text: "cannot view")}
+      describe "when visisted by a teacher" do
+        before do
+          sign_in teacher
+          visit assignment_submissions_path(assignment)
+        end
+
+        it { should have_title("Submissions for #{assignment.name}") }
+
+        it "should list each of the assignment's submissions' authors" do
+          assignment.submissions.each do |submission|
+            expect(page).to have_content(submission.author.name)
+            expect(page).to have_content("#{submission.grade} / #{submission.assignment.point_value}")
+          end
+        end
+      end
+
+      describe "when visited by a non-teacher" do
+        before do
+          sign_in assignment.course.students.last # a student of the assignment
+          visit assignment_submissions_path(assignment)
+        end
+
+        it { should have_selector('.alert.alert-error') }
+      end
     end
   end
 end
