@@ -4,7 +4,14 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 group :development do
+  gem 'awesome_print'
+
   gem 'debugger'
+
+  # Charliesome's better errors and REPL
+  # Make sure this _never_ goes in production.
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 # Use sqlite3 as the database for Active Record
