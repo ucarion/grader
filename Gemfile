@@ -81,6 +81,9 @@ gem 'cocoon'
 # For finding string similarity
 gem 'damerau-levenshtein'
 
+# For displaying similar strings
+gem 'diffy'
+
 gem 'candela', path: '~/ruby/candela'
 
 group :test do

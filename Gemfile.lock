@@ -87,6 +87,7 @@ GEM
       activerecord (>= 3.0, < 4.1)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.4)
+    diffy (3.0.1)
     docker-api (1.5.4)
       archive-tar-minitar
       excon (>= 0.22.0)
@@ -220,6 +221,7 @@ DEPENDENCIES
   damerau-levenshtein
   debugger
   delayed_job_active_record
+  diffy
   docker-api
   factory_girl_rails
   faker

@@ -1,0 +1,21 @@
+<%= provide(:title, "Submission Comparison") %>
+
+<h1>Submission Comparison</h1>
+<h2>
+  <%= @submission_a.author.name %> vs. <%= @submission_b.author.name %>
+</h2>
+
+<div class="row row-fluid">
+  <%= diff_between(@submission_a, @submission_b).html_safe %>
+</div>
+
+<div class="row row-fluid">
+  <div class="span6">
+    <h4><%= @submission_a.main_file.code_file_name %></h4>
+    <%= content_tag(:pre, File.read(@submission_a.main_file.code.path)) %>
+  </div>
+  <div class="span6">
+    <h4><%= @submission_b.main_file.code_file_name %></h4>
+    <%= content_tag(:pre, File.read(@submission_b.main_file.code.path)) %>
+  </div>
+</div>

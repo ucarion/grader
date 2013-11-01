@@ -40,6 +40,14 @@ class Ability < Candela::Ability
         assignment.course.teacher == user
       end
 
+      can :plagiarism, Assignment do |assignment|
+        assignment.course.teacher == user
+      end
+
+      can :compare, Assignment do |assignment|
+        assignment.course.teacher == user
+      end
+
       can :read, Submission do |submission|
         submission.author == user || submission.assignment.course.teacher == user
       end

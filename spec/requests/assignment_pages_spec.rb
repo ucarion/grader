@@ -213,7 +213,9 @@ describe "AssignmentPages" do
     end
   end
 
-  describe "plagiarism page" do
+  describe "assignment plagiarism page" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
     let(:assignment) { FactoryGirl.create(:assignment, course: course) }
     let(:student1) { FactoryGirl.create(:student) }
     let(:student2) { FactoryGirl.create(:student) }
@@ -224,19 +226,97 @@ describe "AssignmentPages" do
       course.students << student2
 
       # TODO do this in a less yucky fashion -- skip the source-file creation callback?
-      cheat1 = FactoryGirl.create(:submission, assignment: @assignment, author: student1)
+      cheat1 = FactoryGirl.create(:submission, assignment: assignment, author: student1)
       cheat1.source_files.clear
       FactoryGirl.create(:source_file, code: submission_file("prime/doppel.rb"), submission: cheat1)
 
-      cheat2 = FactoryGirl.create(:submission, assignment: @assignment, author: student2)
+      cheat2 = FactoryGirl.create(:submission, assignment: assignment, author: student2)
       cheat2.source_files.clear
       FactoryGirl.create(:source_file, code: submission_file("prime/ganger.rb"), submission: cheat2)
 
-      cheat3 = FactoryGirl.create(:submission, assignment: @assignment, author: student3)
+      cheat3 = FactoryGirl.create(:submission, assignment: assignment, author: student3)
       cheat3.source_files.clear
       FactoryGirl.create(:source_file, code: submission_file("prime/original.rb"), submission: cheat3)
+    end
 
-      assignment.test_for_plagiarism!
+    describe "viewed by a non-teacher" do
+      before do
+        sign_in student1
+        visit plagiarism_assignment_path(assignment)
+      end
+
+      it { should have_selector('.alert.alert-error') }
+    end
+
+    describe "viewed by the teacher" do
+      before do
+        sign_in teacher
+        visit plagiarism_assignment_path(assignment)
+      end
+
+      it { should have_content("Plagiarism for #{assignment.name}") }
+
+      # TODO: Test to see that the plagiarised ones are highlighted
+      it "should list each submission and what it copied from" do
+        assignment.submissions.each do |submission|
+          expect(page).to have_content(submission.author.name)
+        end
+      end
+    end
+
+    # Maybe this should get its own context outside of plagiarism?
+    # I'd like to re-use this gigantic before block here, though ...
+    describe "submission comparison" do
+      let(:submission1) { student1.submissions.first }
+      let(:submission2) { student2.submissions.first }
+
+      describe "comparing with a submission that doesn't belong to the assignment" do
+        before do
+          other_student = FactoryGirl.create(:student)
+          course.students << other_student
+
+          other_assignment = FactoryGirl.create(:assignment, course: course)
+
+          other_submission = FactoryGirl.create(:submission, assignment: other_assignment, author: other_student)
+
+          sign_in teacher
+          visit compare_assignment_path(assignment, submission1, other_submission)
+        end
+
+        it { should have_selector('.alert.alert-error') }
+      end
+
+      describe "visited by a non-teacher" do
+        before do
+          sign_in student1
+          visit compare_assignment_path(assignment, submission1, submission2)
+        end
+
+        it { should have_selector('.alert.alert-error') }
+      end
+
+      describe "visited by the teacher" do
+        let(:sub1_source) { File.read(submission1.main_file.code.path) }
+        let(:sub2_source) { File.read(submission2.main_file.code.path) }
+        
+        before do
+          sign_in teacher
+          visit compare_assignment_path(assignment, submission1, submission2)
+        end
+
+        it { should have_content("Comparison") }
+
+        describe "source file contents" do
+          it { should have_content(sub1_source) }
+          it { should have_content(sub2_source) }
+        end
+
+        describe "diff" do
+          let(:diff) { Diffy::Diff.new(sub1_source, sub2_source).to_s(:html) }
+
+          it { should have_content(diff) }
+        end
+      end
     end
   end
 end

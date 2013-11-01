@@ -41,8 +41,21 @@ class AssignmentsController < ApplicationController
     redirect_to assignment.course
   end
 
+  def plagiarism
+  end
+
+  def compare
+    @submission_a = Submission.find(params[:submission_a])
+    @submission_b = Submission.find(params[:submission_b])
+
+    if @submission_a.assignment != @assignment || @submission_b.assignment != @assignment
+      flash[:error] = "This submission is not for that assignment."
+      redirect_to root_path
+    end
+  end
+
   load_resources do
-    before(:show, :edit, :update, :destroy) do
+    before(:show, :edit, :update, :destroy, :plagiarism, :compare) do
       @assignment = Assignment.find(params[:id])
     end
 

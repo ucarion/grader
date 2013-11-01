@@ -20,6 +20,7 @@ Grader::Application.routes.draw do
       resources :assignments do
         member do
           get :plagiarism
+          get 'compare/:submission_a/:submission_b', action: 'compare', as: 'compare'
         end
 
         resources :submissions do
