@@ -1,13 +1,18 @@
 class UsersController < ApplicationController
-  authorize_resource
-
   def show
+    @user = User.find(params[:id])
+    authorize @user
   end
 
   def new
+    @user = User.new
+    authorize @user
   end
 
   def create
+    @user = User.new(user_params)
+    authorize @user
+
     if @user.save
       flash[:success] = "Welcome, #{@user.name}!"
       sign_in @user
@@ -18,9 +23,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
+    authorize @user
   end
 
   def update
+    @user = User.find(params[:id])
+    authorize @user
+
     if @user.update_attributes(user_params)
       flash[:success] = "Successfully updated your account information."
       sign_in @user
@@ -31,35 +41,16 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = policy_scope(User).paginate(page: params[:page])
   end
 
   def destroy
+    @user = User.find(params[:id])
+    authorize @user
+
     user = @user.destroy
     flash[:success] = "User #{user.name} was destroyed."
     redirect_to users_url
-  end
-
-  load_resources do
-    before(:show, :edit, :update) do
-      @user = User.find(params[:id])
-    end
-
-    before(:new) do
-      @user = User.new
-    end
-
-    before(:create) do
-      @user = User.new(user_params)
-    end
-
-    before(:destroy) do
-      @user = User.find(params[:id])
-    end
-
-    before(:index) do
-      @users = User.all
-    end
   end
 
   private
