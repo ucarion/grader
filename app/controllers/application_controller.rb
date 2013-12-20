@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
   include PublicActivity::StoreController
+  include Pundit
 
-  rescue_from Candela::AccessDeniedError do |error|
-    flash[:error] = "You are not allowed to complete this action."
-    redirect_to root_path
-  end
+  # Make sure Pundit is always used, except on the static pages
+  after_filter :verify_authorized, :except => :index
+  after_filter :verify_policy_scoped, :only => :index
 end
