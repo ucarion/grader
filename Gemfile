@@ -6,8 +6,6 @@ gem 'rails', '4.0.0'
 group :development do
   gem 'awesome_print'
 
-  gem 'debugger'
-
   # Charliesome's better errors and REPL
   # Make sure this _never_ goes in production.
   gem 'better_errors'
@@ -25,16 +23,19 @@ group :production do
   gem 'pg'
 end
 
-group :assets do
-  # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 4.0.0'
+# For authorization
+gem 'pundit'
 
-  # Use Uglifier as compressor for JavaScript assets
-  gem 'uglifier', '>= 1.3.0'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
 
-  # Use CoffeeScript for .js.coffee assets and views
-  gem 'coffee-rails', '~> 4.0.0'
-end
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+
+gem 'therubyracer'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -83,8 +84,6 @@ gem 'damerau-levenshtein'
 
 # For displaying similar strings
 gem 'diffy'
-
-gem 'candela', path: '~/ruby/candela'
 
 group :test do
   gem 'selenium-webdriver'
