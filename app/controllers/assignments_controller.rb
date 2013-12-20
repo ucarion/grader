@@ -1,19 +1,28 @@
 class AssignmentsController < ApplicationController
   before_filter :change_due_time_param, only: [:update, :create]
 
-  authorize_resource
-
   def show
+    @assignment = Assignment.find(params[:id])
+    authorize @assignment
+
     if signed_in?
       @user_submission = Submission.where(assignment: @assignment, author: current_user).first
     end
   end
 
   def new
-    @course = @assignment.course # TODO: be able to not have to do this.
+    @course = Course.find(params[:course_id])
+    @assignment = @course.assignments.new
+
+    authorize @assignment
   end
 
   def create
+    @course = Course.find(params[:course_id])
+    @assignment = @course.assignments.build(assignment_params)
+
+    authorize @assignment
+
     if @assignment.save
       @assignment.create_activity :create, owner: @assignment.course.teacher
       flash[:success] = "Assignment #{@assignment.name} created successfully."
@@ -24,9 +33,14 @@ class AssignmentsController < ApplicationController
   end
 
   def edit
+    @assignment = Assignment.find(params[:id])
+    authorize @assignment
   end
 
   def update
+    @assignment = Assignment.find(params[:id])
+    authorize @assignment
+
     if @assignment.update_attributes(assignment_params)
       flash[:success] = "Assignment #{@assignment.name} updated successfully"
       redirect_to @assignment.course
@@ -36,37 +50,30 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
+    @assignment = Assignment.find(params[:id])
+    authorize @assignment
+
     assignment = @assignment.destroy
     flash[:success] = "Assignment #{assignment.name} was destroyed successfully."
     redirect_to assignment.course
   end
 
   def plagiarism
+    @assignment = Assignment.find(params[:id])
+
+    authorize @assignment
   end
 
   def compare
+    @assignment = Assignment.find(params[:id])
+    authorize @assignment
+
     @submission_a = Submission.find(params[:submission_a])
     @submission_b = Submission.find(params[:submission_b])
 
     if @submission_a.assignment != @assignment || @submission_b.assignment != @assignment
       flash[:error] = "This submission is not for that assignment."
       redirect_to root_path
-    end
-  end
-
-  load_resources do
-    before(:show, :edit, :update, :destroy, :plagiarism, :compare) do
-      @assignment = Assignment.find(params[:id])
-    end
-
-    before(:new) do
-      @course = Course.find(params[:course_id])
-      @assignment = @course.assignments.new
-    end
-
-    before(:create) do
-      @course = Course.find(params[:course_id])
-      @assignment = @course.assignments.build(assignment_params)
     end
   end
 
