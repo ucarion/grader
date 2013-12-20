@@ -2,7 +2,7 @@
   <td><%= gravatar_for user, size: 60 %></td>
   <td>
     <%= link_to user.name, user %>
-    <% if can? :destroy, user %>
+    <% if policy(user).destroy? %>
       &mdash; <%= link_to "delete", user, method: :delete, data: { confirm: "Are you sure you want to delete #{user.name}?" } %>
     <% end %>
   </td>
