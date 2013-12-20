@@ -1,13 +1,18 @@
 class CoursesController < ApplicationController
-  authorize_resource
-
   def show
+    @course = Course.find(params[:id])
+    authorize @course
   end
 
   def new
+    @course = Course.new
+    authorize @course
   end
 
   def create
+    @course = current_user.taught_courses.build(course_params)
+    authorize @course
+
     if @course.save
       flash[:success] = "Course #{@course.name} created successfully!"
       redirect_to @course
@@ -17,9 +22,14 @@ class CoursesController < ApplicationController
   end
 
   def edit
+    @course = Course.find(params[:id])
+    authorize @course
   end
 
   def update
+    @course = Course.find(params[:id])
+    authorize @course
+
     if @course.update_attributes(course_params)
       flash[:success] = "Course #{@course.name} was updated successfully."
       redirect_to @course
@@ -29,32 +39,26 @@ class CoursesController < ApplicationController
   end
 
   def destroy
+    @course = Course.find(params[:id])
+    authorize @course
+
     course = @course.destroy
     flash[:success] = "Course #{course.name} was destroyed successfully."
     redirect_to root_path
   end
 
   def enroll
+    @course = Course.find(params[:id])
+    authorize @course
+
     @course.students << current_user
     flash[:success] = "You have been enrolled into the course #{@course.name}"
     redirect_to @course
   end
 
   def analytics
-  end
-
-  load_resources do
-    before(:show, :edit, :update, :destroy, :enroll, :analytics) do
-      @course = Course.find(params[:id])
-    end
-
-    before(:new) do
-      @course = Course.new
-    end
-
-    before(:create) do
-      @course = current_user.taught_courses.build(course_params)
-    end
+    @course = Course.find(params[:id])
+    authorize @course
   end
 
   private
