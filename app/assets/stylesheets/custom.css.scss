@@ -19,9 +19,9 @@ input, textarea {
 footer {
   hr {
     // http://stackoverflow.com/a/4151954/1462197
-    background-color: $grayLighter;
+    background-color: $gray-lighter;
     border: 0 none;
-    color: $grayLighter;
+    color: $gray-lighter;
     height: 1px;
   }
 
@@ -37,10 +37,10 @@ footer {
     float: right;
 
     a {
-      color: $grayLight;
+      color: $gray-light;
 
       &:hover {
-        color: $grayDarker;
+        color: $gray-darker;
       }
     }
   }
@@ -74,15 +74,15 @@ footer {
 
   .participation-info {
     font-size: 16px;
-    color: $grayLight;
+    color: $gray-light;
 
     .participation-info-value {
       color: $gray;
     }
 
     hr {
-      border-top: 1px solid $grayLight;
-      border-bottom: 1px solid $grayLighter;
+      border-top: 1px solid $gray-light;
+      border-bottom: 1px solid $gray-lighter;
 
       margin-left: auto;
       margin-right: auto;
@@ -100,16 +100,16 @@ footer {
     padding-top: 5px;
     padding-bottom: 5px;
 
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid $gray-lighter;
 
     &:last-of-type {
-      border-bottom: 1px solid $grayLighter;
+      border-bottom: 1px solid $gray-lighter;
     }
   }
 
   small {
     margin-left: 10px;
-    color: $grayLight;
+    color: $gray-light;
   }
 }
 
@@ -143,7 +143,7 @@ footer {
 
   .details {
     font-style: italic;
-    color: $grayLight;
+    color: $gray-light;
   }
 }
 
