@@ -1,8 +1,11 @@
 class SessionsController < ApplicationController
   def new
+    authorize self
   end
 
   def create
+    authorize self
+
     user = User.find_by(email: params[:session][:email].downcase)
 
     if user && user.authenticate(params[:session][:password])
@@ -16,6 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    authorize self
     sign_out
     redirect_to root_path
   end
