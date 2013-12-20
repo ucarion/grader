@@ -10,4 +10,14 @@ class ApplicationController < ActionController::Base
   # Make sure Pundit is always used, except on the static pages
   after_filter :verify_authorized, :except => :index
   after_filter :verify_policy_scoped, :only => :index
+
+  # Rescue from Pundit authorization errors
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  private
+
+  def user_not_authorized
+    flash[:error] = "You are not allowed to complete this action."
+    redirect_to root_path
+  end
 end
