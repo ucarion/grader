@@ -1,16 +1,26 @@
 class SubmissionsController < ApplicationController
-  authorize_resource
-
   def show
+    @submission = Submission.find(params[:id])
+    authorize @submission
+
     @comment = @submission.comments.build
   end
 
   def new
-    @assignment = @submission.assignment
+    @assignment = Assignment.find(params[:assignment_id])
+    @submission = @assignment.submissions.build
+
+    authorize @submission
+
     @submission.source_files.build
   end
 
   def create
+    @assignment = Assignment.find(params[:assignment_id])
+    @submission = Submission.new(submission_params)
+
+    authorize @submission
+
     if @submission.save
       @submission.create_activity :create, owner: @submission.author
       flash[:success] = "Your submission was created successfully."
@@ -22,9 +32,14 @@ class SubmissionsController < ApplicationController
   end
 
   def edit
+    @submission = Submission.find(params[:id])
+    authorize @submission
   end
 
   def update
+    @submission = Submission.find(params[:id])
+    authorize @submission
+
     if @submission.update_attributes(submission_update_params)
       flash[:success] = "Your submission was successfully updated."
       redirect_to @submission
@@ -36,7 +51,10 @@ class SubmissionsController < ApplicationController
   end
 
   def index
-    
+    @assignment = Assignment.find(params[:assignment_id])
+    authorize @assignment, :list_submissions?
+
+    @submissions = policy_scope(@assignment.submissions)
   end
 
   def grade
@@ -45,27 +63,6 @@ class SubmissionsController < ApplicationController
       redirect_to @submission
     else
       redirect_to @submission, flash: { error: submission_error_message }
-    end
-  end
-
-  load_resources do
-    before(:show, :edit, :update, :grade) do
-      @submission = Submission.find(params[:id])
-    end
-
-    before(:new) do
-      @assignment = Assignment.find(params[:assignment_id])
-      @submission = @assignment.submissions.build
-    end
-
-    before(:create) do
-      @assignment = Assignment.find(params[:assignment_id])
-      @submission = Submission.new(submission_params)
-    end
-
-    before(:index) do
-      @assignment = Assignment.find(params[:assignment_id])
-      @submissions = @assignment.submissions
     end
   end
 

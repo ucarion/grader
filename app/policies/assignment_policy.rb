@@ -25,6 +25,15 @@ class AssignmentPolicy < ApplicationPolicy
     is_teacher?
   end
 
+  # This is called when Pundit wants to know if a user can see submissions made
+  # for this assignment. This does not correspond to any assignment action --
+  # this is called from the submission #index action.
+  #
+  # `record` is still an assignment in this method.
+  def list_submissions?
+    is_teacher?
+  end
+
   private
 
   def is_teacher?
