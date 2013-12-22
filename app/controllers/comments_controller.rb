@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = current_user.comments.build(comment_params)
+    authorize @comment
 
     if @comment.save
       @comment.create_activity :create, owner: @comment.user
