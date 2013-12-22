@@ -26,4 +26,7 @@ Grader::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # So better_errors will show itself even if accessed through Vagrant.
+  BetterErrors::Middleware.allow_ip! "10.0.2.2"
 end
