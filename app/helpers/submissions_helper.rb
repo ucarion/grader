@@ -16,7 +16,8 @@ module SubmissionsHelper
     # Add the submission's files into the image
     submission_files = submission.source_files.map { |file| file.code.path }
 
-    image = docker_image.insert_local('localPath' => submission_files, 'outputPath' => '/')
+    image = docker_image.insert_local('localPath' => submission_files,
+      'outputPath' => '/', 'rm' => true)
 
     # Next, find the main source file
     main = submission.source_files.find { |file| file.main? }
@@ -26,7 +27,12 @@ module SubmissionsHelper
 
     # Run and get output
     container = image.run(cmd)
-    output = container.attach(stderr: true)
+
+    messages = container.attach
+
+    stdout = messages[0].join
+    stderr = messages[1].join
+    output = stdout + stderr
 
     update_attributes(output: output)
 
@@ -42,8 +48,6 @@ module SubmissionsHelper
   end
 
   private
-
-  DOCKER_IMAGE_ID = '3afdd8d91e29'
 
   def cmd_for(language, main, input)
     file_name = main.code_file_name
@@ -64,6 +68,6 @@ module SubmissionsHelper
   end
 
   def docker_image
-    Docker::Image.all.find { |image| image.id.starts_with?(DOCKER_IMAGE_ID) }
+    Docker::Image.all.find { |img| img.info['Repository'] == 'ulysse/polyglot' }
   end
 end
