@@ -35,3 +35,6 @@ cd /vagrant
 
 # Install necessary gems
 bundle
+
+# When I SSH into Vagrant, I'll want to go to /vagrant automatically
+echo cd /vagrant/ >> ~/.bashrc
