@@ -85,7 +85,7 @@ describe Submission do
 
   describe "output" do
     before { @submission.execute_code! }
-      
+
     its(:output) { should eq "Hello, world!\n" }
   end
 
@@ -131,7 +131,7 @@ describe Submission do
 
       course.update_attributes(language: :java)
       FactoryGirl.create(:source_file, code: submission_file("Refer.java"), submission: @submission)
-      FactoryGirl.create(:source_file, code: submission_file("Referenced.java"), 
+      FactoryGirl.create(:source_file, code: submission_file("Referenced.java"),
         submission: @submission, main: false)
 
       @submission.reload
@@ -209,7 +209,7 @@ describe Submission do
       describe "java" do
         before do
           course.update_attributes(language: :java)
-        
+
           @submission.execute_code!
         end
 

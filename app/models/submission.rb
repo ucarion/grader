@@ -7,7 +7,7 @@ class Submission < ActiveRecord::Base
     OUTPUT_CORRECT = 1
     OUTPUT_INCORRECT = 2
   end
-  
+
   serialize :plagiarizing, Array
 
   belongs_to :author, class_name: "User"

@@ -30,7 +30,7 @@ describe "SubmissionsPages" do
 
     describe "with multiple files" do
       before do
-        FactoryGirl.create(:source_file, submission: submission, 
+        FactoryGirl.create(:source_file, submission: submission,
           code: submission_file("norepeat.rb"), main: false)
       end
 
