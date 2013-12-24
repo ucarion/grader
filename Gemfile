@@ -87,6 +87,9 @@ gem 'damerau-levenshtein'
 # For displaying similar strings
 gem 'diffy'
 
+# For linking to Gravatars
+gem 'gravatar_image_tag'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
