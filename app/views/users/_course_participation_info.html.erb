@@ -1,17 +1,17 @@
-<div class="participation-info">
-  Taking
+<div class="row participation-info">
+  <div class="col-md-6">
+    taking
+    <strong class="course-count">
+      <%= @user.enrolled_courses.count %>
+    </strong>
+    courses
+  </div>
 
-  <span class="participation-info-value">
-    <%= @user.enrolled_courses.count %>
-  </span>
-
-  <%= "course".pluralize(@user.enrolled_courses.count) %> &mdash; Teaching
-
-  <span class="participation-info-value">
-    <%= @user.taught_courses.count %>
-  </span>
-  
-  <%= "course".pluralize(@user.taught_courses.count) %>
-
-  <hr>
+  <div class="col-md-6">
+    teaching
+    <strong class="course-count">
+      <%= @user.taught_courses.count %>
+    </strong>
+    courses
+  </div>
 </div>

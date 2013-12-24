@@ -1,7 +1,6 @@
 module UsersHelper
-  def gravatar_for(user, args = {})
-    id = Digest::MD5::hexdigest(user.email.downcase)
-    url = "https://secure.gravatar.com/avatar/#{id}?s=#{args[:size] || 200}"
-    image_tag(url, alt: user.name, class: "gravatar " + (args[:class] || ""))
+  def main_profile_picture(user)
+    image_tag(gravatar_image_url(user.email),
+      class: "img-rounded", id: "profile-picture")
   end
 end

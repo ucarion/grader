@@ -1,22 +1,15 @@
-<div class="span6">
-  <h3>Enrolled courses</h3>
-  <ul class="course-list">
-    <% @user.enrolled_courses.each do |course| %>
-      <li>
-        <%= link_to course.name, course %>
-        <small>(<%= pluralize(course.students.count, "student") %>)</small>
-      </li>
-    <% end %>
-  </ul>
-</div>
-<div class="span6">
-  <h3>Taught courses</h3>
-  <ul class="course-list">
-    <% @user.taught_courses.each do |course| %>
-      <li>
-        <%= link_to course.name, course %>
-        <small>(<%= pluralize(course.students.count, "student") %>)</small>
-      </li>
-    <% end %>
-  </ul>
+<ul class="nav nav-tabs user-courses-nav">
+  <li class="active"><a href="#enrolled" data-toggle="tab">Enrolled courses</a></li>
+  <li><a href="#taught" data-toggle="tab">Taught courses</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active in fade" id="enrolled">
+    <%= render 'courses/course_summaries', courses: @user.enrolled_courses,
+      empty_message: "You are not enrolled in any courses." %>
+  </div>
+  <div class="tab-pane fade" id="taught">
+    <%= render 'courses/course_summaries', courses: @user.taught_courses,
+      empty_message: "You are not teaching any courses." %>
+  </div>
 </div>

@@ -1,10 +1,17 @@
 <% provide(:title, @user.name) %>
-<div class="row pagination-centered well user-info">
-  <%= gravatar_for @user, class: "img-circle img-polaroid" %>
-  <h1 id="username"><%= @user.name %></h1>
-  <%= render 'course_participation_info' %>
-  <p><%= mail_to @user.email %></p>
-</div>
-<div class="row">
-  <%= render 'user_course_list' %>
+
+<div class="row user-information">
+  <div class="col-md-3 sidebar">
+    <div class="row">
+      <%= main_profile_picture(@user) %>
+    </div>
+    <div class="row">
+      <h1 id="name"><%= @user.name %></h1>
+      <hr />
+      <%= render 'course_participation_info' %>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <%= render 'user_course_list' %>
+  </div>
 </div>

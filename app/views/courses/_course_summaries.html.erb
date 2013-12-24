@@ -1,0 +1,7 @@
+<% if courses.any? %>
+  <% courses.each do |course| %>
+    <%= render 'courses/course_summary', course: course %>
+  <% end %>
+<% else %>
+  <i><%= empty_message %></i>
+<% end %>
