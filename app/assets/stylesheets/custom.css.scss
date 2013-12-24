@@ -1,13 +1,6 @@
-@import "bootstrap";
-
 // The header takes up 60px from the top.
 body {
   margin-top: 60px;
-}
-
-/* General */
-h1, h2, h3, h4, h5, h6 {
-  text-align: center;
 }
 
 /* forms */
@@ -63,32 +56,6 @@ footer {
 
   td {
     vertical-align: middle;
-  }
-}
-
-/* shown for user#show */
-.user-info {
-  #username {
-    margin-bottom: 30px;
-  }
-
-  .participation-info {
-    font-size: 16px;
-    color: $gray-light;
-
-    .participation-info-value {
-      color: $gray;
-    }
-
-    hr {
-      border-top: 1px solid $gray-light;
-      border-bottom: 1px solid $gray-lighter;
-
-      margin-left: auto;
-      margin-right: auto;
-      float: none;
-      width: 20%;
-    }
   }
 }
 

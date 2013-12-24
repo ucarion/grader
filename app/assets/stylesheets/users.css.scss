@@ -1,3 +1,22 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user-information {
+  #profile-picture {
+    width: 100%;
+  }
+
+  .participation-info {
+    text-align: center;
+
+    .course-count {
+      display: block;
+      font-size: 20px;
+    }
+  }
+
+  .user-courses-nav {
+    margin-bottom: 10px;
+  }
+}
