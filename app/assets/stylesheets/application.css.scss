@@ -9,7 +9,15 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  *= require font-awesome
  *= require bootstrap-datepicker
  */
+
+// Rather than letting Rails specify what order things are getting imported via
+// require_tree, I'm gonna tell Rails how to order things.
+
+@import "bootstrap";
+
+@import "users";
+@import "courses";
+@import "custom";
