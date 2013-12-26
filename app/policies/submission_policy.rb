@@ -12,7 +12,7 @@ class SubmissionPolicy < ApplicationPolicy
   def create?
     user && enrolled? && open?
   end
-  
+
   def update?
     user && author? && enrolled? && open?
   end
