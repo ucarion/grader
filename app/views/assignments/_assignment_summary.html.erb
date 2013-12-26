@@ -1,0 +1,17 @@
+<div class="assignment-summary row">
+  <div class="col-md-1">
+    <%= fa_icon 'code 3x', class: 'assignment-icon' %>
+  </div>
+
+  <div class="col-md-11">
+    <h4>
+      <%= link_to assignment.name, assignment %>
+      <small>
+        <% if assignment.open? %>
+          Due in <%= time_ago_in_words(assignment.due_time) %>
+        <% end %>
+      </small>
+    </h4>
+    <p><%= assignment.description %></p>
+  </div>
+</div>

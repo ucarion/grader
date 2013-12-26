@@ -1,5 +1,5 @@
 <% provide(:title, @assignment.name) %>
-<h1>
+<!-- <h1>
   <%= @assignment.name %>
   <% if @assignment.course.teacher == current_user %>
     <small><%= link_to "Edit", edit_assignment_path(@assignment) %>
@@ -8,17 +8,18 @@
   <% end %>
 </h1>
 <h3>For course: <%= link_to @assignment.course.name, @assignment.course %></h3>
+
 <h5><%= render 'time_left' %></h5>
 <div class="pagination-centered">
   <% if current_user?(@assignment.course.teacher) %>
-    <%= link_with_icon('gear', "View submissions for this assignment", 
+    <%= link_with_icon('gear', "View submissions for this assignment",
       assignment_submissions_path(@assignment), class: "btn btn-success") %>
     <br /><br />
-    <%= link_with_icon('exclamation-sign', "View plagiarism in this assignment", 
+    <%= link_with_icon('exclamation-sign', "View plagiarism in this assignment",
       plagiarism_assignment_path(@assignment), class: "btn btn-danger") %>
   <% elsif @assignment.course.students.include?(current_user) %>
     <% if @user_submission %>
-      <%= link_with_icon('pencil', "See your submission for this assignment", 
+      <%= link_with_icon('pencil', "See your submission for this assignment",
         submission_path(@user_submission), class: "btn") %>
     <% else %>
       <% if @assignment.open? %>
@@ -31,4 +32,8 @@
   <% end %>
 </div>
 <hr>
+ -->
+
+<%= render 'assignment_header' %>
+
 <p><%= simple_format(h @assignment.description) %></p>

@@ -1,0 +1,14 @@
+<div class="btn-group" id="details-assignment-btn">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    <%= fa_icon 'eye fw' %> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <%= link_to "View Submissions", assignment_submissions_path(@assignment) %>
+    </li>
+
+    <li>
+      <%= link_to "View Plagiarism", plagiarism_assignment_path(@assignment) %>
+    </li>
+  </ul>
+</div>

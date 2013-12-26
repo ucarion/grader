@@ -11,7 +11,7 @@
     </tr>
     <% @submissions.each do |submission| %>
       <tr class="<%= table_class_for_status(submission.status) %>">
-        <td><%= gravatar_for submission.author, size: 60 %></td>
+        <td><%= profile_picture(submission.author) %></td>
         <td><%= link_to submission.author.name, submission %></td>
         <td>
           <% if submission.grade %>
@@ -27,4 +27,4 @@
 <% else %>
   <i>There are no submissions for this assignment.</i>
 <% end %>
-  
+

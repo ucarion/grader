@@ -1,0 +1,17 @@
+<div class="assignment-header">
+  <% if policy(@assignment).update? && policy(@assignment).destroy? %>
+    <%= render 'admin_assignment_button' %>
+  <% end %>
+
+  <% if policy(@assignment).list_submissions? && policy(@assignment).plagiarism? %>
+    <%= render 'details_assignment_button' %>
+  <% end %>
+
+  <h1>
+    <%= fa_icon 'code fw', class: 'assignment-icon' %>
+    <%= @assignment.name %>
+    <small>
+      For <%= link_to @assignment.course.name, @assignment.course %>
+    </small>
+  </h1>
+</div>

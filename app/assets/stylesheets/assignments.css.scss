@@ -1,0 +1,25 @@
+// Place all the styles related to the assignment controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.assignment-summary {
+  p {
+    color: $gray-dark;
+  }
+
+  .assignment-icon {
+    margin: 20px 12px;
+  }
+}
+
+.assignment-icon {
+  color: $gray-light;
+}
+
+#admin-assignment-btn, #details-assignment-btn {
+  @extend .pull-right;
+}
+
+#details-assignment-btn {
+  margin-right: 5px;
+}
