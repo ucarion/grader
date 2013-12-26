@@ -18,6 +18,11 @@
 
 @import "bootstrap";
 
+@import "general";
+
 @import "users";
 @import "courses";
+@import "assignments";
 @import "custom";
+
+@import "syntax_highlighting"

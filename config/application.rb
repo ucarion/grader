@@ -23,5 +23,7 @@ module Grader
 
     # Needed to get bootstrap-sass working on Rails 4
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end
 end
