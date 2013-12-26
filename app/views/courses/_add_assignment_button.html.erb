@@ -1,5 +1,4 @@
-<% if current_user?(@course.teacher) %>
-  <div class="pagination-centered add-assignment-button">
-    <%= link_to "Add an assignment", new_course_assignment_path(@course), class: 'btn btn-success' %>
-  </div>
+<%= link_to new_course_assignment_path(@course), class: 'btn btn-success' do %>
+  <%= fa_icon 'plus fw' %>
+  Add an assignment
 <% end %>

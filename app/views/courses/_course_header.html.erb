@@ -1,0 +1,29 @@
+<div class="course-header">
+  <% if policy(@course).add_assignments? %>
+    <div class="btn-group" id="add-assignment-btn">
+      <%= render 'add_assignment_button' %>
+
+      <a type="button" class="btn btn-default" href="#assignments" data-toggle="tab">
+        <%= @course.assignments.count %>
+      </a>
+    </div>
+  <% end %>
+
+  <% if policy(@course).enroll? %>
+    <div class="btn-group" id="enroll-assignment-btn">
+      <%= render 'enroll_button' %>
+
+      <a type="button" class="btn btn-default" href="#students" data-toggle="tab">
+        <%= @course.students.count %>
+      </a>
+    </div>
+  <% end %>
+
+  <h1>
+    <%= fa_icon 'book fw', class: 'class-icon' %>
+    <%= @course.name %>
+    <small>
+      Taught by <%= link_to @course.teacher.name, @course.teacher %>
+    </small>
+  </h1>
+</div>

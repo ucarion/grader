@@ -1,0 +1,7 @@
+<% if @course.assignments.any? %>
+  <% @course.assignments.each do |assignment| %>
+    <%= render 'assignments/assignment_summary', assignment: assignment %>
+  <% end %>
+<% else %>
+  <i>There are no assignments for this course.</i>
+<% end %>

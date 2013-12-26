@@ -5,6 +5,18 @@
 
   .class-icon {
     margin: 20px 12px;
-    color: $gray-light;
   }
+}
+
+.class-icon {
+  color: $gray-light;
+}
+
+#add-assignment-btn, #enroll-assignment-btn {
+  @extend .pull-right;
+}
+
+// give some space between the nav and the "about" text.
+.course-description {
+  margin-top: 10px;
 }

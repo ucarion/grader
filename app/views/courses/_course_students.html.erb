@@ -1,0 +1,7 @@
+<h3>Students enrolled in <%= @course.name %></h3>
+
+<% if @course.students.any? %>
+  <%= render 'users/user_table', users: @course.students %>
+<% else %>
+  <i>There are no students enrolled in this class.</i>
+<% end %>

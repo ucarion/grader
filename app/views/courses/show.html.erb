@@ -1,40 +1,29 @@
 <%= provide(:title, @course.name) %>
 
-<h1><%= @course.name %></h1>
-<h3>Taught by <%= link_to @course.teacher.name, @course.teacher %></h3>
-<%= render 'enroll_button' %>
+<%= render 'course_header' %>
 
-<div class="tabbable">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">Assignments</a></li>
-    <li><a href="#tab2" data-toggle="tab">Students</a></li>
-    <li><a href="#tab3" data-toggle="tab">About</a></li>
-    <% if @course.teacher == current_user %>
-      <li><%= link_with_icon "beaker", "Analytics", analytics_course_path(@course) %></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            Options
-            <b class="caret"></b>
-          </a>
-        <ul class="dropdown-menu">
-          <li><%= link_with_icon "pencil", "Edit Course", edit_course_path(@course) %></li>
-          <li>
-            <%= link_with_icon "trash", "Delete Course", @course, method: :delete,
-              data: { confirm: "Are you sure you want to delete #{@course.name}?" } %></li>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-      <%= render 'add_assignment_button' %>
-      <%= render 'course_assignments_list' %>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <%= render 'course_students_table' %>
-    </div>
-    <div class="tab-pane" id="tab3">
-      <%= @course.description %>
-    </div>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#assignments" data-toggle="tab">Assignments</a></li>
+  <li><a href="#students" data-toggle="tab">Students</a></li>
+  <li><a href="#about" data-toggle="tab">About</a></li>
+
+  <% if policy(@course).analytics? %>
+    <li><%= link_to "Analytics", analytics_course_path(@course) %></li>
+  <% end %>
+
+  <% if policy(@course).update? && policy(@course).destroy? %>
+    <%= render 'course_admin_options' %>
+  <% end %>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active in fade" id="assignments">
+    <%= render 'course_assignments' %>
+  </div>
+  <div class="tab-pane fade" id="students">
+    <%= render 'course_students' %>
+  </div>
+  <div class="tab-pane fade" id="about">
+    <%= render 'course_description' %>
   </div>
 </div>
