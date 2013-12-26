@@ -20,3 +20,17 @@
     margin-bottom: 10px;
   }
 }
+
+.list-users-table {
+  // have the gravatar column be very thin
+  th:first-of-type {
+    width: 32px;
+  }
+  .gravatar {
+    max-width: 32px;
+  }
+
+  td {
+    vertical-align: middle !important;
+  }
+}
