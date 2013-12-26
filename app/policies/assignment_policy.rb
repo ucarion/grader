@@ -34,6 +34,10 @@ class AssignmentPolicy < ApplicationPolicy
     is_teacher?
   end
 
+  def submit_submissions?
+    Pundit.policy(user, Submission.new(assignment: record)).create?
+  end
+
   private
 
   def is_teacher?
