@@ -9,20 +9,19 @@ class CoursePolicy < ApplicationPolicy
     true
   end
 
-  def edit?
-    user && user == record.teacher
-  end
-
   def update?
-    edit?
+    is_teacher?
   end
 
-  def new?
-    user
+  # Just a cute method for views to use to see if they should show certain
+  # things; in reality, verifying if a particular assignment can be created is
+  # handled in the assignment policy, not this one.
+  def add_assignments?
+    update?
   end
 
   def create?
-    new?
+    user
   end
 
   def enroll?
@@ -30,10 +29,16 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user && user == record.teacher
+    is_teacher?
   end
 
   def analytics?
+    is_teacher?
+  end
+
+  private
+
+  def is_teacher?
     user && user == record.teacher
   end
 end
