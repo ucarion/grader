@@ -90,6 +90,10 @@ gem 'diffy'
 # For linking to Gravatars
 gem 'gravatar_image_tag'
 
+# Syntax highlighting and Markdown
+gem 'redcarpet'
+gem 'pygments.rb' # why the .rb? Because screw you, that's why.
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
