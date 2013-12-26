@@ -27,6 +27,10 @@ sudo docker pull ulysse/polyglot
 sudo gpasswd -a vagrant docker
 sudo service docker restart
 
+# Stuff to get syntax highlighting working with Pygments ...
+sudo apt-get install python-setuptools -y
+sudo easy_install pygments
+
 # Use awesome print by default (untested)
 printf "require 'awesome_print'\nAwesomePrint.irb! \n" > ~/.irbrc
 
