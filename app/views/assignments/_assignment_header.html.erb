@@ -7,6 +7,13 @@
     <%= render 'details_assignment_button' %>
   <% end %>
 
+  <% if @user_submission %>
+    <%= render 'show_existing_submission' %>
+  <% elsif policy(@assignment).submit_submissions? %>
+    <%= render 'create_assignment_button' %>
+  <% end %>
+
+
   <h1>
     <%= fa_icon 'code fw', class: 'assignment-icon' %>
     <%= @assignment.name %>

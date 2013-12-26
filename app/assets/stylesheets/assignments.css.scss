@@ -16,7 +16,8 @@
   color: $gray-light;
 }
 
-#admin-assignment-btn, #details-assignment-btn {
+#admin-assignment-btn, #details-assignment-btn,
+    #view-submission-btn, #create-submission-btn {
   @extend .pull-right;
 }
 

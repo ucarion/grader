@@ -1,39 +1,15 @@
 <% provide(:title, @assignment.name) %>
-<!-- <h1>
-  <%= @assignment.name %>
-  <% if @assignment.course.teacher == current_user %>
-    <small><%= link_to "Edit", edit_assignment_path(@assignment) %>
-      &mdash;
-    <%= link_to "Delete", @assignment, method: :delete %></small>
-  <% end %>
-</h1>
-<h3>For course: <%= link_to @assignment.course.name, @assignment.course %></h3>
-
-<h5><%= render 'time_left' %></h5>
-<div class="pagination-centered">
-  <% if current_user?(@assignment.course.teacher) %>
-    <%= link_with_icon('gear', "View submissions for this assignment",
-      assignment_submissions_path(@assignment), class: "btn btn-success") %>
-    <br /><br />
-    <%= link_with_icon('exclamation-sign', "View plagiarism in this assignment",
-      plagiarism_assignment_path(@assignment), class: "btn btn-danger") %>
-  <% elsif @assignment.course.students.include?(current_user) %>
-    <% if @user_submission %>
-      <%= link_with_icon('pencil', "See your submission for this assignment",
-        submission_path(@user_submission), class: "btn") %>
-    <% else %>
-      <% if @assignment.open? %>
-        <%= link_with_icon('pencil', "Turn in a submission for this assignment",
-          new_assignment_submission_path(@assignment), class: "btn btn-primary") %>
-      <% else %>
-        <i>This assignment is now closed and thus cannot be submitted to.</i>
-      <% end %>
-    <% end %>
-  <% end %>
-</div>
-<hr>
- -->
 
 <%= render 'assignment_header' %>
+<%= markdown(@assignment.description) %>
 
-<p><%= simple_format(h @assignment.description) %></p>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Input</h2>
+    <%= content_tag(:pre, @assignment.input) %>
+  </div>
+  <div class="col-md-6">
+    <h2>Expected Output</h2>
+    <%= content_tag(:pre, @assignment.expected_output) %>
+  </div>
+</div>

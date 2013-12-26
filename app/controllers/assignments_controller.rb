@@ -43,7 +43,7 @@ class AssignmentsController < ApplicationController
 
     if @assignment.update_attributes(assignment_params)
       flash[:success] = "Assignment #{@assignment.name} updated successfully"
-      redirect_to @assignment.course
+      redirect_to @assignment
     else
       render 'edit'
     end
