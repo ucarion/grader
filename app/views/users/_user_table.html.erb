@@ -1,0 +1,24 @@
+<table class="table table-bordered table-striped list-users-table">
+  <tr>
+    <th></th>
+    <th>Name</th>
+  </tr>
+
+  <% users.each do |user| %>
+    <tr>
+      <td><%= profile_picture(user) %></td>
+      <td>
+        <%= link_to user.name, user %>
+        <% if policy(user).destroy? %>
+          &mdash;
+          <%= link_to_destroy user %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td></td>
+    <td>Total: <%= users.count %></td>
+  </tr>
+</table>
