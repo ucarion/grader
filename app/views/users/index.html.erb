@@ -3,12 +3,6 @@
 
 <%= will_paginate %>
 
-<table class="table table-striped table-bordered list-users-table">
-  <tr>
-    <th></th>
-    <th>Name</th>
-  </tr>
-  <%= render @users %>
-</table>
+<%= render 'user_table', users: @users %>
 
 <%= will_paginate %>
