@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Assignment do
   let(:teacher) { FactoryGirl.create(:teacher) }
   let(:course) { FactoryGirl.create(:course, teacher: teacher) }
-  
+
   before do
     @assignment = FactoryGirl.create(:assignment, course: course)
   end
@@ -92,6 +92,15 @@ describe Assignment do
 
     it { should_not be_open }
     it { should be_closed }
+  end
+
+  describe "short description" do
+    before do
+      description = "Foo bar\nbaz\n"
+      @assignment.update_attributes(description: description)
+    end
+
+    its(:short_description) { should eq "Foo bar\n" }
   end
 
   describe "submission association" do

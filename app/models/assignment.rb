@@ -1,7 +1,7 @@
 class Assignment < ActiveRecord::Base
   include PublicActivity::Common
   include PlagiarismHelper
-  
+
   belongs_to :course
   has_many :submissions, dependent: :destroy
 
@@ -21,6 +21,10 @@ class Assignment < ActiveRecord::Base
 
   def closed?
     !open?
+  end
+
+  def short_description
+    description.lines.first
   end
 
   def average_grade
