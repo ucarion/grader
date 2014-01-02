@@ -2,6 +2,7 @@ class Submission < ActiveRecord::Base
   include PublicActivity::Common
   include SubmissionsHelper
 
+  # TODO: make this be an enum
   module Status
     WAITING = 0
     OUTPUT_CORRECT = 1

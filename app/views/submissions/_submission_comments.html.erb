@@ -1,9 +1,20 @@
-<% if @submission.comments.any? %>
-  <ul>
-    <% @submission.comments.each do |comment| %>
-      <%= render comment if comment.content %>
-    <% end %>
-  </ul>
+<% if @submission.comments.created.any? %>
+  <% @submission.comments.created.each do |comment| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="comment-date">
+          <%= time_ago_in_words(comment.created_at) %> ago
+        </div>
+
+        <%= content_tag(:strong,
+            link_to(comment.user.name, comment.user, class: 'comment-author')) %>
+        commented
+      </div>
+      <div class="panel-body">
+        <%= markdown(comment.content) %>
+      </div>
+    </div>
+  <% end %>
 <% else %>
-  <i>There are no comments for this submission.
+  <i>There are no comments for this submission.</i>
 <% end %>

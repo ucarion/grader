@@ -58,6 +58,9 @@ class SubmissionsController < ApplicationController
   end
 
   def grade
+    @submission = Submission.find(params[:id])
+    authorize @submission
+
     if @submission.update_attributes(submission_grading_params)
       flash[:success] = "The submission was updated successfully."
       redirect_to @submission
@@ -69,7 +72,7 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    params.require(:submission).permit(:assignment_id, :author_id, 
+    params.require(:submission).permit(:assignment_id, :author_id,
       source_files_attributes: source_file_params)
   end
 

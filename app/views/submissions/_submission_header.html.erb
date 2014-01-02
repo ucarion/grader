@@ -1,0 +1,14 @@
+<div class="submission-header">
+  <%= render 'submission_grade' %>
+
+  <h1>
+    <%= fa_icon 'file-o fw', class: 'submission-icon' %>
+    Submission
+
+    <small>
+      By <%= link_to @submission.author.name, @submission.author %>
+
+      <%= status_label(@submission) %>
+    </small>
+  </h1>
+</div>

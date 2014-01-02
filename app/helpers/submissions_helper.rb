@@ -10,6 +10,25 @@ module SubmissionsHelper
     end
   end
 
+  def status_label(submission)
+    color, text = "", ""
+    case submission.status
+    when Submission::Status::WAITING
+      color, text = "default", "Waiting"
+    when Submission::Status::OUTPUT_CORRECT
+      color, text = "success", "Tests passed"
+    when Submission::Status::OUTPUT_INCORRECT
+      color, text = "danger", "Tests failed"
+    end
+
+    content_tag(:label, text, class: "label label-#{color}")
+  end
+
+  def highlighted_code(submission, code)
+    Pygments.highlight(code, lexer: submission.assignment.course.language)
+  end
+
+  # TODO: Move this into the submission model
   def execute_submission(submission)
     language = submission.assignment.course.language
 

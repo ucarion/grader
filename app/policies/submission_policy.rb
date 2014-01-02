@@ -17,6 +17,10 @@ class SubmissionPolicy < ApplicationPolicy
     user && author? && enrolled? && open?
   end
 
+  def grade?
+    user && teacher?
+  end
+
   private
 
   def author?

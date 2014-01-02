@@ -1,8 +1,24 @@
-<%= form_for @submission, url: grade_submission_path(@submission), 
-    html: { class: "form-inline" } do |f| %>
-  <div class="input-append">
-    <%= f.text_field :grade, class: "input-mini", placeholder: "Grade" %>
-    <span class="add-on">/ <%= @submission.assignment.point_value %></span>
+<% if policy(@submission).grade? %>
+  <div class="grade-assignment-form row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Grade this Submission</h3>
+        </div>
+
+        <div class="panel-body">
+          <%= form_for @submission, url: grade_submission_path(@submission),
+            html: { role: 'form' } do |f| %>
+
+            <div class="form-group">
+              <%= f.label :grade, "Grade (out of #{@submission.assignment.point_value})" %>
+              <%= f.text_field :grade, class: 'form-control', placeholder: 'Grade' %>
+            </div>
+
+            <%= content_tag(:button, "Submit", type: :submit, class: 'btn btn-primary') %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-  <%= f.submit "Submit", class: "btn btn-grade" %>
 <% end %>

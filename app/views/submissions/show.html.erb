@@ -1,9 +1,12 @@
+<% provide(:title, "Submission by #{@submission.author.name}") %>
+<!--
 <% if current_user?(@submission.assignment.course.teacher) %>
   <%= link_to "Back to other submissions for this assignment.",
-    assignment_submissions_path(@submission.assignment) %> 
+    assignment_submissions_path(@submission.assignment) %>
 <% end %>
+-->
 
-<h1>
+<!-- <h1>
   Submission
 
   <% if current_user?(@submission.author) && @submission.assignment.open? %>
@@ -25,14 +28,12 @@
   <% end %>
 </div>
 <div class="pagination-centered">
-  <%= render 'submission_status_message' %>
 </div>
+ -->
 
-<hr>
+<%= render 'submission_header' %>
+<%= render 'grade_submission_form' %>
 <%= render 'source_files' %>
-
 <%= render 'output' %>
 
-<h3>Comments</h3>
-<%= render 'submission_comments' %>
-<%= render 'comment_form' %>
+<%= render 'comments' %>

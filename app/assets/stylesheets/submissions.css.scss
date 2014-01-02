@@ -1,3 +1,30 @@
 // Place all the styles related to the submissions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.submission-icon {
+  color: $gray-light;
+}
+
+#submission-grade {
+  @extend .pull-right;
+}
+
+.source-file {
+  @extend .panel-default;
+
+  .source-file-heading {
+    @extend .panel-heading;
+    border: 1px solid #DDD;
+    background-color: $gray-lighter;
+
+    .source-file-title {
+      @extend .panel-title;
+    }
+  }
+
+  .highlight pre {
+    @include border-top-radius(0px);
+    border-top: 0;
+  }
+}

@@ -1,6 +1,6 @@
 <% provide(:title, "Submissions for #{@assignment.name}") %>
 
-<h1>Submissions for <%= @assignment.name %></h1>
+<h1>Submissions for <%= link_to @assignment.name, @assignment %></h1>
 <% if @assignment.submissions.any? %>
   <table class="table table-striped table-bordered list-users-table">
     <tr>

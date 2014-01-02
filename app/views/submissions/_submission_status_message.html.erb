@@ -1,5 +1,0 @@
-<% if @submission.status == Submission::Status::OUTPUT_CORRECT %>
-  <span class="label label-success"><%= fa_icon 'ok' %> This submission passed tests.</span>
-<% elsif @submission.status == Submission::Status::OUTPUT_INCORRECT %>
-  <span class="label label-important"><%= fa_icon 'remove' %> This submission failed tests.</span>
-<% end %>
