@@ -1,5 +1,18 @@
-<%= form_for @comment do |f| %>
-  <%= f.hidden_field :submission_id, value: @submission.id %>
-  <%= f.text_area :content, placeholder: "Add a new comment ..." %>
-  <%= f.submit "Comment", class: "btn btn-comment" %>
-<% end %>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Add a new comment</h3>
+  </div>
+
+  <div class="panel-body">
+    <%= form_for @comment, html: { role: 'form' } do |f| %>
+      <%= f.hidden_field :submission_id, value: @submission.id %>
+
+      <div class="form-group">
+        <%= f.text_area :content, placeholder: "Enter your comment text here",
+            class: 'form-control' %>
+      </div>
+
+      <%= content_tag(:button, "Comment", type: :submit, class: 'btn btn-info') %>
+    <% end %>
+  </div>
+</div>

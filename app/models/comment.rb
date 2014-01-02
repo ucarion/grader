@@ -1,6 +1,9 @@
 class Comment < ActiveRecord::Base
   include PublicActivity::Common
-  
+
+  # TODO add tests for this
+  scope :created, -> { where.not(id: nil) }
+
   belongs_to :user
   belongs_to :submission
 

@@ -1,3 +1,19 @@
 // Place all the styles related to the comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.comment-date {
+  @extend .pull-right;
+
+  font-style: italic;
+  font-size: 10px;
+  color: $gray;
+}
+
+.comment-author {
+  color: $gray-dark;
+
+  &:hover {
+    color: $gray-darker;
+  }
+}
