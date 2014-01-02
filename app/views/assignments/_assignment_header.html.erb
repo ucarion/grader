@@ -13,12 +13,13 @@
     <%= render 'create_assignment_button' %>
   <% end %>
 
-
   <h1>
     <%= fa_icon 'code fw', class: 'assignment-icon' %>
     <%= @assignment.name %>
     <small>
       For <%= link_to @assignment.course.name, @assignment.course %>
+
+      <%= assignment_open_label(@assignment) %>
     </small>
   </h1>
 </div>

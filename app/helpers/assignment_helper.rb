@@ -19,4 +19,14 @@ module AssignmentHelper
 
     ::Diffy::Diff.new(source_a, source_b, include_plus_and_minus_in_html: true).to_s(:html)
   end
+
+  def assignment_open_label(assignment)
+    color, text = if assignment.open?
+      ["success", "Open"]
+    else
+      ["danger", "Closed"]
+    end
+
+    content_tag(:label, text, class: "label label-#{color}")
+  end
 end
