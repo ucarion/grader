@@ -8,7 +8,12 @@
   <li><a href="#about" data-toggle="tab">About</a></li>
 
   <% if policy(@course).analytics? %>
-    <li><%= link_to "Analytics", analytics_course_path(@course) %></li>
+    <li>
+      <%= link_to analytics_course_path(@course) do %>
+        <%= fa_icon 'flask fw' %>
+        Analytics
+      <% end %>
+    </li>
   <% end %>
 
   <% if policy(@course).update? && policy(@course).destroy? %>
