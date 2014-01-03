@@ -103,7 +103,7 @@ describe "AssignmentPages" do
               visit current_path
             end
 
-            it { should have_content('assignment is now closed') }
+            it { should_not have_link("", href: new_assignment_submission_path(assignment)) }
           end
         end
 
@@ -127,7 +127,7 @@ describe "AssignmentPages" do
           visit assignment_path(assignment)
         end
 
-        it { should have_link "plagiarism", plagiarism_assignment_path(assignment) }
+        it { should have_link "Plagiarism", plagiarism_assignment_path(assignment) }
       end
 
       describe "for non-teachers" do
@@ -136,7 +136,7 @@ describe "AssignmentPages" do
           visit assignment_path(assignment)
         end
 
-        it { should_not have_link "plagiarism", plagiarism_assignment_path(assignment) }
+        it { should_not have_link "Plagiarism", plagiarism_assignment_path(assignment) }
       end
     end
 

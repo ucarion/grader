@@ -21,12 +21,13 @@ module AssignmentHelper
   end
 
   def assignment_open_label(assignment)
-    color, text = if assignment.open?
-      ["success", "Open"]
+    text, color, timestatus = if assignment.open?
+      ["Open", "success", "open"]
     else
-      ["danger", "Closed"]
+      ["Closed", "danger", "closed"]
     end
 
-    content_tag(:label, text, class: "label label-#{color}")
+    content_tag(:label, text,
+      class: "label label-#{color} timestatus timestatus-#{timestatus}")
   end
 end

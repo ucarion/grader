@@ -11,7 +11,7 @@
     </tr>
     <% @assignment.submissions.each do |submission| %>
       <tr class="<%= "danger" if submission.plagiarizing.any? %>">
-        <td><%= gravatar_for submission.author, size: 60 %></td>
+        <td><%= profile_picture(submission.author) %></td>
         <td><%= link_to submission.author.name, submission %></td>
         <td>
           <% if submission.grade %>
