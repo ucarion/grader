@@ -19,6 +19,14 @@ module ApplicationHelper
     markdown_parser.render(text).html_safe
   end
 
+  def submit_btn(text, params)
+    opts = {
+      type: :submit
+    }.merge(params)
+
+    content_tag(:button, text, opts)
+  end
+
   private
 
   def markdown_parser
