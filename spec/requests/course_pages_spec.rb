@@ -64,20 +64,6 @@ describe "CoursePages" do
           expect(page).to have_content(assignment.description)
         end
       end
-
-      describe "and logged in as the teacher" do
-        before do
-          sign_in(teacher)
-
-          visit course_path(course)
-        end
-
-        it "should offer edit buttons for each assignment" do
-          course.assignments.find_all do |assignment|
-            expect(page).to have_link("", href: edit_assignment_path(assignment))
-          end
-        end
-      end
     end
 
     describe "when there are no enrolled students" do
@@ -119,7 +105,7 @@ describe "CoursePages" do
         it { should have_selector('.btn-enroll') }
 
         describe "clicking on the enroll button" do
-          before { click_link 'Enroll in this Course' }
+          before { click_link 'Enroll' }
 
           it "should make the current user enroll into the course" do
             expect(user.enrolled_courses).to include(course)
