@@ -1,5 +1,5 @@
 <% if @submission.errors.any? %>
-  <div class="alert alert-error">
+  <div class="alert alert-danger">
     Your form contains <%= pluralize(@submission.errors.count, "error") %>.
 
     <ul>
