@@ -9,6 +9,5 @@
     </h3>
   </div>
 
-  <!-- <%= content_tag(:pre, File.read(source_file.code.path), class: 'source-file-code') %> -->
   <%= highlighted_code(@submission, File.read(source_file.code.path)).html_safe %>
 </div>
