@@ -28,44 +28,6 @@ module SubmissionsHelper
     Pygments.highlight(code, lexer: submission.assignment.course.language)
   end
 
-  # TODO: Move this into the submission model
-  def execute_submission(submission)
-    language = submission.assignment.course.language
-
-    # Add the submission's files into the image
-    submission_files = submission.source_files.map { |file| file.code.path }
-
-    image = docker_image.insert_local('localPath' => submission_files,
-      'outputPath' => '/', 'rm' => true)
-
-    # Next, find the main source file
-    main = submission.source_files.find { |file| file.main? }
-
-    # Now, let's generate an image that will run the submission
-    cmd = [ "/bin/bash", "-c", cmd_for(language, main, assignment.input) ]
-
-    # Run and get output
-    container = image.run(cmd)
-
-    messages = container.attach
-
-    stdout = messages[0].join
-    stderr = messages[1].join
-    output = stdout + stderr
-
-    update_attributes(output: output)
-
-    if output.strip == assignment.expected_output.strip
-      update_attributes(status: Submission::Status::OUTPUT_CORRECT)
-    else
-      update_attributes(status: Submission::Status::OUTPUT_INCORRECT)
-    end
-
-    # Cleanup
-    container.delete
-    image.remove
-  end
-
   private
 
   def cmd_for(language, main, input)

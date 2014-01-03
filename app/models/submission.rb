@@ -42,7 +42,37 @@ class Submission < ActiveRecord::Base
   end
 
   def execute_code!
-    execute_submission(self)
+    language = assignment.course.language
+
+    # Add the files into the image
+    files = source_files.map { |file| file.code.path }
+
+    image = docker_image.insert_local('localPath' => files,
+      'outputPath' => '/', 'rm' => true)
+
+    # Now, let's generate an image that will run the submission
+    cmd = [ "/bin/bash", "-c", cmd_for(language, main_file, assignment.input) ]
+
+    # Run and get output
+    container = image.run(cmd)
+
+    messages = container.attach
+
+    stdout = messages[0].join
+    stderr = messages[1].join
+    output = stdout + stderr
+
+    update_attributes(output: output)
+
+    if output.strip == assignment.expected_output.strip
+      update_attributes(status: Submission::Status::OUTPUT_CORRECT)
+    else
+      update_attributes(status: Submission::Status::OUTPUT_INCORRECT)
+    end
+
+    # Cleanup
+    container.delete
+    image.remove
   end
 
   handle_asynchronously :execute_code!
