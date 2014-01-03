@@ -1,0 +1,10 @@
+<%= link_to(
+  fa_icon('arrow-left fw'),
+  assignment_submissions_path(@submission.assignment),
+  id: 'back_to_list_submissions',
+  "data-trigger" => :hover,
+  "data-content" => "View other submissions for this assignment.",
+  "data-placement" => "bottom",
+  "data-toggle" => "popover",
+  "data-container" => "body"
+)%>

@@ -6,7 +6,17 @@
   color: $gray-light;
 }
 
+#back_to_list_submissions {
+  position: absolute;
+  left: 15px;
+  font-size: $font-size-h2;
+}
+
 #submission-grade {
+  font-size: ceil($font-size-h3 * 0.75);
+}
+
+#edit-submission-button {
   @extend .pull-right;
 }
 

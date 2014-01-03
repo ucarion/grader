@@ -1,7 +1,13 @@
 <div class="submission-header">
-  <%= render 'submission_grade' %>
+  <% if policy(@submission).update? %>
+    <%= render 'resubmit_submission_button' %>
+  <% end %>
 
   <h1>
+    <% if policy(@submission.assignment).list_submissions? %>
+      <%= render 'back_to_list_submissions' %>
+    <% end %>
+
     <%= fa_icon 'file-o fw', class: 'submission-icon' %>
     Submission
 
@@ -10,5 +16,7 @@
 
       <%= status_label(@submission) %>
     </small>
+
+    <%= render 'submission_grade' %>
   </h1>
 </div>
