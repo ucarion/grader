@@ -12,12 +12,18 @@ group :development do
   # Make sure this _never_ goes in production.
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  # Faster application loading
+  gem 'spring'
 end
 
-# Use sqlite3 as the database for Active Record
 group :development, :test do
   gem 'rspec-rails'
+
+  # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+
+  gem 'factory_girl_rails'
 end
 
 # Heroku uses postgres
@@ -100,6 +106,4 @@ group :test do
 
   # for capybara's save_and_open_page
   gem 'launchy'
-
-  gem 'factory_girl_rails'
 end
