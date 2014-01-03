@@ -38,3 +38,12 @@
     border-top: 0;
   }
 }
+
+// Forms
+.btn-remove-sub-file {
+  @extend .pull-right;
+}
+
+.submit-sub-btn {
+  margin-top: 20px;
+}

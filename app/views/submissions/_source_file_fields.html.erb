@@ -1,9 +1,16 @@
-<div class="form-inline nested-fields">
-  <%= f.label :code %>
-  <%= f.file_field :code %>
+<div class="row nested-fields well well-sm" role="form">
+  <div class="col-md-5">
+    <%= f.file_field :code %>
+  </div>
 
-  <%= f.label :main %>
-  <%= f.check_box :main %>
+  <div class="col-md-1">
+    <%= f.label :main %>
+  </div>
+  <div class="col-md-1">
+    <%= f.check_box :main %>
+  </div>
 
-  <%= link_to_remove_association "Remove", f %>
+  <%= link_to_remove_association(f, class: 'btn btn-default btn-remove-sub-file') do %>
+    <%= fa_icon 'trash-o' %> Delete
+  <% end %>
 </div>

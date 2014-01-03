@@ -1,9 +1,10 @@
 <% provide(:title, "Create a new Submission") %>
 
-<h1>Create a Submission</h1>
 <div class="row">
-  <div class="span6 offset3">
-    <%= form_for([@assignment, @submission], :html => { :multipart => true }) do |f| %>
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Create a Submission</h1>
+    <%= form_for([@assignment, @submission],
+        html: { :multipart => true, role: :form }) do |f| %>
       <%= render 'shared/submission_error_messages' %>
 
       <%= f.hidden_field :assignment_id, value: @assignment.id %>
@@ -13,10 +14,13 @@
         <%= f.fields_for :source_files do |b| %>
           <%= render 'source_file_fields', f: b %>
         <% end %>
-        <%= link_to_add_association 'Add source file', f, :source_files %>
+        <%= link_to_add_association(f, :source_files, class: 'btn btn-default') do %>
+          <%= fa_icon 'plus' %>
+          Add a source file
+        <% end %>
       </div>
-      
-      <%= f.submit "Create Submission", class: "btn btn-large" %>
+
+      <%= submit_btn "Create Submission", class: "btn btn-primary submit-sub-btn" %>
     <% end %>
   </div>
 </div>
