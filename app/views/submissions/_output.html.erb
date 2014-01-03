@@ -2,11 +2,12 @@
   <div class="row">
     <div class="col-md-6">
       <h3>Expected Output</h3>
-      <%= content_tag(:pre, @submission.assignment.expected_output) %>
+      <%= content_tag(:pre, @submission.assignment.expected_output,
+          class: 'expected-output') %>
     </div>
     <div class="col-md-6">
       <h3>Actual Output</h3>
-      <%= content_tag(:pre, @submission.output) %>
+      <%= content_tag(:pre, @submission.output, class: 'output') %>
     </div>
   </div>
 <% else %>

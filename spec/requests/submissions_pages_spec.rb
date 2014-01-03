@@ -21,7 +21,6 @@ describe "SubmissionsPages" do
     end
 
     it { should have_link(student.name, href: user_path(student)) }
-    it { should have_link(assignment.name, href: assignment_path(assignment)) }
 
     it "should show the submission's source code" do
       source = File.read(submission.source_files.first.code.path)
@@ -39,7 +38,7 @@ describe "SubmissionsPages" do
           source = File.read(file.code.path)
 
           expect(page).to have_content(source)
-          expect(page).to have_selector('.source-file > pre', text: source.strip)
+          expect(page).to have_selector('.source-file pre', text: source.strip)
           expect(page).to have_selector('.source-file', text: file.code_file_name)
         end
       end
@@ -52,7 +51,7 @@ describe "SubmissionsPages" do
 
     describe "submission output" do
       describe "if not yet executed" do
-        it { should have_content("This submission is still pending") }
+        it { should have_content("Waiting") }
       end
 
       describe "if executed" do
@@ -94,7 +93,7 @@ describe "SubmissionsPages" do
         end
 
         it { should have_content(student.name) }
-        it { should have_content(assignment.name) }
+        it { should have_link("", href: assignment_submissions_path(assignment)) }
         it { should have_button("Submit") }
 
         it { should have_link("", href: assignment_submissions_path(assignment)) }
@@ -104,7 +103,7 @@ describe "SubmissionsPages" do
         it { should_not have_button("Submit") }
 
         describe "when the submission is ungraded" do
-          it { should have_content("has not been graded yet") }
+          it { should have_content("Ungraded") }
         end
 
         describe "when the submission has been graded" do
@@ -177,7 +176,7 @@ describe "SubmissionsPages" do
           visit current_path
         end
 
-        it { should have_content("submission passed tests") }
+        it { should have_selector('.label-success') }
       end
 
       describe "when a submission failed tests" do
@@ -187,7 +186,7 @@ describe "SubmissionsPages" do
           visit current_path
         end
 
-        it { should have_content("submission failed tests") }
+        it { should have_selector('.label-danger') }
       end
     end
 

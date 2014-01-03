@@ -1,10 +1,8 @@
-<h3 id ="submission-grade">
-  <small>
-    Grade:
-    <% if @submission.grade %>
-      <%= @submission.grade %> / <%= @submission.assignment.point_value %>
-    <% else %>
-      <em>Ungraded</em>
-    <% end %>
-  </small>
-</h3>
+<small id="submission-grade">
+  Grade:
+  <% if @submission.grade %>
+    <%= @submission.grade %> / <%= @submission.assignment.point_value %>
+  <% else %>
+    <em>Ungraded</em>
+  <% end %>
+</small>
