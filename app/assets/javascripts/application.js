@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-datepicker/core
-//= require highcharts
-//= require highcharts/highcharts-more
 //= require cocoon
+//= require jquery.autosize
 //= require_tree .

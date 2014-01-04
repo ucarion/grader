@@ -24,3 +24,7 @@
 #details-assignment-btn {
   margin-right: 5px;
 }
+
+.code-field {
+  @include transition(height 0.2s);
+}
