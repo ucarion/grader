@@ -1,6 +1,6 @@
 <% if current_user?(activity.trackable.user) ||
     current_user?(activity.trackable.submission.assignment.course.teacher) %>
-  <%= fa_icon 'comments-alt 3x', class: 'pull-left icon-fixed-width' %>
+  <%= fa_icon 'comments-o 3x fw', class: 'pull-left icon-fixed-width' %>
   <div class="header">
     <%= link_to activity.owner.name, activity.owner %>
     added a comment to
