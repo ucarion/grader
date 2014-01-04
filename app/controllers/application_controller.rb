@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    flash[:error] = "You are not allowed to complete this action."
+    flash[:danger] = "You are not allowed to complete this action."
     redirect_to root_path
   end
 end

@@ -72,7 +72,7 @@ class AssignmentsController < ApplicationController
     @submission_b = Submission.find(params[:submission_b])
 
     if @submission_a.assignment != @assignment || @submission_b.assignment != @assignment
-      flash[:error] = "This submission is not for that assignment."
+      flash[:danger] = "This submission is not for that assignment."
       redirect_to root_path
     end
   end

@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
       flash[:success] = "Comment created."
       redirect_to @comment.submission
     else
-      redirect_to @comment.submission, flash: { error: comment_error }
+      redirect_to @comment.submission, flash: { danger: comment_error }
     end
   end
 
@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
   def check_teacher_or_student
     submission = Submission.find(params[:comment][:submission_id])
     course = submission.assignment.course
-    
+
     unless current_user?(course.teacher) || course.students.include?(current_user)
       redirect_to root_path, notice: "You cannot comment on this submission!"
     end

@@ -72,7 +72,7 @@ describe "SubmissionsPages" do
           visit submission_path(submission)
         end
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "visited by another user" do
@@ -83,7 +83,7 @@ describe "SubmissionsPages" do
           visit submission_path(submission)
         end
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "visited by the teacher" do
@@ -150,7 +150,7 @@ describe "SubmissionsPages" do
       describe "filled in with invalid information" do
         before { click_button submit_comment }
 
-        it { should have_selector('.alert.alert-error', text: "blank") }
+        it { should have_selector('.alert.alert-danger', text: "blank") }
       end
 
       describe "filled in with valid information" do
@@ -248,7 +248,7 @@ describe "SubmissionsPages" do
     describe "submitted with bad information" do
       before { click_button submit }
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
 
     describe "for an assignment that is closed" do
@@ -258,7 +258,7 @@ describe "SubmissionsPages" do
         visit new_assignment_submission_path(assignment)
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
 
     describe "visited while not signed in" do
@@ -268,7 +268,7 @@ describe "SubmissionsPages" do
         visit new_assignment_submission_path(assignment)
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
 
     describe "visited by a user who is not enrolled in the corresponding course" do
@@ -280,7 +280,7 @@ describe "SubmissionsPages" do
         visit new_assignment_submission_path(assignment)
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
   end
 
@@ -293,7 +293,7 @@ describe "SubmissionsPages" do
         visit edit_submission_path(submission)
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
 
     before do
@@ -311,7 +311,7 @@ describe "SubmissionsPages" do
         visit current_path
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
 
     describe "filled in with correct information" do
@@ -382,7 +382,7 @@ describe "SubmissionsPages" do
           visit assignment_submissions_path(assignment)
         end
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
     end
   end

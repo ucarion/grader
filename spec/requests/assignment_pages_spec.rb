@@ -202,7 +202,7 @@ describe "AssignmentPages" do
         click_button submit
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
       it { should have_title('Edit Assignment') }
     end
 
@@ -245,7 +245,7 @@ describe "AssignmentPages" do
         visit plagiarism_assignment_path(assignment)
       end
 
-      it { should have_selector('.alert.alert-error') }
+      it { should have_selector('.alert.alert-danger') }
     end
 
     describe "viewed by the teacher" do
@@ -283,7 +283,7 @@ describe "AssignmentPages" do
           visit compare_assignment_path(assignment, submission1, other_submission)
         end
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "visited by a non-teacher" do
@@ -292,7 +292,7 @@ describe "AssignmentPages" do
           visit compare_assignment_path(assignment, submission1, submission2)
         end
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "visited by the teacher" do

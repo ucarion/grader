@@ -17,7 +17,7 @@ describe "Authentication Pages" do
       before { click_button 'Sign in' }
 
       it { should have_title('Sign in') }
-      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should have_selector('div.alert.alert-danger', text: 'Invalid') }
     end
 
     describe "with good information" do
@@ -52,31 +52,31 @@ describe "Authentication Pages" do
       describe "when trying to edit a user" do
         before { visit edit_user_path(user) }
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "when trying to create a course" do
         before { visit new_course_path }
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "when editing a course" do
         before { visit edit_course_path(course) }
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "when trying to create an assignment" do
         before { visit new_course_assignment_path(course) }
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "when editing an assignment" do
         before { visit edit_assignment_path(assignment) }
 
-        it { should have_selector('.alert.alert-error') }
+        it { should have_selector('.alert.alert-danger') }
       end
 
       describe "as the correct user" do
@@ -109,7 +109,7 @@ describe "Authentication Pages" do
         describe "creating an assignment for another's course" do
           before { visit new_course_assignment_path(course) }
 
-          it { should have_selector('.alert.alert-error') }
+          it { should have_selector('.alert.alert-danger') }
         end
       end
 
