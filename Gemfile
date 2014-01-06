@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
+gem 'unicorn'
 
 group :development do
   gem 'awesome_print'
@@ -13,23 +14,17 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
-  # Faster application loading
-  gem 'spring'
+  gem 'capistrano'
 end
 
 group :development, :test do
   gem 'rspec-rails'
 
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
-
   gem 'factory_girl_rails'
 end
 
-# Heroku uses postgres
-group :production do
-  gem 'pg'
-end
+# Use Postgres as a database
+gem 'pg'
 
 # For authorization
 gem 'pundit'

@@ -17,6 +17,11 @@ source /etc/profile.d/rvm.sh
 rvm install 2.0.0-p353
 gem install --no-ri --no-rdoc bundler
 
+# Get passenger
+sudo gem install passenger --pre
+sudo passenger-install-nginx-module
+
+
 # Get docker
 curl -sL https://get.docker.io/ | sh
 
@@ -26,6 +31,9 @@ sudo docker pull ulysse/polyglot
 # Not yet tested: add `vagrant` to the docker group
 sudo gpasswd -a vagrant docker
 sudo service docker restart
+
+# Postgres stuff ...
+sudo apt-get install -y postgresql postgresql-contrib libpq-dev
 
 # Stuff to get syntax highlighting working with Pygments ...
 sudo apt-get install python-setuptools -y

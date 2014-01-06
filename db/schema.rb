@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 20130929234459) do
     t.datetime "updated_at"
   end
 
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 20130929234459) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["submission_id"], name: "index_comments_on_submission_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["submission_id"], name: "index_comments_on_submission_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "courses", force: true do |t|
     t.string   "name"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20130929234459) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "source_files", force: true do |t|
     t.integer  "submission_id"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20130929234459) do
     t.datetime "code_updated_at"
   end
 
-  add_index "source_files", ["submission_id"], name: "index_source_files_on_submission_id"
+  add_index "source_files", ["submission_id"], name: "index_source_files_on_submission_id", using: :btree
 
   create_table "submissions", force: true do |t|
     t.integer  "assignment_id"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20130929234459) do
     t.boolean  "admin",           default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end
