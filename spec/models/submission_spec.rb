@@ -123,6 +123,17 @@ describe Submission do
         its(:status) { should eq Submission::Status::OUTPUT_INCORRECT }
       end
     end
+
+    describe "using JOptionPane" do
+      before do
+        course.update_attributes(language: :java)
+        @submission.source_files.first.update_attributes(code: submission_file("JOptionPaneReader.java"))
+
+        @submission.execute_code!
+      end
+
+      its(:output) { should eq "1 2 3 4 5\n" }
+    end
   end
 
   describe "multiple files" do

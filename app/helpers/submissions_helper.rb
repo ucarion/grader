@@ -40,7 +40,7 @@ module SubmissionsHelper
     when Language::Python
       "echo #{input} | python #{file_name}"
     when Language::Java
-      "javac *.java && echo #{input} | java #{file_name_no_ext}"
+      "javac *.java && echo #{input} | java -Xbootclasspath/p:java-overrides #{file_name_no_ext}"
     when Language::C
       "gcc *.c && echo #{input} | ./a.out"
     when Language::Cpp

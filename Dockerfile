@@ -14,3 +14,5 @@ RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true 
 RUN apt-get install -y oracle-java7-installer
 
 RUN apt-get install -y ruby1.9.1 gcc g++
+
+ADD docker/java-overrides /java-overrides
