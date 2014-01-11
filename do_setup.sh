@@ -49,7 +49,27 @@ a2dissite default   # deactivate default
 
 # Now to get the site to actually work ...
 # Postgres needs this
-sudo apt-get install -y postgresql postgresql-contrib libpq-dev
+sudo apt-get install -y postgresql postgresql-contrib libpq-dev postgresql-client-common
 bundle install
 
 # Now let's get the database ready to go!
+
+# Set up in psql (idk how to automate this)
+#
+# Note that this is run as the postgres user.
+sudo -u postgres psql
+# Run this command. Username and password are from database.yml
+# create user grader with password 'grader' createdb;
+# \q (to get out)
+
+# Finishing touches... prepare db, precompile assets
+RAILS_ENV=production bundle exec rake db:create db:migrate assets:precompile
+
+# It _should_ work. I had some issues with the hrefs used for CSS and JS, but a
+# quick call to
+#
+# service apache2 restart
+#
+# Fixed that for me.
+#
+# Woop woop I did it!
