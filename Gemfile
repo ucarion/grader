@@ -26,6 +26,9 @@ end
 # Use Postgres as a database
 gem 'pg'
 
+# For authentication
+gem 'devise'
+
 # For authorization
 gem 'pundit'
 
