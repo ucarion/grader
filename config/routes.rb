@@ -6,9 +6,8 @@ Grader::Application.routes.draw do
   resources :users
   match '/signup', to: 'users#new', via: 'get'
 
-  resources :sessions, only: [:new, :create, :destroy]
-  match '/signin', to: 'sessions#new', via: 'get'
-  match '/signout', to: 'sessions#destroy', via: 'delete'
+  # match '/signin', to: 'sessions#new', via: 'get'
+  # match '/signout', to: 'sessions#destroy', via: 'delete'
 
   shallow do
     resources :courses do
@@ -74,7 +73,7 @@ Grader::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
