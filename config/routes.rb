@@ -3,11 +3,14 @@ Grader::Application.routes.draw do
   match '/help', to: 'static_pages#help', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
 
+  devise_for :users
+  devise_scope :user do
+    get '/signin' => 'devise/sessions#new'
+    delete '/signout' => 'devise/sessions#destroy'
+  end
+
   resources :users
   match '/signup', to: 'users#new', via: 'get'
-
-  # match '/signin', to: 'sessions#new', via: 'get'
-  # match '/signout', to: 'sessions#destroy', via: 'delete'
 
   shallow do
     resources :courses do

@@ -21,7 +21,9 @@
             <li><%= link_to "Edit Settings", edit_user_path(current_user) %></li>
           </ul>
         </li>
-        <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+        <li>
+          <%= link_to "Sign out", signout_path, method: "delete" %>
+        </li>
         <% else %>
           <li><%= link_to "Sign up", signup_path %></li>
           <li><%= link_to "Sign in", signin_path %></li>

@@ -29,7 +29,7 @@ describe "Authentication Pages" do
         click_button "Sign in"
       end
 
-      it { should have_title(user.name) }
+      it { should have_content(user.name) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
@@ -114,7 +114,7 @@ describe "Authentication Pages" do
       end
 
       describe "as a non-admin" do
-        before { sign_in(user, no_capybara: true ) }
+        before { sign_in(user) }
 
         describe "submitting a DELETE request to Users#destroy" do
           before { delete user_path(other_user) }

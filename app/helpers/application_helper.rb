@@ -27,6 +27,17 @@ module ApplicationHelper
     content_tag(:button, text, opts)
   end
 
+  def class_for_flash_type(type)
+    case type.to_sym
+    when :notice
+      :info
+    when :alert
+      :danger
+    else
+      type
+    end
+  end
+
   private
 
   def markdown_parser

@@ -1,7 +1,4 @@
 class CommentsController < ApplicationController
-  before_filter :check_signed_in, only: [:create]
-  before_filter :check_teacher_or_student, only: [:create]
-
   def create
     @comment = current_user.comments.build(comment_params)
     authorize @comment

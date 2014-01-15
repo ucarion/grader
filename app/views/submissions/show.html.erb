@@ -1,35 +1,4 @@
 <% provide(:title, "Submission by #{@submission.author.name}") %>
-<!--
-<% if current_user?(@submission.assignment.course.teacher) %>
-  <%= link_to "Back to other submissions for this assignment.",
-    assignment_submissions_path(@submission.assignment) %>
-<% end %>
--->
-
-<!-- <h1>
-  Submission
-
-  <% if current_user?(@submission.author) && @submission.assignment.open? %>
-    <small>
-      &mdash;
-      <%= link_to "Resubmit Submission", edit_submission_path(@submission) %>
-    </small>
-  <% end %>
-</h1>
-<h2>By <%= link_to @submission.author.name, @submission.author %></h2>
-<h3>For assignment <%= link_to @submission.assignment.name, @submission.assignment %></h3>
-<div class="pagination-centered">
-  <% if current_user?(@submission.assignment.course.teacher) %>
-    <%= render 'grade_submission_form' %>
-  <% elsif @submission.grade %>
-    Grade: <strong><%= @submission.grade %></strong> out of <%= @submission.assignment.point_value %>
-  <% else %>
-    <i>This submssion has not been graded yet.</i>
-  <% end %>
-</div>
-<div class="pagination-centered">
-</div>
- -->
 
 <%= render 'submission_header' %>
 <%= render 'grade_submission_form' %>
