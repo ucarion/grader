@@ -71,6 +71,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
+    daemons (1.1.9)
     damerau-levenshtein (1.0.3)
     debug_inspector (0.0.2)
     debugger (1.6.3)
@@ -253,6 +254,7 @@ DEPENDENCIES
   classy_enum
   cocoon
   coffee-rails (~> 4.0.0)
+  daemons
   damerau-levenshtein
   debugger
   delayed_job_active_record
