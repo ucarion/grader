@@ -256,4 +256,16 @@ describe Submission do
 
     its(:main_file) { should eq @submission.source_files.first }
   end
+
+  describe "shell escaping input" do
+    before do
+      assignment.update_attributes(input: "foo | echo bar")
+      @submission.source_files.first.update_attributes(
+        code: submission_file('input_repeater.rb'))
+
+      @submission.execute_code!
+    end
+
+    its(:output) { should eq "foo | echo bar\n" }
+  end
 end

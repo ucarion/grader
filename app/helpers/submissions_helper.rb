@@ -31,10 +31,12 @@ module SubmissionsHelper
   private
 
   def cmd_for(language, main, input)
+    input = input.shellescape
+
     file_name = main.code_file_name
     file_name_no_ext = file_name.split(".").first
 
-    case language
+    cmd = case language
     when Language::Ruby
       "echo #{input} | ruby #{file_name}"
     when Language::Python
@@ -46,6 +48,8 @@ module SubmissionsHelper
     when Language::Cpp
       "g++ *.cpp && echo #{input} | ./a.out"
     end
+
+    cmd
   end
 
   def docker_image
