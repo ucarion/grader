@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
     submission = Submission.find(params[:comment][:submission_id])
     course = submission.assignment.course
 
-    unless current_user?(course.teacher) || course.students.include?(current_user)
+    unless current_user == course.teacher || course.students.include?(current_user)
       redirect_to root_path, notice: "You cannot comment on this submission!"
     end
   end
