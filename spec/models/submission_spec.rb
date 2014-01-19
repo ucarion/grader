@@ -268,4 +268,14 @@ describe Submission do
 
     its(:output) { should eq "foo | echo bar\n" }
   end
+
+  describe "ignore carriage returns" do
+    before do
+      assignment.update_attributes(expected_output: "Hello,\r world!")
+
+      @submission.execute_code!
+    end
+
+    its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
+  end
 end

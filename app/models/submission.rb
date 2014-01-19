@@ -64,7 +64,7 @@ class Submission < ActiveRecord::Base
 
     update_attributes(output: output)
 
-    if output.strip == assignment.expected_output.strip
+    if outputs_equal?(assignment.expected_output, output)
       update_attributes(status: Submission::Status::OUTPUT_CORRECT)
     else
       update_attributes(status: Submission::Status::OUTPUT_INCORRECT)
@@ -89,5 +89,13 @@ class Submission < ActiveRecord::Base
     elsif self.source_files.to_a.count { |file| file.main? } != 1
       errors.add(:source_files, "Submission must have exactly one main file.")
     end
+  end
+
+  def outputs_equal?(expected, actual)
+    cleanup_output(expected) == cleanup_output(actual)
+  end
+
+  def cleanup_output(output)
+    output.gsub("\r", "").strip
   end
 end
