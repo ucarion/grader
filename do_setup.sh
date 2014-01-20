@@ -73,3 +73,11 @@ RAILS_ENV=production bundle exec rake db:create db:migrate assets:precompile
 # Fixed that for me.
 #
 # Woop woop I did it!
+
+# The server is having some issues with ownership of the ./public/system
+# directory ... still working on figuring this out, but it looks like chown will
+# be involved.
+chown -R www-data /webapps
+
+# Now let's get Docker going
+curl -sL https://get.docker.io/ | sh
