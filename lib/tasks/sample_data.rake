@@ -1,10 +1,6 @@
-require 'factory_girl'
-
 namespace :db do
   desc "Fill database with fake users"
   task populate: :environment do
-    require File.expand_path("spec/factories.rb")
-
     puts "Creating admin"
     admin_user = FactoryGirl.create(:admin, email: "admin@example.com")
 
