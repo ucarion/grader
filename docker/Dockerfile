@@ -15,4 +15,4 @@ RUN apt-get install -y oracle-java7-installer
 
 RUN apt-get install -y ruby1.9.1 gcc g++
 
-ADD docker/java-overrides /java-overrides
+ADD /java-overrides /java-overrides
