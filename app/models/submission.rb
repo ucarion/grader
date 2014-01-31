@@ -56,7 +56,13 @@ class Submission < ActiveRecord::Base
     # Run and get output
     container = image.run(cmd)
 
-    messages = container.attach
+    # It would appear that setting
+    #
+    #    logs: true
+    #
+    # Will make sure that Docker always returns some kind of output. Why this
+    # would be the case is beyond me.
+    messages = container.attach(logs: true)
 
     stdout = messages[0].join
     stderr = messages[1].join
