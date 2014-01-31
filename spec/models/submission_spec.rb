@@ -278,4 +278,16 @@ describe Submission do
 
     its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
   end
+
+  describe "java packages" do
+    before do
+      course.update_attributes(language: :java)
+      @submission.source_files.first.update_attributes(
+        code: submission_file('JavaPackage.java'))
+
+      @submission.execute_code!
+    end
+
+    its(:output) { should eq "Hello, world!\n" }
+  end
 end
