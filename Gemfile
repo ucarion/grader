@@ -101,6 +101,9 @@ gem 'gravatar_image_tag'
 gem 'redcarpet'
 gem 'pygments.rb' # why the .rb? Because screw you, that's why.
 
+# Cron jobs
+gem 'whenever', require: false
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'

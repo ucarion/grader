@@ -81,3 +81,6 @@ chown -R www-data /webapps
 
 # Now let's get Docker going
 curl -sL https://get.docker.io/ | sh
+
+# This is where dumps of the database will go
+mkdir /dumps
