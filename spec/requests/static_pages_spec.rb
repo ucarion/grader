@@ -10,7 +10,35 @@ describe "Static pages" do
     it { should have_title('Grader') }
 
     describe "when logged in" do
-      # TODO: Test the index page. This requires testing the controller actions directly.
+      let(:teacher) { FactoryGirl.create(:user) }
+      let(:student) { FactoryGirl.create(:user) }
+      let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
+      before { course.students << student }
+
+      describe "as a teacher" do
+        before do
+          sign_in teacher
+          visit root_path
+        end
+
+        it "should list taught courses" do
+          expect(page).to have_content('teaching')
+          expect(page).to have_content(course.name)
+        end
+      end
+
+      describe "as a student" do
+        before do
+          sign_in student
+          visit root_path
+        end
+
+        it "should list enrolled courses" do
+          expect(page).to have_content('enrolled')
+          expect(page).to have_content(course.name)
+        end
+      end
     end
   end
 

@@ -1,0 +1,36 @@
+<h1>Grader</h1>
+
+<div class="row">
+  <div class="col-md-9">
+    <h3>Recent activity</h3>
+    <% @activities.each do |activity| %>
+      <% if activity && activity.trackable %>
+        <%= render_activity(activity, layout: "layouts/activity") %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-md-3">
+    <h3>Quick links</h3>
+
+    <% if current_user.taught_courses.any? %>
+      <h4>Courses you're teaching</h4>
+
+      <ul class="list-group">
+        <% current_user.taught_courses.each do |course| %>
+          <%= link_to course.name, course, class: 'list-group-item' %>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if current_user.enrolled_courses.any? %>
+      <h4>Courses you're enrolled in</h4>
+
+      <ul class="list-group">
+        <% current_user.enrolled_courses.each do |course| %>
+          <%= link_to course.name, course, class: 'list-group-item' %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
