@@ -84,3 +84,6 @@ curl -sL https://get.docker.io/ | sh
 
 # This is where dumps of the database will go
 mkdir /dumps
+
+# Create the cron job that will take care of saving the database
+whenever --update-crontab
