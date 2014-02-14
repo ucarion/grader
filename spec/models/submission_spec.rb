@@ -23,6 +23,8 @@ describe Submission do
   it { should respond_to(:status) }
   it { should respond_to(:main_file) }
   it { should respond_to(:num_attempts) }
+  it { should respond_to(:max_attempts) }
+  it { should respond_to(:max_attempts_override) }
 
   it { should be_valid }
 
@@ -57,6 +59,48 @@ describe Submission do
     end
 
     it { should_not be_valid }
+  end
+
+  describe "max attempts override" do
+    describe "can be non-present" do
+      before { @submission.max_attempts_override = nil }
+      it { should be_valid }
+    end
+
+    describe "if present" do
+      describe "must be a number" do
+        before { @submission.max_attempts_override = "two" }
+        it { should_not be_valid }
+      end
+
+      describe "must be positive" do
+        before { @submission.max_attempts_override = 0 }
+        it { should_not be_valid }
+      end
+    end
+  end
+
+  describe "max attempts" do
+    describe "when no override is given" do
+      before do
+        assignment.max_attempts = 3
+      end
+
+      it "should be the assignment's max attempts" do
+        expect(@submission.max_attempts).to eq 3
+      end
+    end
+
+    describe "when an override is given" do
+      before do
+        assignment.max_attempts = 3
+        @submission.max_attempts_override = 2
+      end
+
+      it "should use the override value" do
+        expect(@submission.max_attempts).to eq 2
+      end
+    end
   end
 
   describe "comment association" do

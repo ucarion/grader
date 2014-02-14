@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140214230522) do
+ActiveRecord::Schema.define(version: 20140214231725) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20140214230522) do
     t.integer  "status"
     t.text     "plagiarizing"
     t.integer  "num_attempts"
+    t.integer  "max_attempts_override"
   end
 
   create_table "users", force: true do |t|
