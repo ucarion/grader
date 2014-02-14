@@ -61,6 +61,12 @@ describe Submission do
     it { should_not be_valid }
   end
 
+  describe "num attempts" do
+    it "should default to zero" do
+      expect(@submission.num_attempts).to eq 0
+    end
+  end
+
   describe "max attempts override" do
     describe "can be non-present" do
       before { @submission.max_attempts_override = nil }

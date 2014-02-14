@@ -26,10 +26,14 @@ class Submission < ActiveRecord::Base
   validate :validate_source_files
   validates_associated :source_files
 
-  after_create :init_status
+  after_create :init_status, :init_num_attempts
 
   def init_status
     update_attributes(status: Status::WAITING, output: nil)
+  end
+
+  def init_num_attempts
+    update_attributes(num_attempts: 0)
   end
 
   def status_as_string
