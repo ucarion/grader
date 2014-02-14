@@ -14,6 +14,7 @@ class Assignment < ActiveRecord::Base
   validates :point_value, presence: true, numericality: { greater_than: 0 }
   validates :expected_output, presence: true
   validates :input, presence: true
+  validates :max_attempts, presence: true, numericality: { greater_than: 0 }
 
   def open?
     Time.now < due_time

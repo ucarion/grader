@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115005108) do
+ActiveRecord::Schema.define(version: 20140214225730) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140115005108) do
     t.integer  "point_value"
     t.text     "expected_output"
     t.text     "input"
+    t.integer  "max_attempts"
   end
 
   create_table "comments", force: true do |t|

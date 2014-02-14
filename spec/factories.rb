@@ -33,6 +33,7 @@ FactoryGirl.define do
     point_value { rand(5..10) }
     expected_output { Faker::Lorem.sentence(5) }
     input { Faker::Lorem.sentence(2) }
+    max_attempts { rand(1..4) }
   end
 
   factory :submission do

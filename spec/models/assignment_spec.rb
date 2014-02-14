@@ -21,6 +21,7 @@ describe Assignment do
   it { should respond_to(:expected_output) }
   it { should respond_to(:input) }
   it { should respond_to(:test_for_plagiarism!) }
+  it { should respond_to(:max_attempts) }
 
   its(:course) { should eq course }
 
@@ -78,6 +79,26 @@ describe Assignment do
     before { @assignment.input = nil }
 
     it { should_not be_valid }
+  end
+
+  describe "max attempts" do
+    describe "not present" do
+      before { @assignment.max_attempts = nil }
+
+      it { should_not be_valid }
+    end
+
+    describe "not a number" do
+      before { @assignment.max_attempts = "two" }
+
+      it { should_not be_valid }
+    end
+
+    describe "less than one" do
+      before { @assignment.max_attempts = 0 }
+
+      it { should_not be_valid }
+    end
   end
 
   describe "whose due time is not yet passed" do
