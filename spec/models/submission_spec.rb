@@ -22,6 +22,7 @@ describe Submission do
   it { should respond_to(:output) }
   it { should respond_to(:status) }
   it { should respond_to(:main_file) }
+  it { should respond_to(:num_attempts) }
 
   it { should be_valid }
 
