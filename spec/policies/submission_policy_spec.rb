@@ -22,4 +22,14 @@ describe SubmissionPolicy do
       end
     end
   end
+
+  permissions :override_max_attempts? do
+    it "grants access to the teacher" do
+      expect(subject).to permit(teacher, submission)
+    end
+
+    it "does not grant access to the student" do
+      expect(subject).not_to permit(student, submission)
+    end
+  end
 end

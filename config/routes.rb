@@ -28,6 +28,7 @@ Grader::Application.routes.draw do
         resources :submissions do
           member do
             patch :grade
+            patch :override_max_attempts
           end
         end
       end

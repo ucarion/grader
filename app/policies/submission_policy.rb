@@ -21,6 +21,10 @@ class SubmissionPolicy < ApplicationPolicy
     user && teacher?
   end
 
+  def override_max_attempts?
+    user && teacher?
+  end
+
   private
 
   def author?

@@ -31,7 +31,7 @@ module ApplicationHelper
     case type.to_sym
     when :notice
       :info
-    when :alert
+    when :alert, :error
       :danger
     else
       type

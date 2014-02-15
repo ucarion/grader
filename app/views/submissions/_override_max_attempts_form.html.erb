@@ -1,0 +1,31 @@
+<% if policy(@submission).override_max_attempts? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Override maximum attempts</h3>
+    </div>
+
+    <div class="panel-body">
+      <p>
+        This submission has been attempted <%= @submission.num_attempts %> out of
+        a maximum of <%= @submission.max_attempts %> tries.
+      </p>
+      <p>
+        To allow the student to attempt this assignment again, or to prevent this
+        student from resubmitting this assignment, you may override the
+        resubmission limit here.
+      </p>
+
+      <%= form_for @submission, html: { role: 'form' },
+          url: override_max_attempts_submission_path(@submission) do |f| %>
+        <%= f.hidden_field :submission_id, value: @submission.id %>
+
+        <div class="form-group">
+          <%= f.label :max_attempts_override %>
+          <%= f.text_field :max_attempts_override, class: 'form-control' %>
+        </div>
+
+        <%= content_tag(:button, "Override", type: :submit, class: 'btn btn-default') %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

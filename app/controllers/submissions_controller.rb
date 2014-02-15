@@ -70,6 +70,18 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def override_max_attempts
+    @submission = Submission.find(params[:id])
+    authorize @submission
+
+    if @submission.update_attributes(submission_override_attempts_params)
+      flash[:success] = "The submission was updated successfully."
+      redirect_to @submission
+    else
+      redirect_to @submission, flash: { error: submission_error_message }
+    end
+  end
+
   private
 
   def submission_params
@@ -83,6 +95,10 @@ class SubmissionsController < ApplicationController
 
   def submission_update_params
     params.require(:submission).permit(source_files_attributes: source_file_params)
+  end
+
+  def submission_override_attempts_params
+    params.require(:submission).permit(:max_attempts_override)
   end
 
   def source_file_params

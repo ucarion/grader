@@ -168,6 +168,33 @@ describe "SubmissionsPages" do
       end
     end
 
+    describe "override max attempts form" do
+      before do
+        sign_in teacher
+        visit submission_path(submission)
+      end
+
+      let(:override_btn) { "Override" }
+
+      describe "filled in with invalid information" do
+        before do
+          fill_in "submission[max_attempts_override]", with: "nonsense"
+          click_button override_btn
+        end
+
+        it { should have_selector('.alert.alert-danger') }
+      end
+
+      describe "filled in with valid information" do
+        before do
+          fill_in "submission[max_attempts_override]", with: "100"
+          click_button override_btn
+        end
+
+        it { should have_selector('.alert.alert-success', text: 'updated') }
+      end
+    end
+
     describe "status" do
       describe "when a submission passed tests" do
         before do
