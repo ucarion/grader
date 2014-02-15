@@ -30,4 +30,8 @@ module AssignmentHelper
     content_tag(:label, text,
       class: "label label-#{color} timestatus timestatus-#{timestatus}")
   end
+
+  def default_assignment_max_attempts
+    5
+  end
 end
