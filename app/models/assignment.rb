@@ -41,4 +41,8 @@ class Assignment < ActiveRecord::Base
   def test_for_plagiarism!
     find_and_report_plagiarism!(self)
   end
+
+  def ungraded_submissions
+    submissions.where(grade: nil)
+  end
 end

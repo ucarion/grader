@@ -5,7 +5,15 @@
 
   <div class="col-md-11">
     <h4>
-      <%= link_to assignment.name, assignment %>
+      <%= link_to assignment do %>
+        <%= assignment.name %>
+
+        <% if assignment.ungraded_submissions.any? %>
+          <span class="badge">
+            <%= assignment.ungraded_submissions.count %>
+          </span>
+        <% end %>
+      <% end %>
       <small>
         <% if assignment.open? %>
           Due in <%= time_ago_in_words(assignment.due_time) %>

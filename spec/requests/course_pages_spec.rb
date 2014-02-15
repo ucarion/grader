@@ -64,6 +64,23 @@ describe "CoursePages" do
           expect(page).to have_content(assignment.description)
         end
       end
+
+      describe "and those assignments have ungraded submissions" do
+        before do
+          6.times do
+            student = FactoryGirl.create(:student)
+            course.students << student
+            FactoryGirl.create(:submission, author: student,
+              assignment: course.assignments.first)
+          end
+
+          visit current_path
+        end
+
+        it "shows that there are ungraded submissions" do
+          expect(find('span.badge').text).to eq '6'
+        end
+      end
     end
 
     describe "when there are no enrolled students" do
