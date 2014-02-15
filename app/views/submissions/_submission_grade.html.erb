@@ -1,8 +1,6 @@
-<small id="submission-grade">
-  Grade:
-  <% if @submission.grade %>
-    <%= @submission.grade %> / <%= @submission.assignment.point_value %>
-  <% else %>
-    <em>Ungraded</em>
-  <% end %>
-</small>
+Grade:
+<% if @submission.grade %>
+  <%= @submission.grade %> / <%= @submission.assignment.point_value %>
+<% else %>
+  <em>Ungraded</em>
+<% end %>

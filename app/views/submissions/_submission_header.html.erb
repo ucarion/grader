@@ -17,6 +17,8 @@
       <%= status_label(@submission) %>
     </small>
 
-    <%= render 'submission_grade' %>
+    <small id="submission-aside">
+      <%= render 'submission_grade' %> &mdash; <%= render 'submission_attempts' %>
+    </small>
   </h1>
 </div>
