@@ -44,6 +44,7 @@ class SubmissionsController < ApplicationController
       flash[:success] = "Your submission was successfully updated."
       redirect_to @submission
       @submission.init_status
+      @submission.increment_num_attempts
       @submission.execute_code!
     else
       render 'edit'

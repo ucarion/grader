@@ -36,6 +36,10 @@ class Submission < ActiveRecord::Base
     update_attributes(num_attempts: 0)
   end
 
+  def increment_num_attempts
+    update_attributes(num_attempts: num_attempts + 1)
+  end
+
   def status_as_string
     case status
     when Status::WAITING

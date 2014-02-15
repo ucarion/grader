@@ -317,23 +317,41 @@ describe "SubmissionsPages" do
     describe "filled in with correct information" do
       before do
         attach_file "Code", submission_file("norepeat.rb").path
-        click_button submit
-
-        submission.reload
       end
 
-      it "should change the submission" do
-        expect(submission.source_files.first.code_file_name).to eq "norepeat.rb"
+      describe "number of attempts" do
+        it "should be incremented" do
+          num_attempts_before = submission.num_attempts
+
+          click_button submit
+          submission.reload
+
+          num_attempts_after = submission.num_attempts
+
+          expect(num_attempts_after - num_attempts_before).to eq 1
+        end
       end
 
-      describe "after submission" do
-        it "should show the new submission's source code" do
-          source = File.read(submission.source_files.first.code.path)
-          expect(page).to have_content(source)
+      describe "after submitting" do
+        before do
+          click_button submit
+
+          submission.reload
         end
 
-        it "should show the new submission's output" do
-          expect(page).to have_content("[0, 1, 4, 9, 16, 25]")
+        it "should change the submission" do
+          expect(submission.source_files.first.code_file_name).to eq "norepeat.rb"
+        end
+
+        describe "after submission" do
+          it "should show the new submission's source code" do
+            source = File.read(submission.source_files.first.code.path)
+            expect(page).to have_content(source)
+          end
+
+          it "should show the new submission's output" do
+            expect(page).to have_content("[0, 1, 4, 9, 16, 25]")
+          end
         end
       end
     end
