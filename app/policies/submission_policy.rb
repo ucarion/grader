@@ -14,7 +14,7 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def update?
-    user && author? && enrolled? && open?
+    user && author? && enrolled? && open? && !attempts_exceeded?
   end
 
   def grade?
@@ -37,5 +37,9 @@ class SubmissionPolicy < ApplicationPolicy
 
   def open?
     record.assignment.open?
+  end
+
+  def attempts_exceeded?
+    record.num_attempts >= record.max_attempts
   end
 end
