@@ -22,7 +22,17 @@ public class JOptionPane {
       return null;
     }
 
-    return scanner.nextLine();
+    String next = scanner.nextLine();
+
+    if (isNullCode(next)) {
+      return null;
+    } else {
+      return next;
+    }
+  }
+
+  private static boolean isNullCode(String input) {
+    return input.equals("\\0");
   }
 
   public static void showMessageDialog(Component parentComponent, Object message) {
