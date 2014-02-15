@@ -26,6 +26,22 @@ describe "Static pages" do
           expect(page).to have_content('teaching')
           expect(page).to have_content(course.name)
         end
+
+        describe "courses with submissions" do
+          before do
+            2.times do
+              assignment = FactoryGirl.create(:assignment, course: course)
+              FactoryGirl.create(:submission, assignment: assignment,
+                author: student)
+            end
+
+            visit current_path
+          end
+
+          it "shows a badge with their ungraded assignments" do
+            expect(find('span.badge').text).to eq '2'
+          end
+        end
       end
 
       describe "as a student" do

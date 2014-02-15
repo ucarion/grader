@@ -18,7 +18,15 @@
 
       <ul class="list-group">
         <% current_user.taught_courses.each do |course| %>
-          <%= link_to course.name, course, class: 'list-group-item' %>
+          <%= link_to course, class: 'list-group-item' do %>
+            <%= course.name %>
+
+            <% if course.ungraded_submissions.any? %>
+              <span class="badge">
+                <%= course.ungraded_submissions.count %>
+              </span>
+            <% end %>
+          <% end %>
         <% end %>
       </ul>
     <% end %>
