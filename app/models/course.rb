@@ -17,4 +17,8 @@ class Course < ActiveRecord::Base
 
     sum
   end
+
+  def ungraded_submissions
+    assignments.map { |assignment| assignment.ungraded_submissions }.flatten
+  end
 end

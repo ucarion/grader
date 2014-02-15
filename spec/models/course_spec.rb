@@ -16,6 +16,7 @@ describe Course do
   it { should respond_to(:assignments) }
   it { should respond_to(:total_points) }
   it { should respond_to(:language) }
+  it { should respond_to(:ungraded_submissions) }
 
   its(:teacher) { should eq teacher }
 
@@ -83,6 +84,26 @@ describe Course do
 
     it "should correctly sum the point values of its assigmnents" do
       expect(@course.total_points).to eq (1 + 2 + 3 + 4 + 5)
+    end
+  end
+
+  describe "ungraded submissions" do
+    before do
+      @course.save!
+      student = FactoryGirl.create(:student)
+
+      2.times do
+        assignment = FactoryGirl.create(:assignment, course: @course)
+
+        3.times do
+          FactoryGirl.create(:submission, assignment: assignment,
+            author: student)
+        end
+      end
+    end
+
+    it "sums up its assignments ungraded submissions" do
+      expect(@course.ungraded_submissions.count).to eq 6
     end
   end
 end
