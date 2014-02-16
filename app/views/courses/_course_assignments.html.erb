@@ -1,5 +1,5 @@
 <% if @course.assignments.any? %>
-  <% @course.assignments.each do |assignment| %>
+  <% @course.assignments_friendly.each do |assignment| %>
     <%= render 'assignments/assignment_summary', assignment: assignment %>
   <% end %>
 <% else %>
