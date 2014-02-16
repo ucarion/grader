@@ -104,6 +104,9 @@ gem 'pygments.rb' # why the .rb? Because screw you, that's why.
 # Cron jobs
 gem 'whenever', require: false
 
+# Human sorting
+gem 'naturally'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'

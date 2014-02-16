@@ -106,4 +106,22 @@ describe Course do
       expect(@course.ungraded_submissions.count).to eq 6
     end
   end
+
+  describe "human-friendly scope" do
+    before { @course.save! }
+    let(:soon) { 2.days.from_now }
+    let(:later) { 3.days.from_now }
+
+    let!(:assignment1) { FactoryGirl.create(:assignment, course: @course,
+      name: 'Assignment 1', due_time: soon) }
+    let!(:assignment2) { FactoryGirl.create(:assignment, course: @course,
+      name: 'Assignment 12', due_time: later) }
+    let!(:assignment3) { FactoryGirl.create(:assignment, course: @course,
+      name: 'Assignment 2', due_time: later) }
+
+    it "lists assignments first by due date, then by name in a human way" do
+      expect(@course.assignments_friendly).to eq [assignment1, assignment3, assignment2]
+    end
+  end
+
 end

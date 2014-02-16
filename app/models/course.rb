@@ -21,4 +21,18 @@ class Course < ActiveRecord::Base
   def ungraded_submissions
     assignments.map { |assignment| assignment.ungraded_submissions }.flatten
   end
+
+  def assignments_friendly
+    assignments.sort { |a, b| human_compare(a, b) }
+  end
+
+  private
+
+  def human_compare(a, b)
+    if a.due_time != b.due_time
+      a.due_time <=> b.due_time
+    else
+      Naturally.normalize(a.name) <=> Naturally.normalize(b.name)
+    end
+  end
 end
