@@ -22,9 +22,13 @@
 }
 
 .list-users-table {
+  table-layout: fixed;
+
   // have the gravatar column be very thin
-  th:first-of-type {
-    width: 32px;
+  tr:first-child {
+    th:first-child {
+      width: 49px;
+    }
   }
   .gravatar {
     max-width: 32px;
