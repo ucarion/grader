@@ -44,13 +44,16 @@
 
       <div class="form-group">
         <%= f.label :due_time %>
-        <%= f.text_field :due_time, class: 'datepicker form-control' %>
+        <%= f.text_field :due_time, class: 'datepicker form-control',
+            id: 'due-time' %>
       </div>
 
       <div class="form-group">
         <%= f.label :grace_period %>
         <%= f.text_field :grace_period, class: 'form-control',
             value: default_assignment_grace_period, id: 'grace-period' %>
+
+        <p class="help-block" id='grace-period-message'></p>
       </div>
 
       <%= submit_btn "Create Assignment", class: "btn btn-default" %>
