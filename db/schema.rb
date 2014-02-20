@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140214231725) do
+ActiveRecord::Schema.define(version: 20140220001836) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20140214231725) do
     t.text     "expected_output"
     t.text     "input"
     t.integer  "max_attempts"
+    t.integer  "grace_period"
   end
 
   create_table "comments", force: true do |t|

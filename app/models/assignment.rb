@@ -15,6 +15,7 @@ class Assignment < ActiveRecord::Base
   validates :expected_output, presence: true
   validates :input, presence: true
   validates :max_attempts, presence: true, numericality: { greater_than: 0 }
+  validates :grace_period, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def open?
     Time.now < due_time
@@ -22,6 +23,14 @@ class Assignment < ActiveRecord::Base
 
   def closed?
     !open?
+  end
+
+  def open_or_grace?
+    if grace_period
+      Time.now < due_time + grace_period.days
+    else
+      open?
+    end
   end
 
   def short_description

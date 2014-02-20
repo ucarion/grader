@@ -22,6 +22,7 @@ describe Assignment do
   it { should respond_to(:input) }
   it { should respond_to(:test_for_plagiarism!) }
   it { should respond_to(:max_attempts) }
+  it { should respond_to(:grace_period) }
 
   its(:course) { should eq course }
 
@@ -100,6 +101,27 @@ describe Assignment do
       it { should_not be_valid }
     end
   end
+
+  describe "grace period" do
+    describe "not present" do
+      before { @assignment.grace_period = nil }
+
+      it { should_not be_valid }
+    end
+
+    describe "not a number" do
+      before { @assignment.grace_period = "two" }
+
+      it { should_not be_valid }
+    end
+
+    describe "less than zero" do
+      before { @assignment.grace_period = -1 }
+
+      it { should_not be_valid }
+    end
+  end
+
 
   describe "whose due time is not yet passed" do
     before { @assignment.due_time = 1.year.from_now }

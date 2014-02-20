@@ -32,4 +32,27 @@ describe SubmissionPolicy do
       expect(subject).not_to permit(student, submission)
     end
   end
+
+  permissions :create? do
+    describe "due_time and grace_period" do
+      it "allows submissions before due_time" do
+        assignment.due_time = 1.day.from_now
+        expect(subject).to permit(student, submission)
+      end
+
+      it "allows submissions after due_time during grace period" do
+        assignment.due_time = 1.day.ago
+        assignment.grace_period = 2
+
+        expect(subject).to permit(student, submission)
+      end
+
+      it "does not allow submissions after grace period" do
+        assignment.due_time = 2.days.ago
+        assignment.grace_period = 1
+
+        expect(subject).not_to permit(student, submission)
+      end
+    end
+  end
 end

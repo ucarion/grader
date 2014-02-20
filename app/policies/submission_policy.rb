@@ -10,11 +10,11 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def create?
-    user && enrolled? && open?
+    user && enrolled? && open_or_grace?
   end
 
   def update?
-    user && author? && enrolled? && open? && !attempts_exceeded?
+    user && author? && enrolled? && open_or_grace? && !attempts_exceeded?
   end
 
   def grade?
@@ -39,8 +39,8 @@ class SubmissionPolicy < ApplicationPolicy
     record.assignment.course.students.include?(user)
   end
 
-  def open?
-    record.assignment.open?
+  def open_or_grace?
+    record.assignment.open_or_grace?
   end
 
   def attempts_exceeded?

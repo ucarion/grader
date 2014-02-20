@@ -34,6 +34,7 @@ FactoryGirl.define do
     expected_output { Faker::Lorem.sentence(5) }
     input { Faker::Lorem.sentence(2) }
     max_attempts { rand(1..4) }
+    grace_period { 0 }
   end
 
   factory :submission do
