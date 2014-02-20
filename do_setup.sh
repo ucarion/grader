@@ -87,3 +87,15 @@ mkdir /dumps
 
 # Create the cron job that will take care of saving the database
 whenever --update-crontab
+
+# Note to self: Running
+#
+#   bundle install
+#
+# Takes up so much memory that I need to expand the droplet's RAM in order to
+# complete it. An easier (and safer) option is to only install the gems I need.
+# This can be done by executing:
+#
+#   bundle update <gemname>
+#
+# Which does not cause OutOfMemory issues.
