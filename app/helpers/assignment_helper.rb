@@ -34,4 +34,8 @@ module AssignmentHelper
   def default_assignment_max_attempts
     5
   end
+
+  def default_assignment_grace_period
+    0
+  end
 end
