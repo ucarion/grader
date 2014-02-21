@@ -4,7 +4,7 @@ describe Course do
   let(:teacher) { FactoryGirl.create(:teacher) }
 
   before do
-    @course = teacher.taught_courses.build(name: "Example", description: "Description", language: :ruby)
+    @course = FactoryGirl.create(:course, teacher: teacher)
   end
 
   subject { @course }
@@ -66,7 +66,7 @@ describe Course do
 
     describe "when not unique" do
       before do
-        FactoryGirl.create(:course, enroll_key: "super_secret")
+        FactoryGirl.create(:course, enroll_key: "super_secret", teacher: teacher)
         @course.enroll_key = "super_secret"
       end
 
@@ -144,9 +144,5 @@ describe Course do
     it "lists assignments first by due date, then by name in a human way" do
       expect(@course.assignments_friendly).to eq [assignment1, assignment3, assignment2]
     end
-  end
-
-  describe "try enroll" do
-
   end
 end
