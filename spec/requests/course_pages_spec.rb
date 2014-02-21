@@ -267,4 +267,46 @@ describe "CoursePages" do
       end
     end
   end
+
+  describe "enrollment page" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:student) { FactoryGirl.create(:student) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
+    before do
+      sign_in student
+      visit enroll_course_path
+    end
+
+    it { should have_title('Enroll') }
+
+    describe "filled in with a course's key" do
+      before do
+        fill_in "Enroll key", with: course.enroll_key
+        click_button "Enroll"
+      end
+
+      it "enrolls the student" do
+        expect(course.students).to include(student)
+      end
+
+      it "redirects to the course's path" do
+        expect(current_url).to eq course_url(course)
+      end
+    end
+
+    describe "filled in with an invalid key" do
+      before do
+        click_button "Enroll"
+      end
+
+      it "does not enroll the student in anything" do
+        expect(student.enrolled_courses).to be_empty
+      end
+
+      it "reports no course was found" do
+        expect(page).to have_content('no course with that key')
+      end
+    end
+  end
 end
