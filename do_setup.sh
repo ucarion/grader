@@ -23,7 +23,7 @@ mkdir /webapps
 cd /webapps
 
 # Clone the repo -- TODO: automate this further?
-git clone https://ulyssecarion@bitbucket.org/ulyssecarion/grader.git
+git clone https://github.com/ulyssecarion/grader.git
 
 # Something to automate:
 
