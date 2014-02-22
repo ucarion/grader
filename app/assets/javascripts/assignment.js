@@ -5,7 +5,7 @@ $(function() {
   $('.datepicker').datepicker();
   $('.code-field').autosize();
 
-  if ($('#grace-period').length) {
+  if ($('#assignment_grace_period').length) {
     var days = [
       'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
     ];
@@ -15,7 +15,7 @@ $(function() {
     ];
 
     var updateGracePeriodMessage = function() {
-      var dueTimeField = $('#due-time').val();
+      var dueTimeField = $('#assignment_due_time').val();
 
       var dueTimeParts = dueTimeField.split('/');
       var year = parseInt(dueTimeParts[2], 10);
@@ -24,7 +24,7 @@ $(function() {
 
       var dueTime = new Date(year, month, day);
 
-      var gracePeriod = parseInt($('#grace-period').val(), 10);
+      var gracePeriod = parseInt($('#assignment_grace_period').val(), 10);
       var milliSecsOfGracePeriod = 24 * 60 * 60 * 1000 * gracePeriod;
 
       var endGrace = new Date(dueTime.getTime() + milliSecsOfGracePeriod);
@@ -42,6 +42,7 @@ $(function() {
       $('#grace-period-message').text(fullMessage);
     };
 
-    $('#grace-period, #due-time').on('change keyup', updateGracePeriodMessage);
+    $('#assignment_grace_period, #assignment_due_time').on('change keyup',
+      updateGracePeriodMessage);
   }
 });
