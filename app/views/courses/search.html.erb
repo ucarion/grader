@@ -1,0 +1,15 @@
+<% provide(:title, "Enroll") %>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Enroll in a course</h1>
+    <%= form_tag(controller: :courses, action: :try_enroll) do %>
+      <div class="form-group">
+        <%= label :query, :key, 'Enroll key' %>
+        <%= text_field :query, :key, class: 'form-control code-field' %>
+      </div>
+
+      <%= submit_tag 'Enroll', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

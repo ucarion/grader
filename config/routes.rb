@@ -15,8 +15,12 @@ Grader::Application.routes.draw do
   shallow do
     resources :courses do
       member do
-        post :enroll
         get :analytics
+      end
+
+      collection do
+        get :enroll, to: 'courses#search'
+        post :try_enroll, to: 'courses#try_enroll'
       end
 
       resources :assignments do

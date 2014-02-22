@@ -23,6 +23,7 @@ describe "CoursePages" do
       before do
         fill_in "Name", with: "Example"
         fill_in "Description", with: "Text goes here ..."
+        fill_in "Enroll key", with: rand_course_enroll_key
       end
 
       it "should create a new course on submission" do
@@ -41,7 +42,11 @@ describe "CoursePages" do
   describe "course description page" do
     let(:teacher) { FactoryGirl.create(:user) }
     let(:user) { FactoryGirl.create(:user) }
-    let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class", language: :ruby) }
+    let(:course) { FactoryGirl.create(:empty_course, teacher: teacher) }
+
+    before do
+      sign_in teacher
+    end
 
     describe "when there are no assignments for that course" do
       before { visit course_path(course) }
@@ -124,9 +129,8 @@ describe "CoursePages" do
         describe "clicking on the enroll button" do
           before { click_link 'Enroll' }
 
-          it "should make the current user enroll into the course" do
-            expect(user.enrolled_courses).to include(course)
-            expect(course.students).to include(user)
+          it "redirects to the enroll page" do
+            expect(current_path).to eq enroll_courses_path
           end
 
           describe "after having already enrolled" do
@@ -275,7 +279,7 @@ describe "CoursePages" do
 
     before do
       sign_in student
-      visit enroll_course_path
+      visit enroll_courses_path
     end
 
     it { should have_title('Enroll') }
@@ -287,6 +291,7 @@ describe "CoursePages" do
       end
 
       it "enrolls the student" do
+        course.reload
         expect(course.students).to include(student)
       end
 
@@ -305,7 +310,7 @@ describe "CoursePages" do
       end
 
       it "reports no course was found" do
-        expect(page).to have_content('no course with that key')
+        expect(page).to have_selector('.alert.alert-danger')
       end
     end
   end
