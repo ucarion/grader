@@ -54,6 +54,10 @@ describe "Static pages" do
           expect(page).to have_content('enrolled')
           expect(page).to have_content(course.name)
         end
+
+        it "provides a way to enroll into a course" do
+          expect(page).to have_link('Enroll', href: enroll_courses_path)
+        end
       end
     end
   end
