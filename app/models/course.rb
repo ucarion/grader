@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
   validates :teacher_id, presence: true
   validates :name, presence: true
   validates :description, presence: true
+  validates :enroll_key, presence: true, length: { minimum: 6 }, uniqueness: true
 
   def total_points
     sum = 0

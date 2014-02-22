@@ -61,9 +61,29 @@ class CoursesController < ApplicationController
     authorize @course
   end
 
+  def search
+  end
+
+  def try_enroll
+    @course = Course.find_by(enroll_key: enroll_params)
+
+    if @course && policy(@course).enroll?
+      @course.students << current_user
+      flash[:success] = "You have been enrolled into the course #{@course.name}"
+      redirect_to @course
+    else
+      flash[:error] = "No enrollable course with that key was found."
+      render 'search'
+    end
+  end
+
   private
 
   def course_params
-    params.require(:course).permit(:name, :description, :language)
+    params.require(:course).permit(:name, :description, :language, :enroll_key)
+  end
+
+  def enroll_params
+    params.require(:query).fetch(:key, "")
   end
 end

@@ -14,6 +14,7 @@ FactoryGirl.define do
     sequence(:name) { |i| "Course #{i}" }
     description { Faker::Lorem.paragraph(10) }
     language :ruby
+    sequence(:enroll_key) { |i| "enroll_key_#{i}"}
 
     students do
       rand(2..10).times.map do

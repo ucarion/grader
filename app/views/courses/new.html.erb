@@ -22,6 +22,12 @@
         <%= f.select :language, Language.select_options, {}, { class: 'form-control' } %>
       </div>
 
+      <div class="form-group">
+        <%= f.label :enroll_key %>
+        <%= f.text_field :enroll_key, class: 'form-control code-field' %>
+      </div>
+
+
       <%= submit_btn "Create Course", class: "btn btn-default" %>
     <% end %>
   </div>

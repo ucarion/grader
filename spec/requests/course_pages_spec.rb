@@ -23,6 +23,7 @@ describe "CoursePages" do
       before do
         fill_in "Name", with: "Example"
         fill_in "Description", with: "Text goes here ..."
+        fill_in "Enroll key", with: rand_course_enroll_key
       end
 
       it "should create a new course on submission" do
@@ -41,7 +42,11 @@ describe "CoursePages" do
   describe "course description page" do
     let(:teacher) { FactoryGirl.create(:user) }
     let(:user) { FactoryGirl.create(:user) }
-    let(:course) { teacher.taught_courses.create!(name: "Test", description: "Class", language: :ruby) }
+    let(:course) { FactoryGirl.create(:empty_course, teacher: teacher) }
+
+    before do
+      sign_in teacher
+    end
 
     describe "when there are no assignments for that course" do
       before { visit course_path(course) }
@@ -124,9 +129,8 @@ describe "CoursePages" do
         describe "clicking on the enroll button" do
           before { click_link 'Enroll' }
 
-          it "should make the current user enroll into the course" do
-            expect(user.enrolled_courses).to include(course)
-            expect(course.students).to include(user)
+          it "redirects to the enroll page" do
+            expect(current_path).to eq enroll_courses_path
           end
 
           describe "after having already enrolled" do
@@ -264,6 +268,49 @@ describe "CoursePages" do
         let(:grade) { "#{student.grade_in_course(course)} / #{course.total_points}" }
 
         it { should have_content(grade) }
+      end
+    end
+  end
+
+  describe "enrollment page" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:student) { FactoryGirl.create(:student) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+
+    before do
+      sign_in student
+      visit enroll_courses_path
+    end
+
+    it { should have_title('Enroll') }
+
+    describe "filled in with a course's key" do
+      before do
+        fill_in "Enroll key", with: course.enroll_key
+        click_button "Enroll"
+      end
+
+      it "enrolls the student" do
+        course.reload
+        expect(course.students).to include(student)
+      end
+
+      it "redirects to the course's path" do
+        expect(current_url).to eq course_url(course)
+      end
+    end
+
+    describe "filled in with an invalid key" do
+      before do
+        click_button "Enroll"
+      end
+
+      it "does not enroll the student in anything" do
+        expect(student.enrolled_courses).to be_empty
+      end
+
+      it "reports no course was found" do
+        expect(page).to have_selector('.alert.alert-danger')
       end
     end
   end

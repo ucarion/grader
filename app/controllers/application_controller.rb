@@ -9,8 +9,13 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
   # Make sure Pundit is always used, except on the static pages
-  after_filter :verify_authorized, :except => :index, unless: :devise_controller?
-  after_filter :verify_policy_scoped, :only => :index, unless: :devise_controller?
+  after_filter :verify_authorized,
+    :except => [:index, :search, :try_enroll],
+    unless: :devise_controller?
+
+  after_filter :verify_policy_scoped,
+    :only => [:index],
+    unless: :devise_controller?
 
   # Rescue from Pundit authorization errors
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized

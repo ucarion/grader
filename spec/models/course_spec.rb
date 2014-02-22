@@ -4,7 +4,7 @@ describe Course do
   let(:teacher) { FactoryGirl.create(:teacher) }
 
   before do
-    @course = teacher.taught_courses.build(name: "Example", description: "Description", language: :ruby)
+    @course = FactoryGirl.create(:course, teacher: teacher)
   end
 
   subject { @course }
@@ -17,6 +17,7 @@ describe Course do
   it { should respond_to(:total_points) }
   it { should respond_to(:language) }
   it { should respond_to(:ungraded_submissions) }
+  it { should respond_to(:enroll_key) }
 
   its(:teacher) { should eq teacher }
 
@@ -50,6 +51,27 @@ describe Course do
     before { @course.language = :french }
 
     it { should_not be_valid }
+  end
+
+  describe "enroll key" do
+    describe "when absent" do
+      before { @course.enroll_key = nil }
+      it { should_not be_valid }
+    end
+
+    describe "when too short" do
+      before { @course.enroll_key = "abc" }
+      it { should_not be_valid }
+    end
+
+    describe "when not unique" do
+      before do
+        FactoryGirl.create(:course, enroll_key: "super_secret", teacher: teacher)
+        @course.enroll_key = "super_secret"
+      end
+
+      it { should_not be_valid }
+    end
   end
 
   describe "assignment association" do
@@ -123,5 +145,4 @@ describe Course do
       expect(@course.assignments_friendly).to eq [assignment1, assignment3, assignment2]
     end
   end
-
 end

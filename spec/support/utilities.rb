@@ -1,3 +1,5 @@
+require 'securerandom'
+
 def submission_file(file_name = "valid.rb")
   File.new(Rails.root + "spec/example_files/#{file_name}")
 end
@@ -17,4 +19,8 @@ end
 
 def signed_in?
   page.has_link?('', href: signout_path)
+end
+
+def rand_course_enroll_key
+  SecureRandom.uuid
 end
