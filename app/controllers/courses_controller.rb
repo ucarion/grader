@@ -67,7 +67,7 @@ class CoursesController < ApplicationController
   def try_enroll
     @course = Course.find_by(enroll_key: enroll_params)
 
-    if @course
+    if @course && policy(@course).enroll?
       @course.students << current_user
       flash[:success] = "You have been enrolled into the course #{@course.name}"
       redirect_to @course
