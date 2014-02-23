@@ -25,7 +25,8 @@ module SubmissionsHelper
   end
 
   def highlighted_code(submission, code)
-    Pygments.highlight(code, lexer: submission.assignment.course.language)
+    Pygments.highlight(tabs_to_spaces(code),
+      lexer: submission.assignment.course.language)
   end
 
   private
@@ -77,5 +78,9 @@ module SubmissionsHelper
 
   def docker_image
     Docker::Image.all.find { |img| img.info['Repository'] == 'ulysse/polyglot' }
+  end
+
+  def tabs_to_spaces(code)
+    code.gsub(/\t/, ' ' * 4)
   end
 end
