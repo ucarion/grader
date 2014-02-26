@@ -107,6 +107,9 @@ gem 'whenever', require: false
 # Human sorting
 gem 'naturally'
 
+# Static markdown -- pages like 'about', 'help', etc.
+gem 'markdown-rails'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
