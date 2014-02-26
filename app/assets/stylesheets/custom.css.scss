@@ -28,10 +28,10 @@ footer {
     float: right;
 
     a {
-      color: $gray-light;
+      color: mix($gray-light, $brand-primary, 75%);
 
       &:hover {
-        color: $gray-darker;
+        color: mix($gray-darker, $brand-primary, 75%);
       }
     }
   }
