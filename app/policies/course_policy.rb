@@ -21,7 +21,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def create?
-    user
+    user && user.teacher?
   end
 
   def enroll?

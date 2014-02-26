@@ -13,4 +13,14 @@ describe CoursePolicy do
       expect(subject).not_to permit(student, course)
     end
   end
+
+  permissions :create? do
+    it "prevents students from creating courses" do
+      expect(subject).not_to permit(student, Course)
+    end
+
+    it "lets teachers create courses" do
+      expect(subject).to permit(teacher, Course)
+    end
+  end
 end
