@@ -1,0 +1,11 @@
+<h3>Recent activity</h3>
+<% if activities.any? %>
+  <% activities.each do |activity| %>
+    <% if activity && activity.trackable %>
+      <%= render_activity(activity, layout: "layouts/activity") %>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>There is no activity to show here.</p>
+  <p>Why don't you <%= link_to 'enroll in a course', enroll_courses_path %>?</p>
+<% end %>

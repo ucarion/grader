@@ -2,12 +2,7 @@
 
 <div class="row">
   <div class="col-md-9">
-    <h3>Recent activity</h3>
-    <% @activities.each do |activity| %>
-      <% if activity && activity.trackable %>
-        <%= render_activity(activity, layout: "layouts/activity") %>
-      <% end %>
-    <% end %>
+    <%= render 'user_activities', activities: @activities %>
   </div>
 
   <div class="col-md-3">
