@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :user, aliases: [:teacher, :student] do
+  factory :user, aliases: [:student] do
     name { Faker::Name.name }
     sequence(:email) { |i| "user#{i}@example.com" }
     password "password"
@@ -7,6 +7,10 @@ FactoryGirl.define do
 
     factory :admin do
       admin true
+    end
+
+    factory :teacher do
+      teacher true
     end
   end
 
