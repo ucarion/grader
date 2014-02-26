@@ -15,6 +15,7 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:admin?) }
+  it { should respond_to(:teacher?) }
   it { should respond_to(:taught_courses) }
   it { should respond_to(:enrolled_courses) }
   it { should respond_to(:assignments) }
