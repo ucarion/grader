@@ -99,3 +99,15 @@ whenever --update-crontab
 #   bundle update <gemname>
 #
 # Which does not cause OutOfMemory issues.
+
+# Setting up SSH for Capistrano is non-trivial. A few things to do that aren't
+# super-obvious:
+#
+# Locally run:
+#
+#   ssh-add ~/.ssh/id_rsa
+#
+# And set `ForwardAgent yes` on ~/.ssh/config for the particular server you're
+# using.
+#
+# The rest? Good luck.
