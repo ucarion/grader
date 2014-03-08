@@ -49,6 +49,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network "private_network", ip: "192.168.50.4"
 
+  # Enable SSH agent forwarding in order to be able to use Capistrano from
+  # within the VM.
+  config.ssh.forward_agent = true
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
