@@ -23,8 +23,21 @@ namespace :deploy do
 
   desc "Restart Passenger app"
   task :restart do
-    run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
+    on roles(:app) do
+      tmp = File.join(current_path, 'tmp')
+      restart_txt = File.join(tmp, 'restart.txt')
+
+      execute "mkdir -p #{tmp}; touch #{restart_txt}"
+    end
+  end
+
+  desc "Ping the server to force Passenger to reload"
+  task :ping do
+    on roles(:app) do |server|
+      `curl #{server.hostname} > /dev/null 2>&1`
+    end
   end
 end
 
 after "deploy", "deploy:restart"
+after "deploy", "deploy:ping"
