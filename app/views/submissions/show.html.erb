@@ -1,8 +1,12 @@
 <% provide(:title, "Submission by #{@submission.author.name}") %>
 
-<%= render 'submission_header' %>
-<%= render 'grade_submission_form' %>
-<%= render 'source_files' %>
+<div class="pane">
+  <%= render 'submission_header' %>
+  <%= render 'source_files' %>
+</div>
+
 <%= render 'output' %>
+<%= render 'grade_submission_form' %>
+
 
 <%= render 'comments' %>

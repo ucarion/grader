@@ -1,30 +1,32 @@
 <% provide(:title, "Submissions for #{@assignment.name}") %>
 
-<h1>Submissions for <%= link_to @assignment.name, @assignment %></h1>
-<% if @assignment.submissions.any? %>
-  <table class="table table-striped table-bordered list-users-table">
-    <tr>
-      <th></th>
-      <th>Student</th>
-      <th>Grade</th>
-      <th>Status</th>
-    </tr>
-    <% @submissions.each do |submission| %>
-      <tr class="<%= table_class_for_status(submission.status) %>">
-        <td><%= profile_picture(submission.author) %></td>
-        <td><%= link_to submission.author.name, submission %></td>
-        <td>
-          <% if submission.grade %>
-            <%= submission.grade %> / <%= @assignment.point_value %>
-          <% else %>
-            <i>Ungraded</i>
-          <% end %>
-        </td>
-        <td><%= submission.status_as_string.capitalize if submission.status %></td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <i>There are no submissions for this assignment.</i>
-<% end %>
+<div class="pane">
+  <h1>Submissions for <%= link_to @assignment.name, @assignment %></h1>
 
+  <% if @assignment.submissions.any? %>
+    <table class="table table-striped table-bordered list-users-table">
+      <tr>
+        <th></th>
+        <th>Student</th>
+        <th>Grade</th>
+        <th>Status</th>
+      </tr>
+      <% @submissions.each do |submission| %>
+        <tr class="<%= table_class_for_status(submission.status) %>">
+          <td><%= profile_picture(submission.author) %></td>
+          <td><%= link_to submission.author.name, submission %></td>
+          <td>
+            <% if submission.grade %>
+              <%= submission.grade %> / <%= @assignment.point_value %>
+            <% else %>
+              <i>Ungraded</i>
+            <% end %>
+          </td>
+          <td><%= submission.status_as_string.capitalize if submission.status %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <i>There are no submissions for this assignment.</i>
+  <% end %>
+</div>

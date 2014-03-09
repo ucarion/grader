@@ -1,33 +1,36 @@
 <%= provide(:title, "Plagiarism for #{@assignment.name}") %>
 
-<h1>Plagiarism for <%= @assignment.name %></h1>
-<% if @assignment.submissions.any? %>
-  <table class="table table-striped table-bordered list-users-table">
-    <tr>
-      <th></th>
-      <th>Student</th>
-      <th>Grade</th>
-      <th>Plagiarised From</th>
-    </tr>
-    <% @assignment.submissions.each do |submission| %>
-      <tr class="<%= "danger" if submission.plagiarizing.any? %>">
-        <td><%= profile_picture(submission.author) %></td>
-        <td><%= link_to submission.author.name, submission %></td>
-        <td>
-          <% if submission.grade %>
-            <%= submission.grade %> / <%= @assignment.point_value %>
-          <% else %>
-            <i>Ungraded</i>
-          <% end %>
-        </td>
-        <td>
-          <% submission.plagiarizing.each do |plagiarizing_id| %>
-            <%= link_to Submission.find(plagiarizing_id).author.name, compare_assignment_path(@assignment, submission, Submission.find(plagiarizing_id)) %>
-          <% end %>
-        </td>
+<div class="pane">
+  <h1>Plagiarism for <%= @assignment.name %></h1>
+
+  <% if @assignment.submissions.any? %>
+    <table class="table table-striped table-bordered list-users-table">
+      <tr>
+        <th></th>
+        <th>Student</th>
+        <th>Grade</th>
+        <th>Plagiarised From</th>
       </tr>
-    <% end %>
-  </table>
-<% else %>
-  <i>There are no submissions for this assignment.</i>
-<% end %>
+      <% @assignment.submissions.each do |submission| %>
+        <tr class="<%= "danger" if submission.plagiarizing.any? %>">
+          <td><%= profile_picture(submission.author) %></td>
+          <td><%= link_to submission.author.name, submission %></td>
+          <td>
+            <% if submission.grade %>
+              <%= submission.grade %> / <%= @assignment.point_value %>
+            <% else %>
+              <i>Ungraded</i>
+            <% end %>
+          </td>
+          <td>
+            <% submission.plagiarizing.each do |plagiarizing_id| %>
+              <%= link_to Submission.find(plagiarizing_id).author.name, compare_assignment_path(@assignment, submission, Submission.find(plagiarizing_id)) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <i>There are no submissions for this assignment.</i>
+  <% end %>
+</div>

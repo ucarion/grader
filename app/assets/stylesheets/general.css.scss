@@ -7,3 +7,105 @@
 .blog-content {
   font-size: 16px;
 }
+
+body {
+  background-color: #F2F0ED
+}
+
+.pane {
+  background-color: #FEFEFE;
+
+  padding: 33px 50px;
+
+  h1, h2, h3 {
+    // Bootstrap by default gives headers a massive margin-top, which makes
+    // forms look weird, because the header has too much upper whitespace.
+    margin-top: 0px;
+  }
+}
+
+// Customization of the navbar header
+$bgDefault      : #818181;
+$bgHighlight    : darken($bgDefault, 10%);
+$colDefault     : #ECECEC;
+$colHighlight   : lighten($colDefault, 10%);
+.navbar-default {
+  background-color: $bgDefault;
+  border-color: $bgHighlight;
+  .navbar-brand {
+    color: $colDefault;
+    &:hover, &:focus {
+      color: $colHighlight; }}
+  .navbar-text {
+    color: $colDefault; }
+  .navbar-nav {
+    > li {
+      > a {
+        color: $colDefault;
+        &:hover,  &:focus {
+          color: $colHighlight; }}}
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $bgHighlight; }}
+    > .open {
+      > a, > a:hover, > a:focus {
+        color: $colHighlight;
+        background-color: $bgHighlight; }}}
+  .navbar-toggle {
+    border-color: $bgHighlight;
+    &:hover, &:focus {
+      background-color: $bgHighlight; }
+    .icon-bar {
+      background-color: $colDefault; }}
+  .navbar-collapse,
+  .navbar-form {
+    border-color: $colDefault; }
+  .navbar-link {
+    color: $colDefault;
+    &:hover {
+      color: $colHighlight; }}}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: $colDefault;
+      &:hover, &:focus {
+        color: $colHighlight; }}
+    > .active {
+      > a, > a:hover, > a:focus, {
+        color: $colHighlight;
+        background-color: $bgHighlight; }}}
+}
+
+// Stuff for the footer
+footer {
+  hr {
+    $footer-color: #D3D3D3;
+
+    // http://stackoverflow.com/a/4151954/1462197
+    background-color: $footer-color;
+    border: 0 none;
+    color: $footer-color;
+    height: 1px;
+  }
+
+  ul {
+    // Make the footer links stick close to the hr
+    margin-top: -15px;
+  }
+
+  li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+    float: right;
+
+    a {
+      color: $gray-light;
+
+      &:hover {
+        color: $gray-darker;
+      }
+    }
+  }
+}
