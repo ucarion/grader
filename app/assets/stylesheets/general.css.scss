@@ -8,8 +8,10 @@
   font-size: 16px;
 }
 
+$body-bg: #F2F0ED;
+
 body {
-  background-color: #F2F0ED
+  background-color: $body-bg;
 }
 
 .pane {
@@ -24,7 +26,9 @@ body {
   }
 
   border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 3px darken($body-bg, 9%);
+
+  behavior: url(/assets/PIE.htc);
 }
 
 // Customization of the navbar header

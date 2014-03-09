@@ -156,6 +156,7 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     pg (0.17.0)
+    pie-rails (1.1.0)
     polyglot (0.3.3)
     posix-spawn (0.3.8)
     public_activity (1.4.0)
@@ -293,6 +294,7 @@ DEPENDENCIES
   naturally
   paperclip (~> 3.0)
   pg
+  pie-rails
   public_activity
   pundit
   pygments.rb
