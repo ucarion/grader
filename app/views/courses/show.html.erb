@@ -1,34 +1,37 @@
 <%= provide(:title, @course.name) %>
 
-<%= render 'course_header' %>
+<div class="pane">
+  <%= render 'course_header' %>
 
-<ul class="nav nav-tabs">
-  <li class="active"><a href="#assignments" data-toggle="tab">Assignments</a></li>
-  <li><a href="#students" data-toggle="tab">Students</a></li>
-  <li><a href="#about" data-toggle="tab">About</a></li>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#assignments" data-toggle="tab">Assignments</a></li>
+    <li><a href="#students" data-toggle="tab">Students</a></li>
+    <li><a href="#about" data-toggle="tab">About</a></li>
 
-  <% if policy(@course).analytics? %>
-    <li>
-      <%= link_to analytics_course_path(@course) do %>
-        <%= fa_icon 'flask fw' %>
-        Analytics
-      <% end %>
-    </li>
-  <% end %>
+    <% if policy(@course).analytics? %>
+      <li>
+        <%= link_to analytics_course_path(@course) do %>
+          <%= fa_icon 'flask fw' %>
+          Analytics
+        <% end %>
+      </li>
+    <% end %>
 
-  <% if policy(@course).update? && policy(@course).destroy? %>
-    <%= render 'course_admin_options' %>
-  <% end %>
-</ul>
+    <% if policy(@course).update? && policy(@course).destroy? %>
+      <%= render 'course_admin_options' %>
+    <% end %>
+  </ul>
 
-<div class="tab-content">
-  <div class="tab-pane active in fade" id="assignments">
-    <%= render 'course_assignments' %>
+  <div class="tab-content">
+    <div class="tab-pane active in fade" id="assignments">
+      <%= render 'course_assignments' %>
+    </div>
+    <div class="tab-pane fade" id="students">
+      <%= render 'course_students' %>
+    </div>
+    <div class="tab-pane fade" id="about">
+      <%= render 'course_description' %>
+    </div>
   </div>
-  <div class="tab-pane fade" id="students">
-    <%= render 'course_students' %>
-  </div>
-  <div class="tab-pane fade" id="about">
-    <%= render 'course_description' %>
-  </div>
+
 </div>

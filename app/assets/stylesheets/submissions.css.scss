@@ -20,6 +20,10 @@
   @extend .pull-right;
 }
 
+.source-files {
+  margin-top: 25px;
+}
+
 .source-file {
   @extend .panel-default;
 
@@ -37,6 +41,11 @@
     @include border-top-radius(0px);
     border-top: 0;
   }
+}
+
+#submission-outputs {
+  margin-top: 28px;
+  margin-bottom: 28px;
 }
 
 // Forms

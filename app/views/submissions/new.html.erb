@@ -1,7 +1,7 @@
 <% provide(:title, "Create a new Submission") %>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3 pane">
     <h1>Create a Submission</h1>
     <%= form_for([@assignment, @submission],
         html: { :multipart => true, role: :form }) do |f| %>

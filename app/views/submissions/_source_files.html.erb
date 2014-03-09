@@ -1,3 +1,5 @@
-<% @submission.source_files.each do |source_file| %>
-  <%= render 'source_file', source_file: source_file %>
-<% end %>
+<div class="source-files">
+  <% @submission.source_files.each do |source_file| %>
+    <%= render 'source_file', source_file: source_file %>
+  <% end %>
+</div>

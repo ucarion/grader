@@ -1,15 +1,22 @@
 <% provide(:title, @assignment.name) %>
 
-<%= render 'assignment_header' %>
-<%= markdown(@assignment.description) %>
+<div class="pane">
+  <%= render 'assignment_header' %>
+  <%= markdown(@assignment.description) %>
+</div>
 
-<div class="row">
+<div class="row" id="assignments-inputs-outputs">
   <div class="col-md-6">
-    <h2>Input</h2>
-    <%= content_tag(:pre, @assignment.input) %>
+    <div class="pane">
+      <h2>Input</h2>
+      <%= content_tag(:pre, @assignment.input) %>
+    </div>
   </div>
+
   <div class="col-md-6">
-    <h2>Expected Output</h2>
-    <%= content_tag(:pre, @assignment.expected_output) %>
+    <div class="pane">
+      <h2>Expected Output</h2>
+      <%= content_tag(:pre, @assignment.expected_output) %>
+    </div>
   </div>
 </div>

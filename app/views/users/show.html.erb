@@ -1,15 +1,20 @@
 <% provide(:title, @user.name) %>
 
 <div class="row user-information">
-  <div class="col-md-2 sidebar">
-    <div class="row">
-      <%= main_profile_picture(@user) %>
-    </div>
-    <div class="row">
-      <h2 id="name"><%= @user.name %></h2>
+  <div class="col-md-3 sidebar">
+    <div class="pane">
+      <div class="row">
+        <%= main_profile_picture(@user) %>
+      </div>
+      <div class="row">
+        <h2 id="name"><%= @user.name %></h2>
+      </div>
     </div>
   </div>
-  <div class="col-md-10">
-    <%= render 'user_course_list' %>
+
+  <div class="col-md-9">
+    <div class="pane">
+      <%= render 'user_course_list' %>
+    </div>
   </div>
 </div>

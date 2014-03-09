@@ -7,36 +7,6 @@ input[type~=hidden], textarea {
   width: 100%;
 }
 
-footer {
-  hr {
-    // http://stackoverflow.com/a/4151954/1462197
-    background-color: $gray-lighter;
-    border: 0 none;
-    color: $gray-lighter;
-    height: 1px;
-  }
-
-  ul {
-    // Make the footer links stick close to the hr
-    margin-top: -15px;
-  }
-
-  li {
-    display: inline;
-    list-style-type: none;
-    padding-right: 20px;
-    float: right;
-
-    a {
-      color: mix($gray-light, $brand-primary, 75%);
-
-      &:hover {
-        color: mix($gray-darker, $brand-primary, 75%);
-      }
-    }
-  }
-}
-
 .debug_dump {
   margin-top: 70px;
 }

@@ -1,18 +1,21 @@
 <% provide(:title, "#{@course.name} Analytics") %>
-<h1>Analytics for <%= @course.name %></h1>
 
-<h3>Grades</h3>
-<table class="table table-striped table-bordered list-users-table">
-  <tr>
-    <th></th>
-    <th>Student</th>
-    <th>Grade</th>
-  </tr>
-  <% @course.students.each do |student| %>
+<div class="pane">
+  <h1>Analytics for <%= @course.name %></h1>
+
+  <h3>Grades</h3>
+  <table class="table table-striped table-bordered list-users-table">
     <tr>
-      <td><%= profile_picture(student) %></td>
-      <td><%= link_to student.name, student %></td>
-      <td><%= student.grade_in_course(@course) %> / <%= @course.total_points %></td>
+      <th></th>
+      <th>Student</th>
+      <th>Grade</th>
     </tr>
-  <% end %>
-</table>
+    <% @course.students.each do |student| %>
+      <tr>
+        <td><%= profile_picture(student) %></td>
+        <td><%= link_to student.name, student %></td>
+        <td><%= student.grade_in_course(@course) %> / <%= @course.total_points %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

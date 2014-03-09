@@ -5,7 +5,7 @@ describe "CoursePages" do
 
   describe "course creation page" do
     before do
-      sign_in(FactoryGirl.create(:user))
+      sign_in(FactoryGirl.create(:teacher))
       visit new_course_path
     end
 
