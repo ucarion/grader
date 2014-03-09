@@ -22,6 +22,9 @@ body {
     // forms look weird, because the header has too much upper whitespace.
     margin-top: 0px;
   }
+
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.09);
 }
 
 // Customization of the navbar header
