@@ -15,10 +15,6 @@ module ApplicationHelper
     end
   end
 
-  def markdown(text)
-    markdown_parser.render(text).html_safe
-  end
-
   def submit_btn(text, params)
     opts = {
       type: :submit
@@ -36,19 +32,5 @@ module ApplicationHelper
     else
       type
     end
-  end
-
-  private
-
-  def markdown_parser
-    renderer = CustomRenderers::HtmlWithPygments
-    opts = {
-      hard_wrap: true,
-      fenced_code_blocks: true,
-      autolinks: true,
-      disable_indented_code_blocks: true
-    }
-
-    Redcarpet::Markdown.new(renderer, opts)
   end
 end

@@ -66,7 +66,7 @@ describe "CoursePages" do
       it "should display all assignments" do
         course.assignments.find_all do |assignment|
           expect(page).to have_content(assignment.name)
-          expect(page).to have_content(assignment.description)
+          expect(page).to have_content(assignment.description[0...70])
         end
       end
 

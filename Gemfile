@@ -116,6 +116,8 @@ gem 'markdown-rails'
 # CSS-PIE: Used to get IE to support parts of CSS3
 gem 'pie-rails'
 
+gem 'nokogiri'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
