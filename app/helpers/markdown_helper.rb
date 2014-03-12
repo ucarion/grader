@@ -10,7 +10,7 @@ module MarkdownHelper
     opts = {
       hard_wrap: true,
       fenced_code_blocks: true,
-      autolinks: true,
+      autolink: true,
       disable_indented_code_blocks: true
     }
 
