@@ -25,7 +25,7 @@ namespace :deploy do
   desc "Ping the server to force Passenger to reload"
   task :ping do
     on roles(:app) do |server|
-      `curl #{server.hostname} > /dev/null 2>&1`
+      execute "curl #{server.hostname} > /dev/null 2>&1"
     end
   end
 end
