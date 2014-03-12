@@ -1,5 +1,9 @@
 module CustomRenderers
   class HtmlWithPygments < Redcarpet::Render::HTML
+    def initialize(extensions = {})
+      super extensions.merge(link_attributes: { target: "_blank" })
+    end
+
     def block_code(code, language)
       Pygments.highlight(code, :lexer => language)
     end

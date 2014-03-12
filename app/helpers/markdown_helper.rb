@@ -11,8 +11,7 @@ module MarkdownHelper
       hard_wrap: true,
       fenced_code_blocks: true,
       autolink: true,
-      disable_indented_code_blocks: true,
-      link_attributes: {target: '_blank'}
+      disable_indented_code_blocks: true
     }
 
     Redcarpet::Markdown.new(renderer, opts)
