@@ -137,15 +137,6 @@ describe Assignment do
     it { should be_closed }
   end
 
-  describe "short description" do
-    before do
-      description = "Foo bar\nbaz\n"
-      @assignment.update_attributes(description: description)
-    end
-
-    its(:short_description) { should eq "Foo bar\n" }
-  end
-
   describe "submission association" do
     let(:student) { FactoryGirl.create(:student) }
 

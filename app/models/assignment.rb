@@ -33,10 +33,6 @@ class Assignment < ActiveRecord::Base
     end
   end
 
-  def short_description
-    description.lines.first
-  end
-
   def average_grade
     sum = 0
 
