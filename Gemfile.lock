@@ -292,6 +292,7 @@ DEPENDENCIES
   launchy
   markdown-rails
   naturally
+  nokogiri
   paperclip (~> 3.0)
   pg
   pie-rails
