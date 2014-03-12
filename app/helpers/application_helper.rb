@@ -15,7 +15,6 @@ module ApplicationHelper
     end
   end
 
-
   def submit_btn(text, params)
     opts = {
       type: :submit
