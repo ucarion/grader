@@ -3,10 +3,11 @@ namespace :deploy do
     desc "Check that we can access everything"
     task :write_permissions do
       on roles(:all) do |host|
-        if test("[ -w #{fetch(:deploy_to)} ]")
-          info "#{fetch(:deploy_to)} is writable on #{host}"
+        system_dir = File.join(current_path, 'public', 'system')
+        if test("[ -w #{system_dir} ]")
+          info "#{system_dir} is writable on #{host}"
         else
-          error "#{fetch(:deploy_to)} is not writable on #{host}"
+          error "#{system_dir} is not writable on #{host}"
         end
       end
     end

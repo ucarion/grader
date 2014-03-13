@@ -12,3 +12,4 @@ set :linked_dirs, %w{public/system}
 after "deploy", "deploy:restart"
 after "deploy", "deploy:ping"
 after "deploy", "delayed_job:restart"
+after "deploy", "deploy:check:write_permissions"
