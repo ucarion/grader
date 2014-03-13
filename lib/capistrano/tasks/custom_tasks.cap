@@ -11,6 +11,17 @@ namespace :deploy do
         end
       end
     end
+
+    desc "Check that the user is in the docker group"
+    task :docker_group do
+      on roles(:all) do |host|
+        if test("groups | grep docker")
+          info "Deploy user is in the docker group."
+        else
+          error "Deploy user is not in the docker group"
+        end
+      end
+    end
   end
 
   desc "Restart Passenger app"
