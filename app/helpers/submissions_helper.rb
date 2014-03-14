@@ -6,7 +6,7 @@ module SubmissionsHelper
     when Submission::Status::OUTPUT_CORRECT
       "success"
     when Submission::Status::OUTPUT_INCORRECT
-      "error"
+      "danger"
     end
   end
 
