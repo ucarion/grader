@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140226050551) do
+ActiveRecord::Schema.define(version: 20140314072300) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20140226050551) do
     t.integer  "author_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "grade"
+    t.float    "grade"
     t.text     "output"
     t.integer  "status"
     t.text     "plagiarizing"
