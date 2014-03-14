@@ -135,7 +135,10 @@ describe Submission do
   end
 
   describe "output" do
-    before { @submission.execute_code! }
+    before do
+      @submission.execute_code!
+      @submission.reload
+    end
 
     its(:output) { should eq "Hello, world!\n" }
   end
@@ -145,6 +148,7 @@ describe Submission do
       @submission.source_files.first.update_attributes(code: File.new(Rails.root + 'spec/example_files/inreader.rb'))
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:output) { should eq "[1, 4, 9, 16, 25]\n" }
@@ -160,6 +164,7 @@ describe Submission do
         before do
           assignment.update_attributes(expected_output: "Hello, world!")
           @submission.execute_code!
+          @submission.reload
         end
 
         its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
@@ -169,6 +174,7 @@ describe Submission do
         before do
           assignment.update_attributes(expected_output: "Something else")
           @submission.execute_code!
+          @submission.reload
         end
 
         its(:status) { should eq Submission::Status::OUTPUT_INCORRECT }
@@ -183,11 +189,12 @@ describe Submission do
       course.update_attributes(language: :java)
       FactoryGirl.create(:source_file, code: submission_file("Refer.java"), submission: @submission)
       FactoryGirl.create(:source_file, code: submission_file("Referenced.java"),
-        submission: @submission, main: false)
+                         submission: @submission, main: false)
 
       @submission.reload
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:output) { should eq "Hello, there!\n" }
@@ -200,6 +207,7 @@ describe Submission do
         @submission.source_files.first.update_attributes!(code: submission_file("JavaExample.java"))
 
         @submission.execute_code!
+        @submission.reload
       end
 
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
@@ -211,6 +219,7 @@ describe Submission do
         @submission.source_files.first.update_attributes!(code: submission_file("c_example.c"))
 
         @submission.execute_code!
+        @submission.reload
       end
 
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
@@ -222,6 +231,7 @@ describe Submission do
         @submission.source_files.first.update_attributes!(code: submission_file("cpp_example.cpp"))
 
         @submission.execute_code!
+        @submission.reload
       end
 
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
@@ -233,6 +243,7 @@ describe Submission do
         @submission.source_files.first.update_attributes!(code: submission_file("pyexample.py"))
 
         @submission.execute_code!
+        @submission.reload
       end
 
       its(:output) { should eq "1\n4\n9\n16\n25\n" }
@@ -245,6 +256,7 @@ describe Submission do
       @submission.source_files.first.update_attributes!(code: submission_file("NoCompile.java"))
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:output) { should_not be_blank }
@@ -262,6 +274,7 @@ describe Submission do
           course.update_attributes(language: :java)
 
           @submission.execute_code!
+          @submission.reload
         end
 
         its(:output) { should_not include("NoClassDefFoundError") }
@@ -272,6 +285,7 @@ describe Submission do
           course.update_attributes(language: :c)
 
           @submission.execute_code!
+          @submission.reload
         end
 
         its(:output) { should_not include("./a.out: No such file or directory") }
@@ -282,6 +296,7 @@ describe Submission do
           course.update_attributes(language: :cpp)
 
           @submission.execute_code!
+          @submission.reload
         end
 
         its(:output) { should_not include("./a.out: No such file or directory") }
@@ -301,9 +316,10 @@ describe Submission do
     before do
       assignment.update_attributes(input: "foo | echo bar")
       @submission.source_files.first.update_attributes(
-        code: submission_file('input_repeater.rb'))
+      code: submission_file('input_repeater.rb'))
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:output) { should eq "foo | echo bar\n" }
@@ -314,6 +330,7 @@ describe Submission do
       assignment.update_attributes(expected_output: "Hello,\r world!")
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
@@ -323,9 +340,10 @@ describe Submission do
     before do
       course.update_attributes(language: :java)
       @submission.source_files.first.update_attributes(
-        code: submission_file('JavaPackage.java'))
+      code: submission_file('JavaPackage.java'))
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:output) { should eq "Hello, world!\n" }
@@ -338,6 +356,7 @@ describe Submission do
       @submission.source_files.first.update_attributes(code: submission_file("JOptionPaneReader.java"))
 
       @submission.execute_code!
+      @submission.reload
     end
 
     its(:output) { should eq "hello\nnull\nhello again\n" }

@@ -57,6 +57,7 @@ describe "SubmissionsPages" do
       describe "if executed" do
         before do
           submission.execute_code!
+          submission.reload
           visit current_path
         end
 

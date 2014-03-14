@@ -56,46 +56,8 @@ class Submission < ActiveRecord::Base
   end
 
   def execute_code!
-    language = assignment.course.language
-
-    # Add the files into the image
-    files = source_files.map { |file| file.code.path }
-
-    image = docker_image.insert_local('localPath' => files,
-      'outputPath' => '/', 'rm' => true)
-
-    # Now, let's generate an image that will run the submission
-    cmd = [ "/bin/bash", "-c", cmd_for(language, main_file, assignment.input) ]
-
-    # Run and get output
-    container = image.run(cmd)
-
-    # It would appear that setting
-    #
-    #    logs: true
-    #
-    # Will make sure that Docker always returns some kind of output. Why this
-    # would be the case is beyond me.
-    messages = container.attach(logs: true)
-
-    stdout = messages[0].join
-    stderr = messages[1].join
-    output = stdout + stderr
-
-    update_attributes(output: output)
-
-    if outputs_equal?(assignment.expected_output, output)
-      update_attributes(status: Submission::Status::OUTPUT_CORRECT)
-    else
-      update_attributes(status: Submission::Status::OUTPUT_INCORRECT)
-    end
-
-    # Cleanup
-    container.delete
-    image.remove
+    Delayed::Job.enqueue SubmissionExecutionJob.new(id)
   end
-
-  handle_asynchronously :execute_code!
 
   def main_file
     source_files.find { |file| file.main? }
@@ -109,13 +71,5 @@ class Submission < ActiveRecord::Base
     elsif self.source_files.to_a.count { |file| file.main? } != 1
       errors.add(:source_files, "Submission must have exactly one main file.")
     end
-  end
-
-  def outputs_equal?(expected, actual)
-    cleanup_output(expected) == cleanup_output(actual)
-  end
-
-  def cleanup_output(output)
-    output.gsub("\r", "").strip
   end
 end
