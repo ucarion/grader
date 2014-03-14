@@ -56,7 +56,7 @@ class Submission < ActiveRecord::Base
   end
 
   def execute_code!
-    Delayed::Job.enqueue SubmissionExecutionJob.new(id)
+    Delayed::Job.enqueue SubmissionExecutionJob.new(self.id)
   end
 
   def main_file

@@ -1,17 +1,28 @@
 class SubmissionExecutionJob
-  attr_reader :submission
-
   def initialize(submission_id)
-    @submission = Submission.find(submission_id)
+    @submission_id = submission_id
   end
 
   def perform
-    execute_submission_code
+    logger.info "Executing code for submission with id: #{@submission_id}"
+
+    begin
+      execute_submission_code
+    rescue => e
+      logger.error "There was an error while working on #{@submission_id}."
+
+      logger.error "Message: #{e.message}"
+      logger.error "Backtrace: #{e.backtrace.join("\n")}"
+    end
+
+    logger.info "Done executing code for submission with id: #{@submission_id}"
   end
 
   private
 
   def execute_submission_code
+    submission = Submission.find(@submission_id)
+
     assignment = submission.assignment
     language = assignment.course.language
 
@@ -49,6 +60,8 @@ class SubmissionExecutionJob
     end
 
     submission.update_attributes(status: status)
+
+    logger.info "Submission with id: #{@submission_id} got status: #{status}"
 
     # Cleanup
     container.delete
@@ -110,5 +123,9 @@ class SubmissionExecutionJob
 
   def cleanup_output(output)
     output.gsub("\r", "").strip
+  end
+
+  def logger
+    Delayed::Worker.logger
   end
 end
