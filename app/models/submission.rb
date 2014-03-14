@@ -20,7 +20,7 @@ class Submission < ActiveRecord::Base
 
   validates :author_id, presence: true
   validates :assignment_id, presence: true
-  validates :grade, numericality: { only_integer: true }, allow_blank: true
+  validates :grade, numericality: true, allow_blank: true
   validates :max_attempts_override, numericality: { greater_than: 0 },
               allow_blank: true
   validate :validate_source_files

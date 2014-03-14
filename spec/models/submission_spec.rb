@@ -61,6 +61,26 @@ describe Submission do
     it { should_not be_valid }
   end
 
+  describe "grade" do
+    it "does not require a grade" do
+      @submission.grade = nil
+
+      expect(subject).to be_valid
+    end
+
+    it "requires numerical grades" do
+      @submission.grade = "three"
+
+      expect(subject).not_to be_valid
+    end
+
+    it "works fine with decimal values" do
+      @submission.grade = "3.14"
+
+      expect(subject).to be_valid
+    end
+  end
+
   describe "num attempts" do
     it "should default to zero" do
       expect(@submission.num_attempts).to eq 0
