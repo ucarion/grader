@@ -22,6 +22,20 @@ namespace :deploy do
         end
       end
     end
+
+    desc "Verify that there is a DJ worker running"
+    task :delayed_job_status do
+      on roles(:app) do
+        delayed_job = File.join(current_path, 'bin', 'delayed_job')
+
+        within release_path do
+          # TODO: Automatically check that the output here is correct.
+          # Capistrano is confusing and documentation is poor, so I don't know
+          # how to capture output properly.
+          execute :bundle, :exec, :'bin/delayed_job', :status
+        end
+      end
+    end
   end
 
   desc "Restart Passenger app"
