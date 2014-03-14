@@ -55,4 +55,14 @@ describe SubmissionPolicy do
       end
     end
   end
+
+  permissions :destroy? do
+    it "lets teachers destroy submissions" do
+      expect(subject).to permit(teacher, submission)
+    end
+
+    it "doesnt let submisison authors destroy submissions" do
+      expect(subject).not_to permit(student, submission)
+    end
+  end
 end

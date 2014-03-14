@@ -25,6 +25,10 @@ class SubmissionPolicy < ApplicationPolicy
     user && teacher?
   end
 
+  def destroy?
+    user && teacher?
+  end
+
   private
 
   def author?
