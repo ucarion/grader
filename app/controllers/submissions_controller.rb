@@ -82,6 +82,15 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def destroy
+    @submission = Submission.find(params[:id])
+    authorize @submission
+
+    submission = @submission.delete
+    flash[:success] = "Submission was destroyed successfully."
+    redirect_to submission.assignment
+  end
+
   private
 
   def submission_params

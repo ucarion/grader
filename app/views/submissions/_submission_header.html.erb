@@ -3,6 +3,10 @@
     <%= render 'resubmit_submission_button' %>
   <% end %>
 
+  <% if policy(@submission).destroy? %>
+    <%= render 'destroy_submission_button' %>
+  <% end %>
+
   <h1>
     <% if policy(@submission.assignment).list_submissions? %>
       <%= render 'back_to_list_submissions' %>

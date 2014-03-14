@@ -237,6 +237,18 @@ describe "SubmissionsPages" do
         it { should have_link("Resubmit", href: edit_submission_path(submission)) }
       end
     end
+
+    describe "deletion" do
+      before do
+        sign_in teacher
+        visit submission_path(submission)
+      end
+
+      it "destroys the submission on click" do
+        click_link "Delete this submission"
+        expect { Submission.find(submission.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 
   describe "creation page" do
