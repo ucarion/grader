@@ -47,6 +47,17 @@ describe "User Pages" do
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
+
+    it "shows a mailto for the user" do
+      teacher = FactoryGirl.create(:teacher)
+      course = FactoryGirl.create(:course, teacher: teacher)
+      course.students << user
+
+      sign_in teacher
+      visit user_path(user)
+
+      expect(page).to have_link(user.email)
+    end
   end
 
   describe "edit" do

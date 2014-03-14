@@ -32,4 +32,14 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     user && user.admin? && user != record
   end
+
+  def show_email?
+    user && user_is_teacher?
+  end
+
+  private
+
+  def user_is_teacher?
+    record.teachers.include?(user)
+  end
 end

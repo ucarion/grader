@@ -8,6 +8,10 @@
       </div>
       <div class="row">
         <h2 id="name"><%= @user.name %></h2>
+
+        <% if policy(@user).show_email? %>
+          <%= mail_to @user.email %>
+        <% end %>
       </div>
     </div>
   </div>
