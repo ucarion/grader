@@ -31,7 +31,7 @@ describe "Authentication Pages" do
 
       it { should have_content(user.name) }
       it { should have_link('Profile', href: user_path(user)) }
-      it { should have_link('Settings', href: edit_user_path(user)) }
+      it { should have_link('Settings', href: edit_user_registration_path) }
       it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
 
@@ -52,7 +52,7 @@ describe "Authentication Pages" do
       let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 
       describe "when trying to edit a user" do
-        before { visit edit_user_path(user) }
+        before { visit edit_user_registration_path }
 
         it { should have_selector('.alert.alert-danger') }
       end
@@ -83,12 +83,6 @@ describe "Authentication Pages" do
 
       describe "as the correct user" do
         before { sign_in(user) }
-
-        describe "visiting another person's edit page" do
-          before { visit edit_user_path(other_user) }
-
-          it { should_not have_title('Edit Account') }
-        end
 
         describe "visiting another person's profile page" do
           before { visit user_path(other_user) }

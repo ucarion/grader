@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       sign_in @user
       redirect_to @user
     else
-      render 'edit'
+      render 'devise/registrations/edit'
     end
   end
 
