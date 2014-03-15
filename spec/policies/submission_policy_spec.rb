@@ -7,7 +7,7 @@ describe SubmissionPolicy do
   let(:student) { FactoryGirl.create(:student) }
   let(:course) { FactoryGirl.create(:course, teacher: teacher) }
   let(:assignment) { FactoryGirl.create(:assignment, course: course) }
-  let(:submission) { FactoryGirl.create(:submission, author: student, assignment: assignment) }
+  let(:submission) { FactoryGirl.build_stubbed(:submission, author: student, assignment: assignment) }
 
   before do
     course.students << student
@@ -53,6 +53,12 @@ describe SubmissionPolicy do
 
         expect(subject).not_to permit(student, submission)
       end
+    end
+
+    it "prevents students from creating many submisisons for one assignment" do
+      FactoryGirl.create(:submission, author: student, assignment: assignment)
+
+      expect(subject).not_to permit(student, submission)
     end
   end
 
