@@ -10,7 +10,7 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def create?
-    user && enrolled? && open_or_grace?
+    user && enrolled? && open_or_grace? && !preexisting_submission?
   end
 
   def update?
@@ -49,5 +49,9 @@ class SubmissionPolicy < ApplicationPolicy
 
   def attempts_exceeded?
     record.num_attempts >= record.max_attempts
+  end
+
+  def preexisting_submission?
+    record.assignment.submissions.where(author: user).any?
   end
 end
