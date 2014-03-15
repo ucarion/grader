@@ -11,7 +11,7 @@ Grader::Application.routes.draw do
     get '/signup' => 'devise/registrations#new'
   end
 
-  resources :users
+  resources :users, except: [:edit]
 
   shallow do
     resources :courses do
