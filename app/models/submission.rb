@@ -78,7 +78,9 @@ class Submission < ActiveRecord::Base
     has_invalid_encoding = source_files.any? do |file|
       path = (file.code.queued_for_write[:original] || file.code).path
 
-      !File.read(path).valid_encoding?
+      # path may be nil if the file uploaded is non-present. Other validations
+      # will take care of making sure the code is present.
+      path && !File.read(path).valid_encoding?
     end
 
     if has_invalid_encoding
