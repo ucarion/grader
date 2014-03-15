@@ -2,14 +2,13 @@ require 'spec_helper'
 
 describe User do
   before do
-    @user = User.new(name: "Lauren Ipsum",
-                        email: "dolor@sit.am.et",
-                        password: "consectetur",
-                        password_confirmation: "consectetur")
+    @user = FactoryGirl.build(:user)
   end
 
   subject { @user }
 
+  it { should respond_to(:first_name) }
+  it { should respond_to(:last_name) }
   it { should respond_to(:name) }
   it { should respond_to(:email) }
   it { should respond_to(:password) }
@@ -26,10 +25,19 @@ describe User do
   # default definition of user is valid
   it { should be_valid }
 
-  describe "when name is blank" do
-    before { @user.name = "" }
+  it "validates for a first name" do
+    @user.first_name = ""
+    expect(@user).not_to be_valid
+  end
 
-    it { should_not be_valid }
+  it "validates for a last name" do
+    @user.last_name = ""
+    expect(@user).not_to be_valid
+  end
+
+  it "uses first and last to create full name" do
+    @user.first_name, @user.last_name = "John", "Doe"
+    expect(@user.name).to eq "John Doe"
   end
 
   describe "when email is blank" do
