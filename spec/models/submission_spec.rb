@@ -381,4 +381,17 @@ describe Submission do
 
     its(:output) { should eq "hello\nnull\nhello again\n" }
   end
+
+  describe "validation for correct UTF8" do
+    before do
+      @submission.source_files.first.update_attributes(
+        code: submission_file("HasBadUtf8.class"))
+    end
+
+    it { should_not be_valid }
+    it "this is a test" do
+      @submission.save
+      expect(@submission.errors[:source_files]).to include(course.language.bad_filetype_message)
+    end
+  end
 end
