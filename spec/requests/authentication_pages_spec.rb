@@ -45,7 +45,9 @@ describe "Authentication Pages" do
   describe "authorization" do
     describe "for actions requiring signin" do
       let(:user) { FactoryGirl.create(:user) }
-      let(:other_user) { FactoryGirl.create(:user, name: "John Doe", email: "john@doe.com") }
+      let(:other_user) { FactoryGirl.create(:user,
+        first_name: "John", last_name: "Doe", email: "john@doe.com") }
+
       let(:course) { FactoryGirl.create(:course, teacher: other_user) }
       let(:assignment) { FactoryGirl.create(:assignment, course: course) }
 

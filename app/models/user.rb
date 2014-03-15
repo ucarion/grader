@@ -17,9 +17,16 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  alias_method :full_name, :name
 
   def assignments(args = {only_open: false})
     courses = "SELECT course_id FROM courses_users WHERE user_id = :user_id"
