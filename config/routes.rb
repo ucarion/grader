@@ -7,10 +7,11 @@ Grader::Application.routes.draw do
   devise_scope :user do
     get '/signin' => 'devise/sessions#new'
     delete '/signout' => 'devise/sessions#destroy'
+
+    get '/signup' => 'devise/registrations#new'
   end
 
   resources :users
-  match '/signup', to: 'users#new', via: 'get'
 
   shallow do
     resources :courses do

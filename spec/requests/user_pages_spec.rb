@@ -21,7 +21,8 @@ describe "User Pages" do
 
     describe "submitted with valid information" do
       before do
-        fill_in "Name", with: "Lauren Ipsum"
+        fill_in "First name", with: "Lauren"
+        fill_in "Last name", with: "Ipsum"
         fill_in "Email", with: "dolor@sit.am.et"
         fill_in "Password", with: "password"
         fill_in "Password confirmation", with: "password"
@@ -80,11 +81,13 @@ describe "User Pages" do
     end
 
     describe "with valid information" do
-      let(:new_name) { "New Name" }
+      let(:new_first_name) { "New" }
+      let(:new_last_name) { "Name" }
       let(:new_email) { "new@email.com" }
 
       before do
-        fill_in "Name", with: new_name
+        fill_in "First name", with: new_first_name
+        fill_in "Last name", with: new_last_name
         fill_in "Email", with: new_email
         fill_in "Password", with: "password"
         fill_in "Password confirmation", with: "password"
@@ -94,7 +97,7 @@ describe "User Pages" do
 
         it { should have_title(user.reload.name) }
         it { should have_selector('div.alert.alert-success', text: 'Successfully updated') }
-        specify { expect(user.reload.name).to eq new_name }
+        specify { expect(user.reload.first_name).to eq new_first_name }
         specify { expect(user.reload.email).to eq new_email }
     end
   end
