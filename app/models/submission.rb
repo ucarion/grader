@@ -76,7 +76,9 @@ class Submission < ActiveRecord::Base
 
   def validate_encoding
     has_invalid_encoding = source_files.any? do |file|
-      file.code.path && !File.read(file.code.path).valid_encoding?
+      path = (file.code.queued_for_write[:original] || file.code).path
+
+      !File.read(path).valid_encoding?
     end
 
     if has_invalid_encoding
