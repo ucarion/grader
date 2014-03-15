@@ -282,6 +282,10 @@ describe "SubmissionsPages" do
         it "should automatically evaluate the program" do
           expect(page).to have_selector('.output')
         end
+
+        it "sets the number of attempts to 1" do
+          expect(page).to have_content("1 / #{assignment.max_attempts}")
+        end
       end
     end
 

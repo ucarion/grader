@@ -25,6 +25,8 @@ class SubmissionsController < ApplicationController
       @submission.create_activity :create, owner: @submission.author
       flash[:success] = "Your submission was created successfully."
       redirect_to @submission
+
+      @submission.increment_num_attempts
       @submission.execute_code!
     else
       render 'new'
