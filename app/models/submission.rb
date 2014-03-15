@@ -24,6 +24,7 @@ class Submission < ActiveRecord::Base
   validates :max_attempts_override, numericality: { greater_than: 0 },
               allow_blank: true
   validate :validate_source_files
+  validate :validate_encoding
   validates_associated :source_files
 
   after_create :init_status, :init_num_attempts
@@ -70,6 +71,16 @@ class Submission < ActiveRecord::Base
       errors.add(:source_files, "Submission must have at least one attached file.")
     elsif self.source_files.to_a.count { |file| file.main? } != 1
       errors.add(:source_files, "Submission must have exactly one main file.")
+    end
+  end
+
+  def validate_encoding
+    has_invalid_encoding = source_files.any? do |file|
+      !File.read(file.code.path).valid_encoding?
+    end
+
+    if has_invalid_encoding
+      errors.add(:source_files, assignment.course.language.bad_filetype_message)
     end
   end
 end
