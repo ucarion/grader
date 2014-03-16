@@ -436,6 +436,27 @@ describe "SubmissionsPages" do
             expect(page).to have_content("#{submission.grade} / #{submission.assignment.point_value}")
           end
         end
+
+        it "lists submissions by given param's order" do
+          visit assignment_submissions_path(assignment,
+            sort: :author, order: :asc)
+          ordered_by_name = assignment.submissions.sort_by { |s| s.author.name }
+
+          first_user = ordered_by_name.first.author.name
+          expect(page).to have_selector("tr:nth-child(2) a", text: first_user)
+
+          second_user = ordered_by_name.second.author.name
+          expect(page).to have_selector("tr:nth-child(3) a", text: second_user)
+        end
+
+        it "has links to sort submissions" do
+          possible_params = [:author, :status, :grade].product([:asc, :desc])
+
+          possible_params.each do |(key, direction)|
+            expect(page).to have_link("", href: assignment_submissions_path(
+              assignment, sort: key, order: direction))
+          end
+        end
       end
 
       describe "when visited by a non-teacher" do

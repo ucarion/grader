@@ -57,7 +57,7 @@ class SubmissionsController < ApplicationController
     @assignment = Assignment.find(params[:assignment_id])
     authorize @assignment, :list_submissions?
 
-    @submissions = policy_scope(@assignment.submissions)
+    @submissions = sort_submissions(policy_scope(@assignment.submissions))
   end
 
   def grade
@@ -114,6 +114,33 @@ class SubmissionsController < ApplicationController
 
   def source_file_params
     [ :code, :main, :id, :_destroy ]
+  end
+
+  def sort_submissions(submissions)
+    case params[:sort]
+    when 'author'
+      sorted = submissions.sort_by { |s| s.author.name }
+
+      if sort_order == :asc
+        sorted
+      else
+        sorted.reverse
+      end
+    when 'status'
+      submissions.order(status: sort_order)
+    when 'grade'
+      submissions.order(grade: sort_order)
+    else
+      submissions
+    end
+  end
+
+  def sort_order
+    if params[:order] == 'asc'
+      :asc
+    else
+      :desc
+    end
   end
 
   # only show the first one, because otherwise it looks weird in an alert

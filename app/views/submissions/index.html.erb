@@ -3,13 +3,13 @@
 <div class="pane">
   <h1>Submissions for <%= link_to @assignment.name, @assignment %></h1>
 
-  <% if @assignment.submissions.any? %>
+  <% if @submissions.any? %>
     <table class="table table-bordered list-users-table">
       <tr>
         <th></th>
-        <th>Student</th>
-        <th>Grade</th>
-        <th>Status</th>
+        <th>Student <%= sort_links('author', 'alpha') %></th>
+        <th>Grade <%= sort_links('grade', 'numeric') %></th>
+        <th>Status <%= sort_links('status', 'amount') %></th>
       </tr>
       <% @submissions.each do |submission| %>
         <tr class="<%= table_class_for_status(submission.status) %>">
