@@ -29,9 +29,22 @@ module SubmissionsHelper
       lexer: submission.assignment.course.language)
   end
 
+  def sort_links(key, icon_type)
+    icon = "sort-#{icon_type}"
+
+    desc = sort_link(key, 'desc', "#{icon}-desc")
+    asc = sort_link(key, 'asc', "#{icon}-asc")
+
+    desc + asc
+  end
+
   private
 
   def tabs_to_spaces(code)
     code.gsub(/\t/, ' ' * 4)
+  end
+
+  def sort_link(key, direction, icon)
+    link_to(fa_icon(icon), sort: key, order: direction)
   end
 end
