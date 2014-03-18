@@ -118,6 +118,8 @@ gem 'pie-rails'
 
 gem 'nokogiri'
 
+gem 'figaro'
+
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
