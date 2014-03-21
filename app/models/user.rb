@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :enrolled_courses, class_name: "Course"
   has_many :submissions, foreign_key: "author_id", dependent: :destroy
   has_many :comments
+  has_many :activities
 
   # Shortcuts
   has_many :teachers, -> { uniq }, through: :enrolled_courses
@@ -47,5 +48,9 @@ class User < ActiveRecord::Base
     end
 
     sum
+  end
+
+  def recent_activities(limit)
+    Activity.where(user: self).order(created_at: :desc).limit(limit)
   end
 end

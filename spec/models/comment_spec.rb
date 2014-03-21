@@ -36,4 +36,22 @@ describe Comment do
 
     it { should_not be_valid }
   end
+
+  describe "activity" do
+    it "notifies the teacher when student comments" do
+      comment_by_student = FactoryGirl.create(:comment,
+        user: student, submission: submission)
+
+      activity = comment_by_student.create_activity
+      expect(activity.user).to eq teacher
+    end
+
+    it "notifies the student when student comments" do
+      comment_by_teacher = FactoryGirl.create(:comment,
+        user: teacher, submission: submission)
+
+      activity = comment_by_teacher.create_activity
+      expect(activity.user).to eq student
+    end
+  end
 end

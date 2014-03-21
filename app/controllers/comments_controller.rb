@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
     authorize @comment
 
     if @comment.save
-      @comment.create_activity :create, owner: @comment.user
+      @comment.create_activity
       flash[:success] = "Comment created."
       redirect_to @comment.submission
     else

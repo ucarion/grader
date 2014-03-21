@@ -1,5 +1,4 @@
 class Assignment < ActiveRecord::Base
-  include PublicActivity::Common
   include PlagiarismHelper
 
   belongs_to :course
@@ -49,5 +48,15 @@ class Assignment < ActiveRecord::Base
 
   def ungraded_submissions
     submissions.where(grade: nil)
+  end
+
+  def create_activities
+    course.students.map do |student|
+      Activity.create(
+        subject: self,
+        name: 'assignment_created',
+        user: student
+      )
+    end
   end
 end

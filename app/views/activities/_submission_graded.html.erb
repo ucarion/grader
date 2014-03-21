@@ -1,0 +1,15 @@
+<div class="activity row">
+  <div class="col-md-1">
+    <%= fa_icon 'pencil 3x fw' %>
+  </div>
+
+  <div class="col-md-11">
+    <% subject.assignment.course.teacher.tap do |teacher| %>
+      <%= link_to teacher.name, teacher %>
+    <% end %>
+    graded
+    <%= link_to 'your submission', subject %>
+    for
+    <%= link_to subject.assignment.name, subject.assignment %>
+  </div>
+</div>

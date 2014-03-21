@@ -179,6 +179,12 @@ describe "AssignmentPages" do
         expect { click_button submit }.to change(Assignment, :count).by(1)
       end
 
+      it "creates a new activity for each student" do
+        expect do
+          click_button submit
+        end.to change(Activity, :count).by(course.students.count)
+      end
+
       describe "after submitting" do
         before { click_button submit }
 
