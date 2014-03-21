@@ -64,6 +64,30 @@ class Submission < ActiveRecord::Base
     source_files.find { |file| file.main? }
   end
 
+  def create_activity_for_create
+    Activity.create(
+      subject: self,
+      name: 'submission_created',
+      user: assignment.course.teacher
+    )
+  end
+
+  def create_activity_for_update
+    Activity.create(
+      subject: self,
+      name: 'submission_updated',
+      user: assignment.course.teacher
+    )
+  end
+
+  def create_activity_for_grade
+    Activity.create(
+      subject: self,
+      name: 'submission_graded',
+      user: author
+    )
+  end
+
   private
 
   def validate_source_files

@@ -98,6 +98,16 @@ describe "SubmissionsPages" do
         it { should have_button("Submit") }
 
         it { should have_link("", href: assignment_submissions_path(assignment)) }
+
+        describe "grade form" do
+          before do
+            fill_in 'Grade', with: 3
+          end
+
+          it "creates an activity for the student on submit" do
+            expect { click_button "Submit" }.to change(Activity, :count).by(1)
+          end
+        end
       end
 
       describe "visited by the author" do
@@ -159,6 +169,10 @@ describe "SubmissionsPages" do
 
         it "should create a new comment on submit" do
           expect { click_button submit_comment }.to change(submission.comments, :count).by(1)
+        end
+
+        it "creates a new activity on submit" do
+          expect { click_button submit_comment }.to change(Activity, :count).by(1)
         end
 
         describe "after commenting" do
@@ -274,6 +288,10 @@ describe "SubmissionsPages" do
         expect { click_button submit }.to change(Submission, :count).by(1)
       end
 
+      it "creates an activity for the teacher" do
+        expect { click_button submit }.to change(Activity, :count).by(1)
+      end
+
       describe "after submitting" do
         before { click_button submit }
 
@@ -374,6 +392,10 @@ describe "SubmissionsPages" do
 
           expect(num_attempts_after - num_attempts_before).to eq 1
         end
+      end
+
+      it "creates an activity for the teacher" do
+        expect { click_button submit }.to change(Activity, :count).by(1)
       end
 
       describe "after submitting" do
