@@ -180,7 +180,6 @@ describe "AssignmentPages" do
       end
 
       it "creates a new activity for each student" do
-        puts course.students.count
         expect do
           click_button submit
         end.to change(Activity, :count).by(course.students.count)
