@@ -159,7 +159,6 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     pg (0.17.0)
-    pie-rails (1.1.0)
     polyglot (0.3.3)
     posix-spawn (0.3.8)
     pundit (0.2.1)
@@ -294,7 +293,6 @@ DEPENDENCIES
   nokogiri
   paperclip (~> 3.0)
   pg
-  pie-rails
   pundit
   pygments.rb
   rails (= 4.0.0)
