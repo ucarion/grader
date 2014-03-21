@@ -196,4 +196,19 @@ describe Assignment do
       expect(noncheat.plagiarizing).to be_empty
     end
   end
+
+  describe "activities" do
+    it "notifies all students in a course of a new assignment" do
+      5.times do
+        user = FactoryGirl.create(:student)
+
+        course.students << user
+      end
+
+      activities = @assignment.create_activities
+      users = activities.map { |activity| activity.user }
+
+      expect(users).to match_array(course.students)
+    end
+  end
 end
