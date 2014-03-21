@@ -9,9 +9,9 @@ set :ssh_options, { forward_agent: true }
 
 set :linked_dirs, %w{public/system}
 
+before "deploy", "delayed_job:stop"
 after "deploy", "deploy:restart"
 after "deploy", "deploy:ping"
-after "deploy", "delayed_job:stop"
 after "deploy", "delayed_job:start"
 after "deploy", "deploy:check:write_permissions"
 after "deploy", "deploy:check:docker_group"
