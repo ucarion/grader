@@ -20,6 +20,7 @@ describe User do
   it { should respond_to(:assignments) }
   it { should respond_to(:submissions) }
   it { should respond_to(:comments) }
+  it { should respond_to(:activities) }
   it { should respond_to(:grade_in_course) }
 
   # default definition of user is valid
@@ -212,6 +213,23 @@ describe User do
           expect { Submission.find(submission) }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
+    end
+  end
+
+  describe "activities" do
+    it "gives activities in reverse chronological order" do
+      activities = 5.downto(1).map do |i|
+        activity = Activity.new(subject: nil, name: nil)
+        activity.created_at = i.days.ago
+
+        activity.save!
+        @user.activities << activity
+
+        activity
+      end
+
+      expect(@user.recent_activities(5)).to eq activities.reverse
+      expect(@user.recent_activities(2)).to eq activities.reverse.first(2)
     end
   end
 end
