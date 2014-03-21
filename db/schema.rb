@@ -14,10 +14,12 @@
 ActiveRecord::Schema.define(version: 20140321032006) do
 
   create_table "activities", force: true do |t|
-    t.integer "subject_id"
-    t.string  "subject_type"
-    t.integer "user_id"
-    t.string  "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "subject_id"
+    t.string   "subject_type"
+    t.integer  "user_id"
+    t.string   "name"
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
