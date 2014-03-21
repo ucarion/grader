@@ -1,5 +1,4 @@
 class Assignment < ActiveRecord::Base
-  include PublicActivity::Common
   include PlagiarismHelper
 
   belongs_to :course

@@ -1,5 +1,4 @@
 class Submission < ActiveRecord::Base
-  include PublicActivity::Common
   include SubmissionsHelper
 
   # TODO: make this be an enum
