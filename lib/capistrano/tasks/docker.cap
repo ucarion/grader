@@ -1,0 +1,15 @@
+namespace :docker do
+  desc "Gets the submission image from the registry."
+  task :pull do
+    on roles(:workers) do
+      execute "docker pull ulysse/polyglot"
+    end
+  end
+
+  desc "Gets the current Docker version (useful for checking if daemon is on.)"
+  task :version do
+    on roles(:workers) do
+      execute "docker version"
+    end
+  end
+end
