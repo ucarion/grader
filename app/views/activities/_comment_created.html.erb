@@ -1,0 +1,15 @@
+<div class="activity row">
+  <div class="col-md-1">
+    <%= fa_icon 'comments-o 3x fw' %>
+  </div>
+
+  <div class="col-md-11">
+    <%= link_to subject.user.name, subject.user %>
+    commented on
+    <%= link_to 'a submission', subject.submission %>
+    for
+    <% subject.submission.assignment.tap do |assignment| %>
+      <%= link_to assignment.name, assignment %>
+    <% end %>
+  </div>
+</div>

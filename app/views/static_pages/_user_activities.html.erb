@@ -1,11 +1,11 @@
 <h3>Recent activity</h3>
-<% if activities.any? %>
-  <% activities.each do |activity| %>
-    <% if activity && activity.trackable %>
-      <%= render_activity(activity, layout: "layouts/activity") %>
+<% current_user.recent_activities(20).tap do |activities| %>
+  <% if activities.any? %>
+    <% activities.each do |activity| %>
+      <%= render "activities/#{activity.name}", subject: activity.subject %>
     <% end %>
+  <% else %>
+    <p>There is no activity to show here.</p>
+    <p>Why don't you <%= link_to 'enroll in a course', enroll_courses_path %>?</p>
   <% end %>
-<% else %>
-  <p>There is no activity to show here.</p>
-  <p>Why don't you <%= link_to 'enroll in a course', enroll_courses_path %>?</p>
 <% end %>

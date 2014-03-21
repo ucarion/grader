@@ -1,0 +1,13 @@
+<div class="activity row">
+  <div class="col-md-1">
+    <%= fa_icon 'file-o 3x fw' %>
+  </div>
+
+  <div class="col-md-11">
+    <%= link_to subject.author.name, subject.author %>
+    created
+    <%= link_to 'a new submission', subject %>
+    for
+    <%= link_to subject.assignment.name, subject.assignment %>
+  </div>
+</div>
