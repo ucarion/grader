@@ -137,6 +137,24 @@ describe User do
     end
   end
 
+  describe "submission for assignment" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    let(:course) { FactoryGirl.create(:course, teacher: teacher) }
+    let(:assignment) { FactoryGirl.create(:assignment, course: course) }
+
+    it "gets the submission for an assignment" do
+      @user.save!
+      submission = FactoryGirl.create(:submission, assignment: assignment,
+        author: @user)
+
+      expect(@user.submission_for_assignment(assignment)).to eq submission
+    end
+
+    it "returns nil if no such assignment exists" do
+      expect(@user.submission_for_assignment(assignment)).to be_nil
+    end
+  end
+
   describe "course associations" do
     describe "with taught courses" do
       # order does matter here; save the user or else you can't create
