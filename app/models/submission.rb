@@ -14,6 +14,7 @@ class Submission < ActiveRecord::Base
   belongs_to :assignment
   has_many :comments, dependent: :destroy
   has_many :source_files
+  has_many :activities, as: :subject, dependent: :destroy
 
   accepts_nested_attributes_for :source_files, allow_destroy: true
 

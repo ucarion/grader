@@ -3,6 +3,7 @@ class Assignment < ActiveRecord::Base
 
   belongs_to :course
   has_many :submissions, dependent: :destroy
+  has_many :activities, as: :subject, dependent: :destroy
 
   default_scope -> { order('due_time ASC') }
 

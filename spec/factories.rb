@@ -62,4 +62,8 @@ FactoryGirl.define do
   factory :comment do
     content { Faker::Lorem.paragraph(3) }
   end
+
+  factory :activity do
+    sequence(:name) { |i| "Activity #{i}" }
+  end
 end

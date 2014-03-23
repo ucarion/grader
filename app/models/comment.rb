@@ -4,6 +4,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :submission
+  has_many :activities, as: :subject, dependent: :destroy
 
   default_scope -> { order('created_at ASC') }
 
