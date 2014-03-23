@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :enrolled_courses, class_name: "Course"
   has_many :submissions, foreign_key: "author_id", dependent: :destroy
   has_many :comments
-  has_many :activities
+  has_many :activities, dependent: :destroy
 
   # Shortcuts
   has_many :teachers, -> { uniq }, through: :enrolled_courses
