@@ -96,17 +96,14 @@ describe "CoursePages" do
           visit course_path(course)
         end
 
-        it "displays info about that submission" do
+        it "links to that submission" do
           assignment = course.assignments.first
-
           submission = FactoryGirl.create(:submission, author: student,
               assignment: assignment, grade: 4)
 
-          grade_message = "Grade: 4.0 / #{assignment.point_value}"
-
           visit current_path
 
-          expect(page).to have_selector('span.badge', text: grade_message)
+          expect(page).to have_link("", href: submission_path(submission))
         end
       end
     end

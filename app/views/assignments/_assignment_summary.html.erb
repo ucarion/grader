@@ -16,11 +16,9 @@
 
         <% current_user.submission_for_assignment(assignment).tap do |submission| %>
           <% if submission %>
-            <% if submission.grade %>
-              <span class="badge">
-                Grade: <%= submission.grade %> / <%= assignment.point_value %>
-              </span>
-            <% end %>
+            <small>
+              &mdash; <%= link_to "View your submission", submission %>
+            </small>
           <% end %>
         <% end %>
       <% end %>
