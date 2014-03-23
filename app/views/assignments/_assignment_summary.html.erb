@@ -13,6 +13,14 @@
             <%= assignment.ungraded_submissions.count %>
           </span>
         <% end %>
+
+        <% current_user.submission_for_assignment(assignment).tap do |submission| %>
+          <% if submission %>
+            <small>
+              &mdash; <%= link_to "View your submission", submission %>
+            </small>
+          <% end %>
+        <% end %>
       <% end %>
       <small>
         <% if assignment.open? %>

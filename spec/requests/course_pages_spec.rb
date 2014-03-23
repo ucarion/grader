@@ -86,6 +86,26 @@ describe "CoursePages" do
           expect(find('span.badge').text).to eq '6'
         end
       end
+
+      describe "and a student has submitted to an assignment" do
+        let(:student) { FactoryGirl.create(:student) }
+
+        before do
+          course.students << student
+          sign_in student
+          visit course_path(course)
+        end
+
+        it "links to that submission" do
+          assignment = course.assignments.first
+          submission = FactoryGirl.create(:submission, author: student,
+              assignment: assignment, grade: 4)
+
+          visit current_path
+
+          expect(page).to have_link("", href: submission_path(submission))
+        end
+      end
     end
 
     describe "when there are no enrolled students" do

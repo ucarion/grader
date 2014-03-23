@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     sum
   end
 
+  def submission_for_assignment(assignment)
+    assignment.submissions.find_by(author: self)
+  end
+
   def recent_activities(limit)
     Activity.where(user: self).order(created_at: :desc).limit(limit)
   end
