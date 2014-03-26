@@ -78,7 +78,7 @@ Grader::Application.configure do
     :password => ENV["MAILGUN_PASSWORD"]
   }
 
-  config.time_zone = 'Western Time (US & Canada)'
+  config.time_zone = 'Pacific Time (US & Canada)'
   config.active_record.default_timezone = :local
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
