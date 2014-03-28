@@ -14,6 +14,11 @@ body {
   background-color: $body-bg;
 }
 
+// stuff for the recent activity
+.activity-timestamp {
+  color: $gray-light;
+}
+
 .pane {
   background-color: #FEFEFE;
 

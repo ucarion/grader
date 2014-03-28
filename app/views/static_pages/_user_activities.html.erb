@@ -2,7 +2,8 @@
 <% current_user.recent_activities(20).tap do |activities| %>
   <% if activities.any? %>
     <% activities.each do |activity| %>
-      <%= render "activities/#{activity.name}", subject: activity.subject %>
+      <%= render "activities/#{activity.name}", activity: activity,
+          subject: activity.subject %>
     <% end %>
   <% else %>
     <p>There is no activity to show here.</p>

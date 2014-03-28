@@ -4,6 +4,7 @@
   </div>
 
   <div class="col-md-11">
+    <%= activity_time_ago(activity) %>
     <%= link_to subject.author.name, subject.author %>
     created
     <%= link_to 'a new submission', subject %>
