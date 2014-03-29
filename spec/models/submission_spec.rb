@@ -25,6 +25,8 @@ describe Submission do
   it { should respond_to(:num_attempts) }
   it { should respond_to(:max_attempts) }
   it { should respond_to(:max_attempts_override) }
+  it { should respond_to(:last_submitted_at) }
+  it { should respond_to(:last_graded_at) }
 
   it { should be_valid }
 
