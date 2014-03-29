@@ -416,4 +416,14 @@ describe Submission do
       expect(activity.user).to eq student
     end
   end
+
+  describe "#handle_create" do
+    it "initializes num_attempts and executes code" do
+      @submission.handle_create!
+      @submission.reload
+
+      expect(@submission.num_attempts).to eq 1
+      expect(@submission.output).not_to be_empty
+    end
+  end
 end

@@ -29,6 +29,11 @@ class Submission < ActiveRecord::Base
 
   after_create :init_status, :init_num_attempts
 
+  def handle_create!
+    increment_num_attempts
+    execute_code!
+  end
+
   def init_status
     update_attributes(status: Status::WAITING, output: nil)
   end
