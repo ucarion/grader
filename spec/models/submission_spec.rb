@@ -426,4 +426,27 @@ describe Submission do
       expect(@submission.output).not_to be_empty
     end
   end
+
+  describe "#handle_update" do
+    it "increments num_attempts and executes code" do
+      # first need to initialize
+      assignment.update_attributes(expected_output: "Hello, world!")
+      @submission.handle_create!
+      @submission.reload
+
+      # just a check that the submissions starts off correct
+      expect(@submission.status).to eq Submission::Status::OUTPUT_CORRECT
+
+      old_num_attempts = @submission.num_attempts
+
+      # The submission should now be wrong
+      @submission.source_files.first.update_attributes(code:
+        submission_file("norepeat.rb"))
+      @submission.handle_update!
+      @submission.reload
+
+      expect(@submission.num_attempts - old_num_attempts).to eq 1
+      expect(@submission.status).to eq Submission::Status::OUTPUT_INCORRECT
+    end
+  end
 end

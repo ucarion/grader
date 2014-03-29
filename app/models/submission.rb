@@ -34,6 +34,12 @@ class Submission < ActiveRecord::Base
     execute_code!
   end
 
+  def handle_update!
+    init_status
+    increment_num_attempts
+    execute_code!
+  end
+
   def init_status
     update_attributes(status: Status::WAITING, output: nil)
   end
