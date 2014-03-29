@@ -6,10 +6,14 @@ namespace :docker do
     end
   end
 
-  desc "Gets the current Docker version (useful for checking if daemon is on.)"
-  task :version do
+  desc "Sees if the docker daemon is running."
+  task :check_daemon do
     on roles(:workers) do
-      execute "docker version"
+      if test("[ ! -z $(pidof docker) ]")
+        info "The docker daemon is running."
+      else
+        error "The docker daemon is not running!"
+      end
     end
   end
 end

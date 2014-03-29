@@ -20,6 +20,7 @@ after "deploy", "deploy:check:write_permissions"
 after "deploy", "deploy:check:docker_group"
 after "deploy", "deploy:check:delayed_job_status"
 after "deploy", "docker:version"
+after "deploy", "docker:check_daemon"
 
 after "deploy:started", "figaro:setup"
 after "deploy:symlink:release", "figaro:symlink"
