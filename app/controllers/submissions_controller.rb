@@ -23,11 +23,10 @@ class SubmissionsController < ApplicationController
 
     if @submission.save
       @submission.create_activity_for_create
+      @submission.handle_create!
+
       flash[:success] = "Your submission was created successfully."
       redirect_to @submission
-
-      @submission.increment_num_attempts
-      @submission.execute_code!
     else
       render 'new'
     end
@@ -44,12 +43,10 @@ class SubmissionsController < ApplicationController
 
     if @submission.update_attributes(submission_update_params)
       @submission.create_activity_for_update
+      @submission.handle_update!
 
       flash[:success] = "Your submission was successfully updated."
       redirect_to @submission
-      @submission.init_status
-      @submission.increment_num_attempts
-      @submission.execute_code!
     else
       render 'edit'
     end
