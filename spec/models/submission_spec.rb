@@ -478,4 +478,27 @@ describe Submission do
       end
     end
   end
+
+  describe "#has_outdated_grade?" do
+    it "returns true if last_submitted_at is later than last_graded_at" do
+      @submission.last_graded_at = 3.days.ago
+      @submission.last_submitted_at = 2.days.ago
+
+      expect(@submission).to have_outdated_grade
+    end
+
+    it "returns false if last_graded_at is more recent" do
+      @submission.last_graded_at = 2.days.ago
+      @submission.last_submitted_at = 3.days.ago
+
+      expect(@submission).not_to have_outdated_grade
+    end
+
+    it "returns false if the submission hasn't been graded" do
+      @submission.last_graded_at = nil
+      @submission.last_submitted_at = 3.days.ago
+
+      expect(@submission).not_to have_outdated_grade
+    end
+  end
 end

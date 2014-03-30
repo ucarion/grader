@@ -81,6 +81,10 @@ class Submission < ActiveRecord::Base
     source_files.find { |file| file.main? }
   end
 
+  def has_outdated_grade?
+    last_submitted_at && last_graded_at && last_submitted_at > last_graded_at
+  end
+
   def create_activity_for_create
     Activity.create(
       subject: self,
