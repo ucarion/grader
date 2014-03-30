@@ -22,7 +22,6 @@ class SubmissionsController < ApplicationController
     authorize @submission
 
     if @submission.save
-      @submission.create_activity_for_create
       @submission.handle_create!
 
       flash[:success] = "Your submission was created successfully."
@@ -42,7 +41,6 @@ class SubmissionsController < ApplicationController
     authorize @submission
 
     if @submission.update_attributes(submission_update_params)
-      @submission.create_activity_for_update
       @submission.handle_update!
 
       flash[:success] = "Your submission was successfully updated."
@@ -64,7 +62,6 @@ class SubmissionsController < ApplicationController
     authorize @submission
 
     if @submission.update_attributes(submission_grading_params)
-      @submission.create_activity_for_grade
       @submission.handle_grade!
 
       flash[:success] = "The submission was updated successfully."

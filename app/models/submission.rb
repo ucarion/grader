@@ -30,12 +30,14 @@ class Submission < ActiveRecord::Base
   after_create :init_status, :init_num_attempts
 
   def handle_create!
+    create_activity_for_create
     reset_last_submitted_at
     increment_num_attempts
     execute_code!
   end
 
   def handle_update!
+    create_activity_for_update
     reset_last_submitted_at
     init_status
     increment_num_attempts
@@ -43,19 +45,8 @@ class Submission < ActiveRecord::Base
   end
 
   def handle_grade!
+    create_activity_for_grade
     reset_last_graded_at
-  end
-
-  def init_status
-    update_attributes(status: Status::WAITING, output: nil)
-  end
-
-  def init_num_attempts
-    update_attributes(num_attempts: 0)
-  end
-
-  def increment_num_attempts
-    update_attributes(num_attempts: num_attempts + 1)
   end
 
   def status_as_string
@@ -85,30 +76,6 @@ class Submission < ActiveRecord::Base
     last_submitted_at && last_graded_at && last_submitted_at > last_graded_at
   end
 
-  def create_activity_for_create
-    Activity.create(
-      subject: self,
-      name: 'submission_created',
-      user: assignment.course.teacher
-    )
-  end
-
-  def create_activity_for_update
-    Activity.create(
-      subject: self,
-      name: 'submission_updated',
-      user: assignment.course.teacher
-    )
-  end
-
-  def create_activity_for_grade
-    Activity.create(
-      subject: self,
-      name: 'submission_graded',
-      user: author
-    )
-  end
-
   private
 
   def validate_source_files
@@ -133,11 +100,47 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def create_activity_for_create
+    Activity.create(
+      subject: self,
+      name: 'submission_created',
+      user: assignment.course.teacher
+    )
+  end
+
+  def create_activity_for_update
+    Activity.create(
+      subject: self,
+      name: 'submission_updated',
+      user: assignment.course.teacher
+    )
+  end
+
+  def create_activity_for_grade
+    Activity.create(
+      subject: self,
+      name: 'submission_graded',
+      user: author
+    )
+  end
+
   def reset_last_submitted_at
     update_attributes(last_submitted_at: Time.current)
   end
 
   def reset_last_graded_at
     update_attributes(last_graded_at: Time.current)
+  end
+
+  def init_status
+    update_attributes(status: Status::WAITING, output: nil)
+  end
+
+  def init_num_attempts
+    update_attributes(num_attempts: 0)
+  end
+
+  def increment_num_attempts
+    update_attributes(num_attempts: num_attempts + 1)
   end
 end

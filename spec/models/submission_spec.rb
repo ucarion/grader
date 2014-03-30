@@ -397,21 +397,22 @@ describe Submission do
     end
   end
 
+  # I'm going to cheat and test private methods here.
   describe "activities" do
     it "notifies the teacher on submission creation" do
-      activity = @submission.create_activity_for_create
+      activity = @submission.send(:create_activity_for_create)
 
       expect(activity.user).to eq teacher
     end
 
     it "notifies the teacher on submission update" do
-      activity = @submission.create_activity_for_update
+      activity = @submission.send(:create_activity_for_update)
 
       expect(activity.user).to eq teacher
     end
 
     it "notifies the student on submission grade" do
-      activity = @submission.create_activity_for_grade
+      activity = @submission.send(:create_activity_for_grade)
 
       expect(activity.user).to eq student
     end
