@@ -42,6 +42,10 @@ class Submission < ActiveRecord::Base
     execute_code!
   end
 
+  def handle_grade!
+    reset_last_graded_at
+  end
+
   def init_status
     update_attributes(status: Status::WAITING, output: nil)
   end
@@ -127,5 +131,9 @@ class Submission < ActiveRecord::Base
 
   def reset_last_submission
     update_attributes(last_submitted_at: Time.current)
+  end
+
+  def reset_last_graded_at
+    update_attributes(last_graded_at: Time.current)
   end
 end

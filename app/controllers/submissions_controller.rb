@@ -65,6 +65,8 @@ class SubmissionsController < ApplicationController
 
     if @submission.update_attributes(submission_grading_params)
       @submission.create_activity_for_grade
+      @submission.handle_grade!
+
       flash[:success] = "The submission was updated successfully."
       redirect_to @submission
     else

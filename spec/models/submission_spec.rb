@@ -468,4 +468,14 @@ describe Submission do
       end
     end
   end
+
+  describe "#handle_grade" do
+    it "resets last_graded_at" do
+      Timecop.freeze do
+        @submission.handle_grade!
+        expect(@submission.reload.last_graded_at.to_f).to be_within(0.01).of(
+          Time.current.to_f)
+      end
+    end
+  end
 end
