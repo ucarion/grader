@@ -30,13 +30,13 @@ class Submission < ActiveRecord::Base
   after_create :init_status, :init_num_attempts
 
   def handle_create!
-    reset_last_submission
+    reset_last_submitted_at
     increment_num_attempts
     execute_code!
   end
 
   def handle_update!
-    reset_last_submission
+    reset_last_submitted_at
     init_status
     increment_num_attempts
     execute_code!
@@ -129,7 +129,7 @@ class Submission < ActiveRecord::Base
     end
   end
 
-  def reset_last_submission
+  def reset_last_submitted_at
     update_attributes(last_submitted_at: Time.current)
   end
 
