@@ -479,6 +479,17 @@ describe "SubmissionsPages" do
               assignment, sort: key, order: direction))
           end
         end
+
+        it "shows if a submission's grade is outdated" do
+          submission = assignment.submissions.first
+
+          submission.update_attributes(last_graded_at: 3.days.ago,
+            last_submitted_at: 2.days.ago)
+
+          visit current_path
+
+          expect(page).to have_selector("i.grade-outdated")
+        end
       end
 
       describe "when visited by a non-teacher" do
