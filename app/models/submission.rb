@@ -36,6 +36,7 @@ class Submission < ActiveRecord::Base
   end
 
   def handle_update!
+    reset_last_submission
     init_status
     increment_num_attempts
     execute_code!

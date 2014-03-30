@@ -430,8 +430,8 @@ describe Submission do
       Timecop.freeze do
         @submission.handle_create!
 
-        expect(@submission.reload.last_submitted_at.to_f).to be_close(
-          Time.current.to_f, 0.01)
+        expect(@submission.reload.last_submitted_at.to_f).to be_within(0.01).of(
+          Time.current.to_f)
       end
     end
   end
@@ -456,6 +456,16 @@ describe Submission do
 
       expect(@submission.num_attempts - old_num_attempts).to eq 1
       expect(@submission.status).to eq Submission::Status::OUTPUT_INCORRECT
+    end
+
+    it "resets last_submitted_at" do
+      @submission.handle_create!
+
+      Timecop.freeze do
+        @submission.handle_update!
+        expect(@submission.reload.last_submitted_at.to_f).to be_within(0.01).of(
+          Time.current.to_f)
+      end
     end
   end
 end
