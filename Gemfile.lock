@@ -231,6 +231,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
+    timecop (0.7.1)
     tins (0.13.1)
     treetop (1.4.15)
       polyglot
@@ -301,6 +302,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   selenium-webdriver
   therubyracer
+  timecop
   uglifier (>= 1.3.0)
   unicorn
   whenever

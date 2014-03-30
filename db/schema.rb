@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321032006) do
+ActiveRecord::Schema.define(version: 20140329225900) do
 
   create_table "activities", force: true do |t|
     t.datetime "created_at"
@@ -104,6 +104,8 @@ ActiveRecord::Schema.define(version: 20140321032006) do
     t.text     "plagiarizing"
     t.integer  "num_attempts"
     t.integer  "max_attempts_override"
+    t.datetime "last_submitted_at"
+    t.datetime "last_graded_at"
   end
 
   create_table "users", force: true do |t|

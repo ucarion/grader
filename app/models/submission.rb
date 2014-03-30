@@ -29,16 +29,24 @@ class Submission < ActiveRecord::Base
 
   after_create :init_status, :init_num_attempts
 
-  def init_status
-    update_attributes(status: Status::WAITING, output: nil)
+  def handle_create!
+    create_activity_for_create
+    reset_last_submitted_at
+    increment_num_attempts
+    execute_code!
   end
 
-  def init_num_attempts
-    update_attributes(num_attempts: 0)
+  def handle_update!
+    create_activity_for_update
+    reset_last_submitted_at
+    init_status
+    increment_num_attempts
+    execute_code!
   end
 
-  def increment_num_attempts
-    update_attributes(num_attempts: num_attempts + 1)
+  def handle_grade!
+    create_activity_for_grade
+    reset_last_graded_at
   end
 
   def status_as_string
@@ -62,6 +70,34 @@ class Submission < ActiveRecord::Base
 
   def main_file
     source_files.find { |file| file.main? }
+  end
+
+  def has_outdated_grade?
+    last_submitted_at && last_graded_at && last_submitted_at > last_graded_at
+  end
+
+  private
+
+  def validate_source_files
+    if self.source_files.blank?
+      errors.add(:source_files, "Submission must have at least one attached file.")
+    elsif self.source_files.to_a.count { |file| file.main? } != 1
+      errors.add(:source_files, "Submission must have exactly one main file.")
+    end
+  end
+
+  def validate_encoding
+    has_invalid_encoding = source_files.any? do |file|
+      path = (file.code.queued_for_write[:original] || file.code).path
+
+      # path may be nil if the file uploaded is non-present. Other validations
+      # will take care of making sure the code is present.
+      path && !File.read(path).valid_encoding?
+    end
+
+    if has_invalid_encoding
+      errors.add(:source_files, assignment.course.language.bad_filetype_message)
+    end
   end
 
   def create_activity_for_create
@@ -88,27 +124,23 @@ class Submission < ActiveRecord::Base
     )
   end
 
-  private
-
-  def validate_source_files
-    if self.source_files.blank?
-      errors.add(:source_files, "Submission must have at least one attached file.")
-    elsif self.source_files.to_a.count { |file| file.main? } != 1
-      errors.add(:source_files, "Submission must have exactly one main file.")
-    end
+  def reset_last_submitted_at
+    update_attributes(last_submitted_at: Time.current)
   end
 
-  def validate_encoding
-    has_invalid_encoding = source_files.any? do |file|
-      path = (file.code.queued_for_write[:original] || file.code).path
+  def reset_last_graded_at
+    update_attributes(last_graded_at: Time.current)
+  end
 
-      # path may be nil if the file uploaded is non-present. Other validations
-      # will take care of making sure the code is present.
-      path && !File.read(path).valid_encoding?
-    end
+  def init_status
+    update_attributes(status: Status::WAITING, output: nil)
+  end
 
-    if has_invalid_encoding
-      errors.add(:source_files, assignment.course.language.bad_filetype_message)
-    end
+  def init_num_attempts
+    update_attributes(num_attempts: 0)
+  end
+
+  def increment_num_attempts
+    update_attributes(num_attempts: num_attempts + 1)
   end
 end

@@ -25,6 +25,8 @@ describe Submission do
   it { should respond_to(:num_attempts) }
   it { should respond_to(:max_attempts) }
   it { should respond_to(:max_attempts_override) }
+  it { should respond_to(:last_submitted_at) }
+  it { should respond_to(:last_graded_at) }
 
   it { should be_valid }
 
@@ -395,23 +397,109 @@ describe Submission do
     end
   end
 
+  # I'm going to cheat and test private methods here.
   describe "activities" do
     it "notifies the teacher on submission creation" do
-      activity = @submission.create_activity_for_create
+      activity = @submission.send(:create_activity_for_create)
 
       expect(activity.user).to eq teacher
     end
 
     it "notifies the teacher on submission update" do
-      activity = @submission.create_activity_for_update
+      activity = @submission.send(:create_activity_for_update)
 
       expect(activity.user).to eq teacher
     end
 
     it "notifies the student on submission grade" do
-      activity = @submission.create_activity_for_grade
+      activity = @submission.send(:create_activity_for_grade)
 
       expect(activity.user).to eq student
+    end
+  end
+
+  describe "#handle_create" do
+    it "initializes num_attempts and executes code" do
+      @submission.handle_create!
+      @submission.reload
+
+      expect(@submission.num_attempts).to eq 1
+      expect(@submission.output).not_to be_empty
+    end
+
+    it "sets last_graded_at and last_submitted_at to now" do
+      Timecop.freeze do
+        @submission.handle_create!
+
+        expect(@submission.reload.last_submitted_at.to_f).to be_within(0.01).of(
+          Time.current.to_f)
+      end
+    end
+  end
+
+  describe "#handle_update" do
+    it "increments num_attempts and executes code" do
+      # first need to initialize
+      assignment.update_attributes(expected_output: "Hello, world!")
+      @submission.handle_create!
+      @submission.reload
+
+      # just a check that the submissions starts off correct
+      expect(@submission.status).to eq Submission::Status::OUTPUT_CORRECT
+
+      old_num_attempts = @submission.num_attempts
+
+      # The submission should now be wrong
+      @submission.source_files.first.update_attributes(code:
+        submission_file("norepeat.rb"))
+      @submission.handle_update!
+      @submission.reload
+
+      expect(@submission.num_attempts - old_num_attempts).to eq 1
+      expect(@submission.status).to eq Submission::Status::OUTPUT_INCORRECT
+    end
+
+    it "resets last_submitted_at" do
+      @submission.handle_create!
+
+      Timecop.freeze do
+        @submission.handle_update!
+        expect(@submission.reload.last_submitted_at.to_f).to be_within(0.01).of(
+          Time.current.to_f)
+      end
+    end
+  end
+
+  describe "#handle_grade" do
+    it "resets last_graded_at" do
+      Timecop.freeze do
+        @submission.handle_grade!
+        expect(@submission.reload.last_graded_at.to_f).to be_within(0.01).of(
+          Time.current.to_f)
+      end
+    end
+  end
+
+  describe "#has_outdated_grade?" do
+    it "returns true if last_submitted_at is later than last_graded_at" do
+      @submission.last_graded_at = 3.days.ago
+      @submission.last_submitted_at = 2.days.ago
+
+      expect(@submission).to have_outdated_grade
+    end
+
+    it "returns false if last_graded_at is more recent" do
+      @submission.last_graded_at = 2.days.ago
+      @submission.last_submitted_at = 3.days.ago
+
+      expect(@submission).not_to have_outdated_grade
+    end
+
+    it "returns false if the submission hasn't been graded" do
+      @submission.last_graded_at = nil
+      @submission.last_submitted_at = 3.days.ago
+
+      expect(@submission).not_to have_outdated_grade
     end
   end
 end

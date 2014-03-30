@@ -18,6 +18,11 @@
           <td>
             <% if submission.grade %>
               <%= submission.grade %> / <%= @assignment.point_value %>
+
+              <% if submission.has_outdated_grade? %>
+                <%= fa_icon 'clock-o fw', class: 'grade-outdated',
+                    title: "This submission's grade may be outdated." %>
+              <% end %>
             <% else %>
               <i>Ungraded</i>
             <% end %>
