@@ -425,6 +425,15 @@ describe Submission do
       expect(@submission.num_attempts).to eq 1
       expect(@submission.output).not_to be_empty
     end
+
+    it "sets last_graded_at and last_submitted_at to now" do
+      Timecop.freeze do
+        @submission.handle_create!
+
+        expect(@submission.reload.last_submitted_at.to_f).to be_close(
+          Time.current.to_f, 0.01)
+      end
+    end
   end
 
   describe "#handle_update" do

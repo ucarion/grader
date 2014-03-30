@@ -30,6 +30,7 @@ class Submission < ActiveRecord::Base
   after_create :init_status, :init_num_attempts
 
   def handle_create!
+    reset_last_submission
     increment_num_attempts
     execute_code!
   end
@@ -121,5 +122,9 @@ class Submission < ActiveRecord::Base
     if has_invalid_encoding
       errors.add(:source_files, assignment.course.language.bad_filetype_message)
     end
+  end
+
+  def reset_last_submission
+    update_attributes(last_submitted_at: Time.current)
   end
 end
