@@ -34,6 +34,15 @@ body {
   box-shadow: 0 1px 3px darken($body-bg, 9%);
 }
 
+// Stuff for headers describing a course, assignment, submission.
+.indented-by-icon {
+  margin-left: 30px;
+}
+
+.subheader {
+  color: $gray;
+}
+
 // Customization of the navbar header
 $bgDefault      : #818181;
 $bgHighlight    : darken($bgDefault, 10%);

@@ -14,15 +14,14 @@
 
     <%= fa_icon 'file-o fw', class: 'submission-icon' %>
     Submission
-
-    <small>
-      By <%= link_to @submission.author.name, @submission.author %>
-
-      <%= status_label(@submission) %>
-    </small>
-
-    <small id="submission-aside">
-      <%= render 'submission_grade' %> &mdash; <%= render 'submission_attempts' %>
-    </small>
+    <%= status_label(@submission) %>
   </h1>
+
+  <h3 class="indented-by-icon subheader">
+    By <%= link_to @submission.author.name, @submission.author %>
+  </h3>
+
+  <h4 class="indented-by-icon subheader">
+    <%= render 'submission_grade' %> &mdash; <%= render 'submission_attempts' %>
+  </h4>
 </div>

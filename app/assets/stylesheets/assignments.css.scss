@@ -18,7 +18,11 @@
 
 #admin-assignment-btn, #details-assignment-btn,
     #view-submission-btn, #create-submission-btn {
-  @extend .pull-right;
+  width: 100%;
+}
+
+#admin-assignment-btn {
+  margin-bottom: 5px;
 }
 
 #details-assignment-btn {

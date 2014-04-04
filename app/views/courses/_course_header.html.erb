@@ -22,8 +22,9 @@
   <h1>
     <%= fa_icon 'book fw', class: 'class-icon' %>
     <%= @course.name %>
-    <small>
-      Taught by <%= link_to @course.teacher.name, @course.teacher %>
-    </small>
   </h1>
+
+  <h3 class="indented-by-icon subheader">
+    Taught by <%= link_to @course.teacher.name, @course.teacher %>
+  </h3>
 </div>
