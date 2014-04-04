@@ -1,6 +1,6 @@
 <div class="assignment-header">
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-9">
       <h1>
         <%= fa_icon 'code fw', class: 'assignment-icon' %>
         <%= @assignment.name %>
@@ -14,7 +14,7 @@
       <%= markdown(@assignment.description) %>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <% if policy(@assignment).update? && policy(@assignment).destroy? %>
         <%= render 'admin_assignment_button' %>
       <% end %>
