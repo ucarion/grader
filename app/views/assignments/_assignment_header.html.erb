@@ -1,25 +1,34 @@
 <div class="assignment-header">
-  <% if policy(@assignment).update? && policy(@assignment).destroy? %>
-    <%= render 'admin_assignment_button' %>
-  <% end %>
+  <div class="row">
+    <div class="col-md-10">
+      <h1>
+        <%= fa_icon 'code fw', class: 'assignment-icon' %>
+        <%= @assignment.name %>
+        <%= assignment_open_label(@assignment) %>
+      </h1>
 
-  <% if policy(@assignment).list_submissions? && policy(@assignment).plagiarism? %>
-    <%= render 'details_assignment_button' %>
-  <% end %>
+      <h3 class="indented-by-icon subheader">
+        For <%= link_to @assignment.course.name, @assignment.course %>
+      </h3>
 
-  <% if @user_submission %>
-    <%= render 'show_existing_submission' %>
-  <% elsif policy(@assignment).submit_submissions? %>
-    <%= render 'create_assignment_button' %>
-  <% end %>
+      <%= markdown(@assignment.description) %>
+    </div>
 
-  <h1>
-    <%= fa_icon 'code fw', class: 'assignment-icon' %>
-    <%= @assignment.name %>
-    <small>
-      For <%= link_to @assignment.course.name, @assignment.course %>
+    <div class="col-md-2">
+      <% if policy(@assignment).update? && policy(@assignment).destroy? %>
+        <%= render 'admin_assignment_button' %>
+      <% end %>
 
-      <%= assignment_open_label(@assignment) %>
-    </small>
-  </h1>
+      <% if policy(@assignment).list_submissions? &&
+          policy(@assignment).plagiarism? %>
+        <%= render 'details_assignment_button' %>
+      <% end %>
+
+      <% if @user_submission %>
+        <%= render 'show_existing_submission' %>
+      <% elsif policy(@assignment).submit_submissions? %>
+        <%= render 'create_assignment_button' %>
+      <% end %>
+    </div>
+  </div>
 </div>
