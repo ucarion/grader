@@ -12,12 +12,16 @@
   font-size: $font-size-h2;
 }
 
-#submission-aside {
-  font-size: ceil($font-size-h3 * 0.75);
-}
-
 #edit-submission-button {
   @extend .pull-right;
+}
+
+.indented-by-icon {
+  margin-left: 30px;
+}
+
+.submission-header .subheader {
+  color: $gray;
 }
 
 .source-files {
