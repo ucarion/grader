@@ -21,6 +21,7 @@ describe "SubmissionsPages" do
     end
 
     it { should have_link(student.name, href: user_path(student)) }
+    it { should have_link(assignment.name, href: assignment_path(assignment)) }
 
     it "should show the submission's source code" do
       source = File.read(submission.source_files.first.code.path)
