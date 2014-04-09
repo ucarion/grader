@@ -1,0 +1,14 @@
+<div class="activity row">
+  <div class="col-md-1">
+    <%= fa_icon 'plus 3x fw' %>
+  </div>
+
+  <div class="col-md-11">
+    <%= activity_time_ago(activity) %>
+    <%= link_to subject.course.teacher.name, subject.course.teacher %>
+    created
+    <%= link_to 'a new assignment', subject %>
+    for
+    <%= link_to subject.course.name, subject.course %>
+  </div>
+</div>
