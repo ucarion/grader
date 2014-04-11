@@ -66,7 +66,11 @@ module AssignmentHelper
 
         # This is important because unchanged lines will have a leading space
         # that browsers will not normally show.
-        chunk_to_html = chunk
+        chunk_to_html = if line_type.unchanged?
+          "&nbsp;".html_safe + chunk
+        else
+          chunk
+        end
 
         # Both line numbers incremented when line_type is 'unchanged'
         line_numbers[:a] += 1 unless line_type.deletion?
