@@ -31,7 +31,10 @@ module AssignmentHelper
       diff.each_chunk.map do |chunk|
         first_char, lines = chunk[0], chunk[1..-1].split("\n")
 
-        if chunk.start_with?('\ ')
+        # Ignore messages about newlines at the end of files; most teachers will
+        # probably not put any ending newlines when they specify the expected
+        # output.
+        if chunk == "\\ No newline at end of file\n"
           []
         else
           lines.map { |line| first_char + line }
