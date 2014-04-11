@@ -1,21 +1,29 @@
 <%= provide(:title, "Submission Comparison") %>
 
-<h1>Submission Comparison</h1>
-<h2>
-  <%= @submission_a.author.name %> vs. <%= @submission_b.author.name %>
-</h2>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 pane">
+    <h1>Submission Comparison</h1>
+    <h3 class="indented-by-icon subheader">
+      Comparing
+      <%= link_to @submission_a.author.name, @submission_a %> and <br>
+      <%= link_to @submission_b.author.name, @submission_b %>
+    </h3>
 
-<div class="row row-fluid">
-  <%= diff_between(@submission_a, @submission_b).html_safe %>
-</div>
+    <div class="plagiarism-diff">
+      <%= diff_between(@submission_a, @submission_b) %>
+    </div>
 
-<div class="row row-fluid">
-  <div class="span6">
-    <h4><%= @submission_a.main_file.code_file_name %></h4>
-    <%= content_tag(:pre, File.read(@submission_a.main_file.code.path)) %>
-  </div>
-  <div class="span6">
-    <h4><%= @submission_b.main_file.code_file_name %></h4>
-    <%= content_tag(:pre, File.read(@submission_b.main_file.code.path)) %>
+    <div class="row">
+      <div class="col-md-6">
+        <h4><%= @submission_a.author.name %></h4>
+        <%= render 'submissions/source_file',
+            source_file: @submission_a.main_file %>
+      </div>
+      <div class="col-md-6">
+        <h4><%= @submission_b.author.name %></h4>
+        <%= render 'submissions/source_file',
+            source_file: @submission_b.main_file %>
+      </div>
+    </div>
   </div>
 </div>
