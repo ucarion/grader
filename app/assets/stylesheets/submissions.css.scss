@@ -35,9 +35,15 @@
   }
 }
 
+$pane-margin: 28px;
+
 #submission-outputs {
-  margin-top: 28px;
-  margin-bottom: 28px;
+  margin-top: $pane-margin;
+  margin-bottom: $pane-margin;
+}
+
+.diff-expected-actual-output {
+  margin-bottom: $pane-margin;
 }
 
 // Forms

@@ -317,11 +317,11 @@ describe "AssignmentPages" do
           it { should have_content(sub2_source) }
         end
 
-        describe "diff" do
+        describe "plagiarism diff" do
           # testing for the exact contents of the diff is pointless and
           # complicated due to HTML escaping issues. The goal here isn't to test
           # Diffy, it's to test my code.
-          it { should have_selector('.diff') }
+          it { should have_selector('.plagiarism-diff') }
         end
       end
     end
