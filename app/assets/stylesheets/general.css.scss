@@ -43,6 +43,23 @@ body {
   color: $gray;
 }
 
+.table-diff {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  .diff-line-number {
+    text-align: right;
+    color: $gray-light;
+  }
+
+  .insertion {
+    background-color: #DFD;
+  }
+
+  .deletion {
+    background-color: #FDD;
+  }
+}
+
 // Customization of the navbar header
 $bgDefault      : #818181;
 $bgHighlight    : darken($bgDefault, 10%);
