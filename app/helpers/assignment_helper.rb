@@ -13,21 +13,29 @@ module AssignmentHelper
     time.strftime("%m/%d/%Y")
   end
 
+  def diff_submissions(submisison_a, submisison_b)
+    source_a = File.read(submisison_a.main_file.code.path)
+    source_b = File.read(submisison_b.main_file.code.path)
+
+    diff_between(source_a, source_b)
+  end
+
   # Generates a table showing the difference between two files.
-  def diff_between(submisison_a, submisison_b)
+  def diff_between(string_a, string_b)
 
     # Diffy returns a list of 'chunks', where insertions, deletions, and
     # unchanged sequences of lines are grouped up. This method ungroups them so
     # that they're easier to display line-by-line.
-    def diff_chunks(submisison_a, submisison_b)
-      source_a = File.read(submisison_a.main_file.code.path)
-      source_b = File.read(submisison_b.main_file.code.path)
-
-      diff = ::Diffy::Diff.new(source_a, source_b)
+    def diff_chunks(string_a, string_b)
+      diff = ::Diffy::Diff.new(string_a, string_b)
       diff.each_chunk.map do |chunk|
         first_char, lines = chunk[0], chunk[1..-1].split("\n")
 
-        lines.map { |line| first_char + line }
+        if chunk.start_with?('\ ')
+          []
+        else
+          lines.map { |line| first_char + line }
+        end
       end.flatten
     end
 
@@ -84,7 +92,7 @@ module AssignmentHelper
       end
     end
 
-    table_content = chunks_as_html(diff_chunks(submisison_a, submisison_b))
+    table_content = chunks_as_html(diff_chunks(string_a, string_b))
 
     content_tag(:table, table_content,
       class: 'table table-bordered table-condensed table-diff')
