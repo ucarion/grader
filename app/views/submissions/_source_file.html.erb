@@ -9,5 +9,6 @@
     </h3>
   </div>
 
-  <%= highlighted_code(@submission, File.read(source_file.code.path)).html_safe %>
+  <%= highlighted_code(source_file.submission,
+    File.read(source_file.code.path)).html_safe %>
 </div>
