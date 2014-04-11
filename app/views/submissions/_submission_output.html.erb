@@ -1,0 +1,24 @@
+<div class="row" id="submission-outputs">
+  <div class="col-md-6">
+    <div class="pane">
+      <h3>Expected Output</h3>
+      <%= content_tag(:pre, @submission.assignment.expected_output,
+          class: 'expected-output') %>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="pane">
+      <h3>Actual Output</h3>
+      <%= content_tag(:pre, @submission.output, class: 'output') %>
+    </div>
+  </div>
+</div>
+
+<% if @submission.status == Submission::Status::OUTPUT_INCORRECT %>
+  <div class="pane diff-expected-actual-output">
+    <h3>Difference between expected and actual output</h3>
+
+    <%= diff_between(@submission.output, @submission.assignment.expected_output) %>
+  </div>
+<% end %>

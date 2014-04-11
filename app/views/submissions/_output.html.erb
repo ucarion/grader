@@ -1,25 +1,5 @@
 <% if @submission.output %>
-  <div class="row" id="submission-outputs">
-    <div class="col-md-6">
-      <div class="pane">
-        <h3>Expected Output</h3>
-        <%= content_tag(:pre, @submission.assignment.expected_output,
-            class: 'expected-output') %>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="pane">
-        <h3>Actual Output</h3>
-        <%= content_tag(:pre, @submission.output, class: 'output') %>
-      </div>
-    </div>
-  </div>
+  <%= render 'submission_output' %>
 <% else %>
-  <div class="alert alert-info">
-    <strong>This submission has not yet been tested.</strong>
-    You may need to
-    <%= link_to "refresh this page", request.path, class: 'alert-link' %>
-    to see the test results of this submission.
-  </div>
+  <%= render 'submission_waiting_message' %>
 <% end %>
