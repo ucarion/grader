@@ -220,16 +220,27 @@ describe "SubmissionsPages" do
         end
 
         it { should have_selector('.label-success') }
+
+        it "doesn't offer a diff between the expected and actual output" do
+          expect(page).not_to have_selector('.diff-expected-actual-output')
+        end
       end
 
       describe "when a submission failed tests" do
         before do
-          submission.update_attributes!(status: Submission::Status::OUTPUT_INCORRECT)
+          submission.update_attributes!(
+            status: Submission::Status::OUTPUT_INCORRECT,
+            output: '')
 
           visit current_path
         end
 
         it { should have_selector('.label-danger') }
+
+        it "offers a diff between the expected and actual output" do
+          puts page.body
+          expect(page).to have_selector('.diff-expected-actual-output')
+        end
       end
     end
 
