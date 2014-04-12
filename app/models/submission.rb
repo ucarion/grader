@@ -50,6 +50,7 @@ class Submission < ActiveRecord::Base
   end
 
   def handle_retest!
+    init_status
     execute_code!
   end
 
