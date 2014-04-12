@@ -34,6 +34,8 @@ Grader::Application.routes.draw do
           member do
             patch :grade
             patch :override_max_attempts
+
+            post :force_retest
           end
         end
       end

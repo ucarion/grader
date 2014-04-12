@@ -12,6 +12,14 @@
   font-size: $font-size-h2;
 }
 
+#delete-submission-button, #force-retest-button {
+  width: 100%;
+}
+
+#delete-submission-button {
+  margin-bottom: 5px;
+}
+
 .source-files {
   margin-top: 25px;
 }

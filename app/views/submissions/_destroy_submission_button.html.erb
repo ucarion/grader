@@ -1,5 +1,6 @@
 <%= link_to "Delete this submission", @submission, method: :delete,
-    class: 'btn btn-default pull-right',
+    class: 'btn btn-default',
+    id: 'delete-submission-button',
     data: {
       confirm: "This operation cannot be reversed.",
       confirm_header: "Are you sure you want to delete this submission?",

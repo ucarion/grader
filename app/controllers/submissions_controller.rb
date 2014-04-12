@@ -83,6 +83,14 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def force_retest
+    @submission = Submission.find(params[:id])
+    authorize @submission
+
+    @submission.handle_retest!
+    redirect_to @submission
+  end
+
   def destroy
     @submission = Submission.find(params[:id])
     authorize @submission

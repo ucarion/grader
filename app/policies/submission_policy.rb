@@ -25,6 +25,10 @@ class SubmissionPolicy < ApplicationPolicy
     user && teacher?
   end
 
+  def force_retest?
+    user && teacher? && !submission_waiting?
+  end
+
   def destroy?
     user && teacher?
   end
@@ -53,5 +57,9 @@ class SubmissionPolicy < ApplicationPolicy
 
   def preexisting_submission?
     record.assignment.submissions.where(author: user).any?
+  end
+
+  def submission_waiting?
+    record.status == Submission::Status::WAITING
   end
 end

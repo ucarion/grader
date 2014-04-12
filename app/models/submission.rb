@@ -49,6 +49,11 @@ class Submission < ActiveRecord::Base
     reset_last_graded_at
   end
 
+  def handle_retest!
+    init_status
+    execute_code!
+  end
+
   def status_as_string
     case status
     when Status::WAITING
