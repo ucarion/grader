@@ -64,6 +64,23 @@ describe "SubmissionsPages" do
 
         it { should have_selector('.output', text: submission.output.strip) }
         it { should have_selector('.expected-output', text: assignment.expected_output) }
+
+        it "has a force submission retest button" do
+          sign_in teacher
+          visit submission_path(submission)
+
+          expect(submission.status).to eq Submission::Status::OUTPUT_INCORRECT
+
+          # The submission does not currently pass tests. Let's make it work
+          # again, and see if clicking 'retest' really does re-evaluate the
+          # submission ...
+          assignment.update_attributes!(expected_output: "Hello, world!")
+
+          click_link "Retest submission"
+          submission.reload
+
+          expect(submission.status).to eq Submission::Status::OUTPUT_CORRECT
+        end
       end
     end
 
