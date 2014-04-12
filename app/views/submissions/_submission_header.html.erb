@@ -1,31 +1,41 @@
 <div class="submission-header">
-  <% if policy(@submission).update? %>
-    <%= render 'resubmit_submission_button' %>
-  <% end %>
+  <div class="row">
+    <div class="col-md-9">
+      <h1>
+        <% if policy(@submission.assignment).list_submissions? %>
+          <%= render 'back_to_list_submissions' %>
+        <% end %>
 
-  <% if policy(@submission).destroy? %>
-    <%= render 'destroy_submission_button' %>
-  <% end %>
+        <%= fa_icon 'file-o fw', class: 'submission-icon' %>
+        Submission
+        <%= status_label(@submission) %>
+      </h1>
 
-  <h1>
-    <% if policy(@submission.assignment).list_submissions? %>
-      <%= render 'back_to_list_submissions' %>
-    <% end %>
+      <h3 class="indented-by-icon subheader">
+        By <%= link_to @submission.author.name, @submission.author %>
+      </h3>
 
-    <%= fa_icon 'file-o fw', class: 'submission-icon' %>
-    Submission
-    <%= status_label(@submission) %>
-  </h1>
+      <h3 class="indented-by-icon subheader">
+        For <%= link_to @submission.assignment.name, @submission.assignment %>
+      </h3>
 
-  <h3 class="indented-by-icon subheader">
-    By <%= link_to @submission.author.name, @submission.author %>
-  </h3>
+      <h4 class="indented-by-icon subheader">
+        <%= render 'submission_grade' %> &mdash; <%= render 'submission_attempts' %>
+      </h4>
+    </div>
 
-  <h3 class="indented-by-icon subheader">
-    For <%= link_to @submission.assignment.name, @submission.assignment %>
-  </h3>
+    <div class="col-md-3">
+      <% if policy(@submission).update? %>
+        <%= render 'resubmit_submission_button' %>
+      <% end %>
 
-  <h4 class="indented-by-icon subheader">
-    <%= render 'submission_grade' %> &mdash; <%= render 'submission_attempts' %>
-  </h4>
+      <% if policy(@submission).destroy? %>
+        <%= render 'destroy_submission_button' %>
+      <% end %>
+
+      <% if policy(@submission).force_retest? %>
+        <%= render 'force_retest_button' %>
+      <% end %>
+    </div>
+  </div>
 </div>
