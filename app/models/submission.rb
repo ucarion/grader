@@ -16,6 +16,8 @@ class Submission < ActiveRecord::Base
   has_many :source_files
   has_many :activities, as: :subject, dependent: :destroy
 
+  classy_enum_attr :status, enum: 'SubmissionStatus'
+
   accepts_nested_attributes_for :source_files, allow_destroy: true
 
   validates :author_id, presence: true
@@ -138,7 +140,7 @@ class Submission < ActiveRecord::Base
   end
 
   def init_status
-    update_attributes(status: Status::WAITING, output: nil)
+    update_attributes(status: :waiting, output: nil)
   end
 
   def init_num_attempts
