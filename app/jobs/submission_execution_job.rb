@@ -1,4 +1,7 @@
 class SubmissionExecutionJob
+  # This is to get the #sanitize_for_comparison method.
+  include SubmissionsHelper
+
   def initialize(submission_id)
     @submission_id = submission_id
   end
@@ -118,11 +121,7 @@ class SubmissionExecutionJob
   end
 
   def outputs_equal?(expected, actual)
-    cleanup_output(expected) == cleanup_output(actual)
-  end
-
-  def cleanup_output(output)
-    output.gsub("\r", "").strip
+    sanitize_for_comparison(expected) == sanitize_for_comparison(actual)
   end
 
   def logger
