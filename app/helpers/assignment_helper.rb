@@ -27,6 +27,9 @@ module AssignmentHelper
     # unchanged sequences of lines are grouped up. This method ungroups them so
     # that they're easier to display line-by-line.
     def diff_chunks(string_a, string_b)
+      string_a = string_a.gsub("\r", "")
+      string_b = string_b.gsub("\r", "")
+
       diff = ::Diffy::Diff.new(string_a, string_b)
       diff.each_chunk.map do |chunk|
         first_char, lines = chunk[0], chunk[1..-1].split("\n")
