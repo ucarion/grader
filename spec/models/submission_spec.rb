@@ -178,7 +178,7 @@ describe Submission do
 
   describe "status" do
     describe "before being executed" do
-      its(:status) { should eq Submission::Status::WAITING }
+      its(:status) { should be_waiting }
     end
 
     describe "after being executed" do
@@ -189,7 +189,7 @@ describe Submission do
           @submission.reload
         end
 
-        its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
+        its(:status) { should be_correct }
       end
 
       describe "and the output is not the expected output" do
@@ -199,7 +199,7 @@ describe Submission do
           @submission.reload
         end
 
-        its(:status) { should eq Submission::Status::OUTPUT_INCORRECT }
+        its(:status) { should be_incorrect }
       end
     end
   end
@@ -355,7 +355,7 @@ describe Submission do
       @submission.reload
     end
 
-    its(:status) { should eq Submission::Status::OUTPUT_CORRECT }
+    its(:status) { should be_correct }
   end
 
   describe "java packages" do
@@ -445,7 +445,7 @@ describe Submission do
       @submission.reload
 
       # just a check that the submissions starts off correct
-      expect(@submission.status).to eq Submission::Status::OUTPUT_CORRECT
+      expect(@submission.status).to be_correct
 
       old_num_attempts = @submission.num_attempts
 
@@ -456,7 +456,7 @@ describe Submission do
       @submission.reload
 
       expect(@submission.num_attempts - old_num_attempts).to eq 1
-      expect(@submission.status).to eq Submission::Status::OUTPUT_INCORRECT
+      expect(@submission.status).to be_incorrect
     end
 
     it "resets last_submitted_at" do
