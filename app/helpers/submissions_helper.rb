@@ -24,6 +24,10 @@ module SubmissionsHelper
     content_tag(:label, text, class: "label label-#{color}")
   end
 
+  def sanitize_for_comparison(output)
+    output.gsub("\r", "").strip
+  end
+
   def highlighted_code(submission, code)
     Pygments.highlight(tabs_to_spaces(code),
       lexer: submission.assignment.course.language)
