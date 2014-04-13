@@ -49,6 +49,8 @@ FactoryGirl.define do
       grade { rand(5..10) }
     end
 
+    status :waiting
+
     after(:build) do |submission, evaluator|
       submission.source_files << FactoryGirl.create_list(:source_file, 1, submission: nil)
     end
