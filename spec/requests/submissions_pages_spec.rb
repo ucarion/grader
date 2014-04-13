@@ -255,7 +255,6 @@ describe "SubmissionsPages" do
         it { should have_selector('.label-danger') }
 
         it "offers a diff between the expected and actual output" do
-          puts page.body
           expect(page).to have_selector('.diff-expected-actual-output')
         end
       end
