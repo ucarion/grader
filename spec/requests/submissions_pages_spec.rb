@@ -69,7 +69,7 @@ describe "SubmissionsPages" do
           sign_in teacher
           visit submission_path(submission)
 
-          expect(submission.status).to eq Submission::Status::OUTPUT_INCORRECT
+          expect(submission.status).to be_incorrect
 
           # The submission does not currently pass tests. Let's make it work
           # again, and see if clicking 'retest' really does re-evaluate the
@@ -79,7 +79,7 @@ describe "SubmissionsPages" do
           click_link "Retest submission"
           submission.reload
 
-          expect(submission.status).to eq Submission::Status::OUTPUT_CORRECT
+          expect(submission.status).to be_correct
         end
       end
     end
@@ -231,7 +231,7 @@ describe "SubmissionsPages" do
     describe "status" do
       describe "when a submission passed tests" do
         before do
-          submission.update_attributes!(status: Submission::Status::OUTPUT_CORRECT)
+          submission.update_attributes!(status: :correct)
 
           visit current_path
         end
@@ -245,9 +245,7 @@ describe "SubmissionsPages" do
 
       describe "when a submission failed tests" do
         before do
-          submission.update_attributes!(
-            status: Submission::Status::OUTPUT_INCORRECT,
-            output: '')
+          submission.update_attributes!(status: :incorrect, output: '')
 
           visit current_path
         end

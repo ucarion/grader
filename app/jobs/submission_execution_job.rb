@@ -57,9 +57,9 @@ class SubmissionExecutionJob
     submission.update_attributes(output: output)
 
     status = if outputs_equal?(assignment.expected_output, output)
-      Submission::Status::OUTPUT_CORRECT
+      :correct
     else
-      Submission::Status::OUTPUT_INCORRECT
+      :incorrect
     end
 
     submission.update_attributes(status: status)

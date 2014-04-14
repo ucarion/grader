@@ -60,6 +60,6 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def submission_waiting?
-    record.status == Submission::Status::WAITING
+    record.status.waiting?
   end
 end

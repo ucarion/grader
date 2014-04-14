@@ -1,13 +1,4 @@
 class Submission < ActiveRecord::Base
-  include SubmissionsHelper
-
-  # TODO: make this be an enum
-  module Status
-    WAITING = 0
-    OUTPUT_CORRECT = 1
-    OUTPUT_INCORRECT = 2
-  end
-
   serialize :plagiarizing, Array
 
   belongs_to :author, class_name: "User"
@@ -15,6 +6,8 @@ class Submission < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :source_files
   has_many :activities, as: :subject, dependent: :destroy
+
+  classy_enum_attr :status, enum: 'SubmissionStatus', allow_blank: true
 
   accepts_nested_attributes_for :source_files, allow_destroy: true
 
@@ -52,17 +45,6 @@ class Submission < ActiveRecord::Base
   def handle_retest!
     init_status
     execute_code!
-  end
-
-  def status_as_string
-    case status
-    when Status::WAITING
-      "waiting"
-    when Status::OUTPUT_CORRECT
-      "correct output"
-    when Status::OUTPUT_INCORRECT
-      "incorrect output"
-    end
   end
 
   def max_attempts
@@ -138,7 +120,7 @@ class Submission < ActiveRecord::Base
   end
 
   def init_status
-    update_attributes(status: Status::WAITING, output: nil)
+    update_attributes(status: :waiting, output: nil)
   end
 
   def init_num_attempts

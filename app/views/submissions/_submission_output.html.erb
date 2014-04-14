@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<% if @submission.status == Submission::Status::OUTPUT_INCORRECT %>
+<% if @submission.status.incorrect? %>
   <div class="pane diff-expected-actual-output">
     <h3>Difference between expected and actual output</h3>
 
