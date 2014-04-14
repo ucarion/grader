@@ -12,7 +12,7 @@
         <th>Status <%= sort_links('status', 'amount') %></th>
       </tr>
       <% @submissions.each do |submission| %>
-        <tr class="<%= table_class_for_status(submission.status) %>">
+        <%= content_tag(:tr, class: submission.status.css_class) do %>
           <td><%= profile_picture(submission.author) %></td>
           <td><%= link_to submission.author.name, submission %></td>
           <td>
@@ -27,8 +27,8 @@
               <i>Ungraded</i>
             <% end %>
           </td>
-          <td><%= submission.status_as_string.capitalize if submission.status %></td>
-        </tr>
+          <td><%= submission.status.text_message if submission.status %></td>
+        <% end %>
       <% end %>
     </table>
   <% else %>
