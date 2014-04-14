@@ -75,15 +75,15 @@ describe SubmissionPolicy do
   permissions :force_retest? do
     context "teachers" do
       it "lets teachers retest if submissions are executed" do
-        submission.status = Submission::Status::OUTPUT_CORRECT
+        submission.status = :correct
         expect(subject).to permit(teacher, submission)
 
-        submission.status = Submission::Status::OUTPUT_INCORRECT
+        submission.status = :incorrect
         expect(subject).to permit(teacher, submission)
       end
 
       it "doesn't let teachers retest waiting submissions" do
-        submission.status = Submission::Status::WAITING
+        submission.status = :waiting
         expect(subject).not_to permit(teacher, submission)
       end
     end
