@@ -56,10 +56,14 @@ class SubmissionExecutionJob
 
     submission.update_attributes(output: output)
 
-    status = if outputs_equal?(assignment.expected_output, output)
-      :correct
+    status = if assignment.should_run_tests?
+      if outputs_equal?(assignment.expected_output, output)
+        :correct
+      else
+        :incorrect
+      end
     else
-      :incorrect
+      :not_tested
     end
 
     submission.update_attributes(status: status)
