@@ -11,11 +11,6 @@ input[type~=hidden], textarea {
   margin-top: 70px;
 }
 
-.field_with_errors {
-  @extend .control-group;
-  @extend .error;
-}
-
 .course-list, .course-assignment-list {
   list-style: none;
   margin-left: 0;
