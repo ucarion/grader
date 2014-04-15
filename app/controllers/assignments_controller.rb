@@ -88,7 +88,10 @@ class AssignmentsController < ApplicationController
     due_time = params[:assignment][:due_time]
 
     begin
-      params[:assignment][:due_time] = convert_string_to_date(due_time)
+      date_param = convert_string_to_date(due_time)
+
+      # We add just under a day to make this due date be *inclusive*.
+      params[:assignment][:due_time] = date_param + 1.day - 1.second
     rescue ArgumentError
       params[:assignment][:due_time] = nil
     end

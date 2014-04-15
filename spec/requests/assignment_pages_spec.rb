@@ -166,12 +166,14 @@ describe "AssignmentPages" do
     end
 
     describe "submitted with good information" do
+      let(:due_date) { Time.now.beginning_of_day }
+
       before do
         fill_in "Name", with: "Course"
         fill_in "Description", with: "Description goes here ..."
         fill_in "Input", with: "a b c d e"
         fill_in "Expected output", with: "Output goes here ..."
-        fill_in "Due time", with: 1.year.from_now.strftime("%m/%d/%Y")
+        fill_in "Due time", with: due_date.strftime("%m/%d/%Y")
         fill_in "Point value", with: "10"
       end
 
@@ -183,6 +185,16 @@ describe "AssignmentPages" do
         expect do
           click_button submit
         end.to change(Activity, :count).by(course.students.count)
+      end
+
+      it "makes the due date be inclusive" do
+        click_button submit
+
+        assignment = Assignment.last
+        actual_due_time = assignment.due_time.to_i
+        expected_due_time = (due_date + 1.day).to_i
+
+        expect(actual_due_time).to be_within(1.minute).of expected_due_time
       end
 
       describe "after submitting" do
