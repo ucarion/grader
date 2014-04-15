@@ -502,4 +502,16 @@ describe Submission do
       expect(@submission).not_to have_outdated_grade
     end
   end
+
+  describe "assignments that skip tests" do
+    it "skips tests if an assignment has should_run_tests: false" do
+      assignment.should_run_tests = false
+      assignment.save
+
+      @submission.execute_code!
+      @submission.reload
+
+      expect(@submission.status).to be_not_tested
+    end
+  end
 end

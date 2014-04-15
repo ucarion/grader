@@ -256,6 +256,24 @@ describe "SubmissionsPages" do
           expect(page).to have_selector('.diff-expected-actual-output')
         end
       end
+
+      describe "when a submission does not have tests" do
+        before do
+          submission.update_attributes!(status: :not_tested, output: '')
+
+          visit current_path
+        end
+
+        it { should have_selector('.label-info') }
+
+        it "doesn't offer a diff" do
+          expect(page).not_to have_selector('.diff-expected-actual-output')
+        end
+
+        it "doesn't show expected output" do
+          expect(page).not_to have_selector('.expected-output')
+        end
+      end
     end
 
     describe "resubmission" do

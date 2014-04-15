@@ -1,18 +1,20 @@
 <div class="row" id="submission-outputs">
-  <div class="col-md-6">
-    <div class="pane">
-      <h3>Expected Output</h3>
-      <%= content_tag(:pre, @submission.assignment.expected_output,
-          class: 'expected-output') %>
+  <% unless @submission.status.not_tested? %>
+    <div class="col-md-6">
+      <div class="pane">
+        <h3>Expected Output</h3>
+        <%= content_tag(:pre, @submission.assignment.expected_output,
+            class: 'expected-output') %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
-  <div class="col-md-6">
+  <%= actual_output_col(@submission) do %>
     <div class="pane">
-      <h3>Actual Output</h3>
+      <h3><%= @submission.status.actual_output_message %></h3>
       <%= content_tag(:pre, @submission.output, class: 'output') %>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <% if @submission.status.incorrect? %>

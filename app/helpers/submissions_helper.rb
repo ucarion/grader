@@ -4,6 +4,12 @@ module SubmissionsHelper
       class: "label label-#{status.css_class}")
   end
 
+  def actual_output_col(submission, &block)
+    css_class = submission.status.tested? ? 'col-md-6' : 'col-md-12'
+
+    content_tag(:div, class: css_class, &block)
+  end
+
   def sanitize_for_comparison(output)
     output.gsub("\r", "").strip
   end
