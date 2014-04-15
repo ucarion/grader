@@ -1,4 +1,11 @@
 class SubmissionStatus < ClassyEnum::Base
+  def tested?
+    true
+  end
+
+  def actual_output_message
+    "Actual Output"
+  end
 end
 
 class SubmissionStatus::Waiting < SubmissionStatus
@@ -32,4 +39,19 @@ class SubmissionStatus::Correct < SubmissionStatus
 end
 
 class SubmissionStatus::NotTested < SubmissionStatus
+  def tested?
+    false
+  end
+
+  def actual_output_message
+    "Output"
+  end
+
+  def css_class
+    "info"
+  end
+
+  def text_message
+    "Not tested"
+  end
 end
