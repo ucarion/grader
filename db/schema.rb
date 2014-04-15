@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413180205) do
+ActiveRecord::Schema.define(version: 20140415013628) do
 
   create_table "activities", force: true do |t|
     t.datetime "created_at"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140413180205) do
     t.text     "input"
     t.integer  "max_attempts"
     t.integer  "grace_period"
+    t.boolean  "should_run_tests", default: true
   end
 
   create_table "comments", force: true do |t|

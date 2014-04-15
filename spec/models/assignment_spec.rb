@@ -23,6 +23,7 @@ describe Assignment do
   it { should respond_to(:test_for_plagiarism!) }
   it { should respond_to(:max_attempts) }
   it { should respond_to(:grace_period) }
+  it { should respond_to(:should_run_tests?) }
 
   its(:course) { should eq course }
 
