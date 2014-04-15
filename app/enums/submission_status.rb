@@ -27,6 +27,6 @@ class SubmissionStatus::Correct < SubmissionStatus
   end
 
   def text_message
-    "Tests failed"
+    "Tests passed"
   end
 end
