@@ -30,3 +30,6 @@ class SubmissionStatus::Correct < SubmissionStatus
     "Tests passed"
   end
 end
+
+class SubmissionStatus::NotTested < SubmissionStatus
+end
