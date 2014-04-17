@@ -23,6 +23,15 @@
             class: 'code-field form-control' %>
       </div>
 
+      <div class="checkbox">
+        <%= f.label :should_run_tests %>
+        <%= f.check_box :should_run_tests %>
+
+        <p class="help-block">
+          If this box is unchecked, then submissions' output will not be tested.
+        </p>
+      </div>
+
       <div class="form-group">
         <%= f.label :expected_output %>
         <%= f.text_area :expected_output, spellcheck: false,

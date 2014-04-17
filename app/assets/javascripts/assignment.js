@@ -45,4 +45,12 @@ $(function() {
     $('#assignment_grace_period, #assignment_due_time').on('change keyup',
       updateGracePeriodMessage);
   }
+
+  if ($('#assignment_should_run_tests').length) {
+    var expectedOutputTextarea = $('#assignment_expected_output');
+
+    $('#assignment_should_run_tests').change(function() {
+      expectedOutputTextarea.attr('disabled', !$(this).is(':checked'));
+    });
+  }
 });

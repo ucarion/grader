@@ -15,7 +15,15 @@
   <div class="col-md-6">
     <div class="pane">
       <h2>Expected Output</h2>
-      <%= content_tag(:pre, @assignment.expected_output) %>
+      <% if @assignment.should_run_tests %>
+        <%= content_tag(:pre, @assignment.expected_output) %>
+      <% else %>
+        <p>This assignment does not have an expected output.</p>
+        <p>
+          Your submission will still be executed, but it will be up to the
+          teacher to determine if your program has produced the correct output.
+        </p>
+      <% end %>
     </div>
   </div>
 </div>
