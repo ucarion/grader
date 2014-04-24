@@ -172,6 +172,12 @@ describe "SubmissionsPages" do
     end
 
     describe "new comment form" do
+      before do
+        # Testing last_graded_at only works for teachers ...
+        sign_in teacher
+        visit submission_path(submission)
+      end
+
       it { should have_selector('.btn-comment') }
 
       let(:submit_comment) { "Comment" }
@@ -191,6 +197,12 @@ describe "SubmissionsPages" do
 
         it "creates a new activity on submit" do
           expect { click_button submit_comment }.to change(Activity, :count).by(1)
+        end
+
+        it "updates last_graded_at" do
+          click_button submit_comment
+
+          expect(submission.reload.last_graded_at).not_to be_nil
         end
 
         describe "after commenting" do

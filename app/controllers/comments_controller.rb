@@ -5,6 +5,8 @@ class CommentsController < ApplicationController
 
     if @comment.save
       @comment.create_activity
+      @comment.notify_submission
+
       flash[:success] = "Comment created."
       redirect_to @comment.submission
     else
