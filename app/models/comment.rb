@@ -17,8 +17,6 @@ class Comment < ActiveRecord::Base
     notify_submission
   end
 
-  private
-
   def create_activity
     target_user = if user == submission.author
       submission.assignment.course.teacher
