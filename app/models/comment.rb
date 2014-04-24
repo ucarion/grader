@@ -25,4 +25,13 @@ class Comment < ActiveRecord::Base
       user: target_user
     )
   end
+
+  # If this comment is one written by the teacher, then this comment is an
+  # indication that the teacher has reviewed the submission.
+  def notify_submission
+    unless user == submission.author
+      submission.last_graded_at = self.updated_at
+      submission.save
+    end
+  end
 end
