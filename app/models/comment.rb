@@ -12,6 +12,13 @@ class Comment < ActiveRecord::Base
   validates :submission_id, presence: true
   validates :content, presence: true
 
+  def handle_create!
+    create_activity
+    notify_submission
+  end
+
+  private
+
   def create_activity
     target_user = if user == submission.author
       submission.assignment.course.teacher
