@@ -54,4 +54,24 @@ describe Comment do
       expect(activity.user).to eq student
     end
   end
+
+  describe "#notify_submission" do
+    it "does not update last_graded_at when the commenter is the student" do
+      comment_by_student = FactoryGirl.create(:comment,
+        user: student, submission: submission)
+
+      expect do
+        comment_by_student.notify_submission
+      end.not_to change(submission, :last_graded_at)
+    end
+
+    it "updates last_graded_at when the commenter is the teacher" do
+      comment_by_teacher = FactoryGirl.create(:comment,
+        user: teacher, submission: submission)
+
+      expect do
+        comment_by_teacher.notify_submission
+      end.to change(submission, :last_graded_at)
+    end
+  end
 end
