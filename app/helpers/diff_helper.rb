@@ -18,15 +18,13 @@ module DiffHelper
 
       diff = ::Diffy::Diff.new(string_a, string_b)
       diff.each_chunk.map do |chunk|
-        first_char, lines = chunk[0], chunk[1..-1].split("\n")
-
         # Ignore messages about newlines at the end of files; most teachers will
         # probably not put any ending newlines when they specify the expected
         # output.
         if chunk == "\\ No newline at end of file\n"
           []
         else
-          lines.map { |line| first_char + line }
+          chunk.split("\n")
         end
       end.flatten
     end
@@ -67,7 +65,8 @@ module DiffHelper
         # This is important because unchanged lines will have a leading space
         # that browsers will not normally show.
         chunk_to_html = if line_type.unchanged?
-          "&nbsp;".html_safe + chunk
+          # the [1..-1] is to avoid putting in the leading space twice
+          "&nbsp;".html_safe + chunk[1..-1]
         else
           chunk
         end
