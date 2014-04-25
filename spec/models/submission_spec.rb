@@ -358,6 +358,25 @@ describe Submission do
     its(:status) { should be_correct }
   end
 
+  describe "ignore trailing line whitespace" do
+    before do
+      course.update_attributes(language: :java)
+      assignment.update_attributes(
+        input: "Hello\nHi again\nGoodbye",
+
+        # note extra spaces at end of lines
+        expected_output: "Hello \nHi again \nGoodbye"
+      )
+
+      @submission.source_files.first.update_attributes(code: submission_file('JOptionPaneReader.java'))
+
+      @submission.execute_code!
+      @submission.reload
+    end
+
+    its(:status) { should be_correct }
+  end
+
   describe "java packages" do
     before do
       course.update_attributes(language: :java)
