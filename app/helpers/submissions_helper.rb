@@ -10,8 +10,21 @@ module SubmissionsHelper
     content_tag(:div, class: css_class, &block)
   end
 
+  # Clean up a string to see if a submission's output is correct. Removes all of
+  # the following:
+  #
+  #   - Carriage returns
+  #   - Whitespace at end of lines (i.e. "hello    \n" -> "hello\n")
+  #   - Leading and trailing whitespace
+  #
+  # Note that the modified string must still, to a human, resemble the original
+  # string. This is because this method is also used to sanitize outputs before
+  # diff-ing them.
   def sanitize_for_comparison(output)
-    output.gsub("\r", "").strip
+    output.gsub("\r", "").each_line.map do |line|
+      # replace whitespace preceding newline with just a newline
+      line.gsub(/\s+\n/, "\n")
+    end.join.strip
   end
 
   def highlighted_code(submission, code)
