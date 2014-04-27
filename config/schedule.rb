@@ -20,5 +20,6 @@
 # Learn more: http://github.com/javan/whenever
 
 every :day do
-  rake 'db:backup', output: 'log/cron.log'
+  rake 'backup:db', output: 'log/cron.log'
+  rake 'backup:submissions', output: 'log/cron.log'
 end
