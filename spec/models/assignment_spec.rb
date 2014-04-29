@@ -212,4 +212,24 @@ describe Assignment do
       expect(users).to match_array(course.students)
     end
   end
+
+  describe "ungraded assignments" do
+    before do
+      student = FactoryGirl.create(:student)
+
+      3.times do
+        FactoryGirl.create(:submission, assignment: @assignment, author: student)
+      end
+
+      2.times do
+        FactoryGirl.create(:submission, assignment: @assignment,
+          author: student, grade: 2, last_graded_at: 2.days.ago,
+          last_submitted_at: 1.day.ago)
+      end
+    end
+
+    it "adds up submissions with no grade or an outdated grade" do
+      expect(@assignment.ungraded_submissions.count).to eq 5
+    end
+  end
 end

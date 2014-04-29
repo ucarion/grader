@@ -46,7 +46,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def ungraded_submissions
-    submissions.where(grade: nil)
+    submissions.select { |s| s.grade.nil? || s.has_outdated_grade? }
   end
 
   def create_activities
