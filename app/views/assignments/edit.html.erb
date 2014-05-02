@@ -58,7 +58,7 @@
       <div class="form-group">
         <%= f.label :grace_period %>
         <%= f.text_field :grace_period, class: 'form-control',
-            value: default_assignment_grace_period %>
+            input_html: { value: default_assignment_grace_period } %>
 
         <p class="help-block" id='grace-period-message'></p>
       </div>
