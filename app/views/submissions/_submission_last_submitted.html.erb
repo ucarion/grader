@@ -1,0 +1,9 @@
+Last submitted at:
+
+<span class="light-header">
+  <%= @submission.last_submitted_at.to_formatted_s(:short) %>
+
+  <small>
+    (<%= time_ago_in_words(@submission.last_submitted_at) %> ago)
+  </small>
+</span>
