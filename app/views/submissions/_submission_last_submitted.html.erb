@@ -1,9 +1,13 @@
-Last submitted at:
+<% @submission.last_submitted_at.tap do |submit_time| %>
+  <% if submit_time %>
+    Last submitted at:
 
-<span class="light-header">
-  <%= @submission.last_submitted_at.to_formatted_s(:short) %>
+    <span class="light-header">
+      <%= submit_time.to_formatted_s(:short) %>
 
-  <small>
-    (<%= time_ago_in_words(@submission.last_submitted_at) %> ago)
-  </small>
-</span>
+      <small>
+        (<%= time_ago_in_words(submit_time) %> ago)
+      </small>
+    </span>
+  <% end %>
+<% end %>
