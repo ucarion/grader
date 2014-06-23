@@ -1,0 +1,73 @@
+#masthead {
+  margin-top: -10px;
+  padding-top: 25px;
+  margin-right: 0px; // avoid scrollbar
+
+  height: 450px;
+
+  background-image: url(asset_path("background-main.jpg"));
+  background-size: 100%;
+
+  h1 {
+    font-size: 70px;
+  }
+
+  p {
+    font-size: 24px;
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+
+  #sign-in-sign-up-buttons {
+    margin-top: 40px;
+  }
+}
+
+#how-it-works {
+  margin-top: 40px;
+
+  .pane {
+    height: 100%;
+  }
+
+  h1, h2, h3 {
+    text-align: center;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .big-icon {
+    margin-top: -9px;
+
+    font-size: 90px;
+    text-align: center;
+  }
+
+  #cogs-icon {
+    color: #c25858;
+  }
+
+  #check-icon {
+    color: #61c85f;
+  }
+
+  #comments-icon {
+    color: #5256bb;
+  }
+}
+
+#sign-up {
+  margin-top: 40px;
+
+  h1, h2, h3 {
+    text-align: center;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
