@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
     if signed_in?
       render 'user_home'
     else
-      render 'guest_home'
+      render 'guest_home', layout: 'guest_home_layout'
     end
   end
 

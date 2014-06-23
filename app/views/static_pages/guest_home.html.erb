@@ -1,18 +1,115 @@
-<div class="jumbotron pane">
-  <h1>Grader</h1>
+<div class="row" id="masthead">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Curriculum</h1>
 
-  <p>
-    An easy way to automatically compile, run, and evaluate computer science
-    programming assignments.
-  </p>
+    <p>
+      Curriculum makes grading computer science assignments
+      <span class="underline">fast and easy</span>.
+    </p>
 
-  <p>
-    Comes with support for: Java, C, C++, Python, and Ruby.
-  </p>
+    <p>
+      <a href="#how-it-works" class="smooth-scroll">
+        Find out how it works.
+      </a>
+    </p>
 
-  <p>
-    <%= link_to 'Sign up', signup_path, class: 'btn btn-primary btn-lg' %>
+    <p id="sign-in-sign-up-buttons">
+      <%= link_to 'Request beta access', '#sign-up',
+          class: 'btn btn-primary btn-lg smooth-scroll' %>
 
-    or <%= link_to 'sign in', signin_path %>
-  </p>
+      or <%= link_to 'sign in', signin_path %>
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row" id="how-it-works">
+    <h1>What Curriculum provides</h1>
+    <div class="col-md-4">
+      <div class="pane">
+        <h3>Automatic testing</h3>
+
+        <div class="big-icon">
+          <%= fa_icon 'cogs', id: 'cogs-icon' %>
+        </div>
+
+        <p>
+          When a student submits their work, it is automatically compiled and
+          tested. If a submission doesn't work as expected, the student is
+          instantly notified.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="pane">
+        <h3>Grade on the go</h3>
+
+        <div class="big-icon">
+          <%= fa_icon 'check-circle', id: 'check-icon' %>
+        </div>
+
+        <p>
+          Spend your valuable class time teaching, not grading assignments.
+        </p>
+        <p>
+          Curriculum is always available online, so you can grade assignments
+          whenever is most convenient for you.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="pane">
+        <h3>Better feedback</h3>
+
+        <div class="big-icon">
+          <%= fa_icon 'comments-o', id: 'comments-icon' %>
+        </div>
+
+        <p>
+          Automatic testing means students immediately know if their program
+          works, so you can focus on encouraging good coding practices.
+        </p>
+        <p>
+          Every submission has a comments section, so students and you can talk
+          about the students' work even outside the classroom.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="sign-up">
+    <h1>Sign up</h1>
+
+    <div class="row">
+      <div class="col-md-5 col-md-offset-1">
+        <div class="pane">
+          <h2>I'm a teacher</h2>
+
+          <p>
+            Curriculum is currently in beta. To request beta access, please
+            e-mail an inquiry to:
+
+            <%= mail_to 'ucarion@berkeley.edu' %>.
+          </p>
+
+          <p>
+            We'll respond to your request as soon as we receive it.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="pane">
+          <h2>I'm a student</h2>
+
+          <p>
+            You can create an account immediately by
+
+            <%= link_to "clicking here", signup_path %>.
+          </p>
+        </div>
+      </div>
+    </div>
 </div>
